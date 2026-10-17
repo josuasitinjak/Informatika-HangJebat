@@ -45,9 +45,9 @@
   <div class="min-h-screen lg:h-screen w-full grid grid-cols-1 lg:grid-cols-12 overflow-y-auto lg:overflow-hidden">
     
     <!-- ========================================================================= -->
-    <!-- LEFT PANEL: Blue Mesh Gradient Showcase                                   -->
+    <!-- LEFT PANEL: Blue Mesh Gradient Showcase (Desktop Only)                    -->
     <!-- ========================================================================= -->
-    <section class="lg:col-span-6 xl:col-span-6 relative mesh-gradient-bg p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-hidden text-white min-h-[460px] lg:h-screen">
+    <section class="hidden lg:flex lg:col-span-6 xl:col-span-6 relative mesh-gradient-bg p-6 sm:p-8 lg:p-10 flex-col justify-between overflow-hidden text-white min-h-[460px] lg:h-screen">
       <!-- Decorative Atmospheric Glow Blobs -->
       <div class="orb-glow w-72 h-72 bg-cyan-300 top-[-10%] right-[-10%]"></div>
       <div class="orb-glow w-80 h-80 bg-blue-800 bottom-[-10%] left-[-10%]"></div>
@@ -119,13 +119,25 @@
     </section>
 
     <!-- ========================================================================= -->
-    <!-- RIGHT PANEL: Clean Form Container (Fitted to Height)                       -->
+    <!-- RIGHT PANEL: Clean Form Container (Instant on Mobile, Fitted on Desktop)  -->
     <!-- ========================================================================= -->
-    <section class="lg:col-span-6 xl:col-span-6 bg-white p-6 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center relative lg:h-screen overflow-hidden">
+    <section class="lg:col-span-6 xl:col-span-6 bg-white p-5 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center relative min-h-screen lg:h-screen">
       
       <div class="max-w-md w-full mx-auto">
+        <!-- Mobile Header (Visible on Mobile only) -->
+        <div class="lg:hidden flex items-center justify-between pb-5 mb-5 border-b border-slate-100">
+          <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-primary transition py-1.5 px-3.5 rounded-full bg-slate-100">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            <span>Beranda</span>
+          </a>
+          <div class="text-right">
+            <span class="text-sm font-black text-navy block leading-tight">Informatika</span>
+            <span class="text-[10px] text-text-muted font-semibold block">SMAN 1 BATAM</span>
+          </div>
+        </div>
+
         <!-- Form Header -->
-        <div class="mb-4">
+        <div class="mb-5 sm:mb-6">
           <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             Masuk ke Akun
           </h2>
@@ -134,8 +146,7 @@
           </p>
         </div>
 
-
-        <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+        <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
           
           <!-- Field 1: Username / Nama Lengkap -->
           <div>

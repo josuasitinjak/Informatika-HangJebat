@@ -57,7 +57,7 @@
   <!-- 1. TOP NAVIGATION BAR                                                     -->
   <!-- ========================================================================= -->
   <header class="bg-surface/90 backdrop-blur-md top-0 sticky z-50 border-b border-border-light">
-    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between w-full">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between w-full">
       <!-- School / Subject Brand (Clean Text, No Logo Box - Same as Dashboard & Modul) -->
       <a href="index.html" class="flex items-center gap-3 group">
         <div>
@@ -65,7 +65,7 @@
           <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
         </div>
       </a>
-      <!-- Navigation Links -->
+      <!-- Navigation Links (Desktop) -->
       <nav class="hidden md:flex items-center space-x-7 text-sm font-medium">
         <a class="text-text-muted hover:text-primary transition-colors" href="modul.html">
           Modul 4 Bab
@@ -86,12 +86,46 @@
           Tentang
         </a>
       </nav>
-      <!-- Actions (Auth Sensitive: Single Prominent Button) -->
-      <div id="navbar-auth-section" class="flex items-center">
-        <a class="interactive-btn inline-flex items-center justify-center px-7 py-2.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary-dark shadow-glow tracking-wide" href="login.html">
-          Mulai Belajar
-        </a>
+      <!-- Actions (Auth Sensitive: Single Prominent Button) & Mobile Menu Toggle -->
+      <div class="flex items-center gap-2">
+        <div id="navbar-auth-section" class="flex items-center">
+          <a class="interactive-btn inline-flex items-center justify-center px-4 sm:px-7 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-white bg-primary hover:bg-primary-dark shadow-glow tracking-wide" href="login.html">
+            Mulai Belajar
+          </a>
+        </div>
+        <!-- Mobile Hamburger Toggle -->
+        <button onclick="toggleMobileNav()" aria-label="Buka Menu" class="md:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition focus:outline-none">
+          <span id="mobile-menu-icon" class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Drawer Menu Dropdown -->
+    <div id="mobile-nav-drawer" class="hidden md:hidden bg-white border-b border-border-light px-4 py-3 space-y-1.5 shadow-lg transition-all">
+      <a href="modul.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-primary-subtle hover:text-primary transition">
+        <span class="material-symbols-outlined text-[19px] text-primary">auto_stories</span>
+        <span>Modul Materi 4 Bab</span>
+      </a>
+      <a href="tanya-ai.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-purple-50 hover:text-purple-600 transition">
+        <span class="material-symbols-outlined text-[19px] text-purple-600">smart_toy</span>
+        <span>Tanya AI Tutor</span>
+      </a>
+      <a href="catatan.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+        <span class="material-symbols-outlined text-[19px] text-emerald-600">edit_note</span>
+        <span>Catatan Belajar Pintar</span>
+      </a>
+      <a href="komunitas.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition">
+        <span class="material-symbols-outlined text-[19px] text-blue-600">forum</span>
+        <span>Komunitas Siswa</span>
+      </a>
+      <a href="simulator.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-navy transition">
+        <span class="material-symbols-outlined text-[19px] text-slate-700">terminal</span>
+        <span>Simulator &amp; Lab Riset</span>
+      </a>
+      <a href="dashboard.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-primary-subtle hover:text-primary transition border-t border-slate-100 pt-3 mt-1">
+        <span class="material-symbols-outlined text-[19px] text-primary">dashboard</span>
+        <span>Dashboard Siswa</span>
+      </a>
     </div>
   </header>
 
@@ -99,27 +133,27 @@
     <!-- ========================================================================= -->
     <!-- 2. HERO SECTION                                                           -->
     <!-- ========================================================================= -->
-    <section class="relative pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-white via-canvas to-canvas">
-      <div class="max-w-7xl mx-auto px-6">
+    <section class="relative pt-8 pb-14 sm:pt-14 sm:pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-white via-canvas to-canvas">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <!-- Top Pitch Headline -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border-light shadow-sm">
+          <div class="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-surface border border-border-light shadow-sm">
             <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            <span class="text-xs font-semibold text-primary">Platform Belajar Informatika Fase F Kelas XI • SMAN 1 Batam</span>
+            <span class="text-[11px] sm:text-xs font-semibold text-primary">Platform Belajar Informatika Fase F • SMAN 1 Batam</span>
           </div>
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+          <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-navy tracking-tight leading-tight px-1">
             Eksplorasi Mesin Pencari &amp; Hukum Digital secara Kritis.
           </h1>
-          <p class="text-base sm:text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
+          <p class="text-sm sm:text-base md:text-lg text-text-muted max-w-2xl mx-auto leading-relaxed px-1">
             Kuasai strategi riset cerdas, teknik membaca lateral, triangulasi sumber kredibel, serta pemahaman regulasi UU ITE &amp; UU PDP di Indonesia.
           </p>
-          <!-- CTA Pill Buttons -->
-          <div class="flex flex-wrap items-center justify-center gap-3.5 pt-3">
-            <button onclick="handleProtectedAction('#modul-materi', 'Mulai Belajar')" class="interactive-btn inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-primary hover:bg-primary-dark shadow-glow">
+          <!-- CTA Pill Buttons (Responsive Full Width on Mobile) -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 w-full max-w-md mx-auto sm:max-w-none">
+            <button onclick="handleProtectedAction('#modul-materi', 'Mulai Belajar')" class="interactive-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 rounded-full text-xs sm:text-sm font-semibold text-white bg-primary hover:bg-primary-dark shadow-glow">
               <span>Mulai Belajar Sekarang</span>
               <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
             </button>
-            <button onclick="handleProtectedAction('#modul-materi', 'Modul Belajar Fase F')" class="interactive-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-navy bg-surface border border-border-light hover:bg-slate-50 shadow-sm">
+            <button onclick="handleProtectedAction('#modul-materi', 'Modul Belajar Fase F')" class="interactive-btn w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 rounded-full text-xs sm:text-sm font-semibold text-navy bg-surface border border-border-light hover:bg-slate-50 shadow-sm">
               <span class="material-symbols-outlined text-[18px] text-primary">menu_book</span>
               <span>Jelajahi Modul Belajar</span>
             </button>

@@ -468,3 +468,19 @@ const XavetraTTS = (function() {
 
 window.XavetraTTS = XavetraTTS;
 
+/**
+ * Toggle Mobile Navigation Drawer (Landing Page)
+ */
+function toggleMobileNav() {
+  const drawer = document.getElementById('mobile-nav-drawer');
+  const icon = document.getElementById('mobile-menu-icon');
+  if (!drawer) return;
+  const isHidden = drawer.classList.contains('hidden');
+  if (isHidden) {
+    drawer.classList.remove('hidden');
+    if (icon) icon.textContent = 'close';
+  } else {
+    drawer.classList.add('hidden');
+    if (icon) icon.textContent = 'menu';
+  }
+}
