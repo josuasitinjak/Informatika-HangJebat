@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modul Materi — XAVETRA SMAN 1 Batam</title>
+  <meta name="description" content="Modul pembelajaran interaktif Informatika Fase F Kelas XI SMAN 1 Batam.">
+  
+  <!-- Immediate Auth Guard -->
+  <script>
+    (function() {
+      const user = localStorage.getItem('xavetra_user');
+      if (!user) {
+        window.location.replace('login.html?redirect=modul.html');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1F6BFF',
+            'primary-dark': '#0E4CD1',
+            'primary-subtle': '#EEF4FF',
+            navy: '#0B1528',
+            canvas: '#F8FAFC',
+            surface: '#FFFFFF',
+            accent: '#F59E0B',
+            'text-main': '#0F172A',
+            'text-muted': '#64748B',
+            'border-light': '#E2E8F0',
+            'border-focus': '#BFDBFE'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(11, 21, 40, 0.04), 0 2px 6px -1px rgba(11, 21, 40, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(11, 21, 40, 0.08), 0 4px 12px -2px rgba(31, 107, 255, 0.06)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+  <!-- ========================================================================= -->
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 select-none">
+    <div class="p-6 space-y-7 overflow-y-auto">
+      
+      <!-- Brand -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div>
+            <span class="text-lg font-black text-navy tracking-tight">Informatika</span>
+            <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Menus -->
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+          Menu Pembelajaran
+        </div>
+
+        <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <!-- Modul Materi (Active) -->
+        <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-glow transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px]">auto_stories</span>
+            <span>Modul Materi</span>
+          </span>
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        </a>
+
+        <!-- Catatan Belajar -->
+        <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+            <span>Catatan Belajar</span>
+          </span>
+          <span id="sidebar-notes-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">Notes</span>
+        </a>
+
+        <!-- Tanya AI (Chatting AI) -->
+        <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-purple-500 group-hover:scale-110 transition">smart_toy</span>
+            <span>Tanya AI</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+        </a>
+
+        <!-- Komunitas (Media Sosial Siswa) -->
+        <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+            <span>Komunitas</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT                                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-xl">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <div class="relative w-full max-w-md">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <span class="material-symbols-outlined text-[19px]">search</span>
+          </div>
+          <input 
+            type="text" 
+            id="module-search-input" 
+            oninput="searchModules(this.value)" 
+            placeholder="Cari materi bab, operator pencarian, atau pasal UU..." 
+            class="w-full bg-[#F4F6FA] border border-slate-200/90 rounded-2xl pl-10 pr-4 py-2 text-xs text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition"
+          >
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+
+        <!-- User Profile Dropdown Button -->
+        <div class="relative">
+          <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition focus:outline-none cursor-pointer">
+            <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+              XS
+            </div>
+            <div class="text-left hidden sm:block">
+              <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[130px]">
+                Siswa Xavetra
+              </div>
+              <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[130px]">
+                Siswa XI HJ 5
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
+          </button>
+
+          <!-- Dropdown Popover Menu -->
+          <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div class="px-4 py-2 border-b border-slate-100 flex items-center gap-3">
+              <div id="dropdown-user-avatar" class="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                XS
+              </div>
+              <div class="min-w-0">
+                <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Siswa Xavetra</div>
+                <div id="dropdown-user-role" class="text-[10px] text-text-muted truncate">XI HJ 5 • SMAN 1 Batam</div>
+                <div class="text-[9px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Akun Siswa Aktif
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2 border-t border-slate-100">
+              <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                <span class="material-symbols-outlined text-[18px]">logout</span>
+                <span>Keluar Akun (Logout)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT: VIEW 1 (KATALOG KARTU BAB) & VIEW 2 (RUANG BELAJAR BAB) -->
+    <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-6xl mx-auto w-full">
+      
+      <!-- ===================================================================== -->
+      <!-- VIEW 1: KATALOG KARTU MODUL (DYNAMIC CARDS & ADMIN CONTROLS)          -->
+      <!-- ===================================================================== -->
+      <div id="view-catalog" class="space-y-6">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+                Modul Pembelajaran Informatika
+              </h1>
+              <span id="catalog-count-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-primary border border-blue-200">
+                0 Bab Tersedia
+              </span>
+            </div>
+            <p class="text-xs sm:text-sm text-text-muted mt-1">
+              Pilih kartu Bab di bawah ini untuk mempelajari materi teks, menonton video, menjalankan simulator lab exact, dan menjawab kuis.
+            </p>
+          </div>
+
+          <!-- Admin Catalog Controls (Only visible to Admin) -->
+          <div id="admin-catalog-bar" class="hidden flex items-center gap-2.5">
+            <button onclick="openAddChapterModal()" class="px-4 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition flex items-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-[18px]">add_circle</span>
+              <span>Tambah Bab Baru</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="catalog-empty-state" class="hidden"></div>
+
+        <!-- Dynamic Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="chapter-cards-grid">
+          <!-- Dynamically populated from localStorage -->
+        </div>
+
+      </div>
+
+      <!-- ===================================================================== -->
+      <!-- VIEW 2: RUANG BELAJAR BAB (STUDY SPACE WITH TABS)                    -->
+      <!-- ===================================================================== -->
+      <div id="view-study-space" class="hidden space-y-6">
+        
+        <!-- Navigation Back Bar -->
+        <div class="flex items-center justify-between">
+          <button onclick="closeChapterStudy()" class="px-4 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-navy text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
+            <span>Kembali ke Katalog Modul</span>
+          </button>
+          
+          <div class="flex items-center gap-2.5">
+            <button id="btn-admin-edit-current-chapter" onclick="editCurrentActiveChapter()" class="hidden px-3.5 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">edit</span>
+              <span>Edit Bab Ini</span>
+            </button>
+            <a id="btn-study-ask-ai" href="tanya-ai.html" class="px-3.5 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold transition flex items-center gap-1.5 shadow-xs">
+              <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+              <span>Tanya AI Bab Ini</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Chapter Structured Study Card with Blue Header Bar -->
+        <div class="rounded-3xl border border-slate-200/90 shadow-card overflow-hidden bg-white">
+          
+          <!-- TOP HEADER BAND (Vibrant Royal Navy / Blue Accent) -->
+          <div class="bg-gradient-to-r from-primary via-[#175CE6] to-[#0E4CD1] p-6 sm:p-8 text-white relative overflow-hidden">
+            <!-- Decorative Subtle Accent Glow -->
+            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="relative z-10 space-y-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="study-badge-pill" class="px-3 py-1 rounded-full text-xs font-extrabold bg-white text-primary shadow-xs tracking-wide">
+                  BAB 01
+                </span>
+                <span id="study-category-pill" class="px-3 py-1 rounded-full text-xs font-medium bg-white/15 text-white backdrop-blur-xs border border-white/20">
+                  Informatika Fase F
+                </span>
+                <span id="study-duration-pill" class="px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 text-white/90 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px]">schedule</span>
+                  <span id="study-duration-text">20 Menit</span>
+                </span>
+              </div>
+
+              <h1 id="study-title" class="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight">
+                Mesin Pencari (Search Engine) &amp; Logika Informasi
+              </h1>
+
+              <p id="study-desc" class="text-xs sm:text-sm text-blue-50/90 leading-relaxed max-w-3xl font-medium">
+                Materi pembelajaran komprehensif mengenai mekanisme crawling, indexing, ranking, dan sintaks pencarian logis.
+              </p>
+            </div>
+          </div>
+
+          <!-- BOTTOM CARD BODY (Clean Structured White Workspace) -->
+          <div class="p-6 sm:p-7 space-y-6">
+
+            <!-- Connected Feature Navigation Tabs (Only Active Features Rendered) -->
+            <div class="border-b border-slate-200/80 pb-3 flex items-center justify-between gap-3 overflow-x-auto select-none">
+              <div class="flex items-center gap-2" id="study-tab-buttons-container">
+                <button onclick="switchStudyTab('materi')" id="tab-btn-materi" class="study-tab-btn px-4 py-2 rounded-xl bg-primary text-white font-bold text-xs transition flex items-center gap-1.5 shrink-0 shadow-xs">
+                  <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                  <span>Rangkuman Materi</span>
+                </button>
+                <button onclick="switchStudyTab('video')" id="tab-btn-video" class="study-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition flex items-center gap-1.5 shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">smart_display</span>
+                  <span>Video Pembelajaran</span>
+                </button>
+                <button onclick="switchStudyTab('simulator')" id="tab-btn-simulator" class="study-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition flex items-center gap-1.5 shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">science</span>
+                  <span>Simulator &amp; Lab</span>
+                </button>
+                <button onclick="switchStudyTab('kuis')" id="tab-btn-kuis" class="study-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition flex items-center gap-1.5 shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">fact_check</span>
+                  <span>Kuis Pemahaman</span>
+                </button>
+                <button onclick="switchStudyTab('catatan')" id="tab-btn-catatan" class="study-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition flex items-center gap-1.5 shrink-0">
+                  <span class="material-symbols-outlined text-[16px]">edit_note</span>
+                  <span>Catatan Saya</span>
+                </button>
+              </div>
+
+              <div id="study-active-tab-indicator" class="hidden sm:flex items-center gap-1 text-[11px] text-text-muted font-semibold shrink-0">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Modul Terhubung</span>
+              </div>
+            </div>
+
+            <!-- TAB CONTENT 1: MATERI LENGKAP -->
+            <div id="tab-content-materi" class="space-y-4">
+              <div id="study-subchapters" class="space-y-4">
+                <!-- Dynamically populated subchapters -->
+              </div>
+            </div>
+
+            <!-- TAB CONTENT 2: VIDEO PEMBELAJARAN -->
+            <div id="tab-content-video" class="hidden space-y-4">
+              <div id="study-video-container" class="space-y-4">
+                <!-- Dynamically populated video player -->
+              </div>
+            </div>
+
+            <!-- TAB CONTENT 3: SIMULATOR / LAB TERINTEGRASI -->
+            <div id="tab-content-simulator" class="hidden space-y-4">
+              <div id="study-lab-container" class="space-y-4">
+                <!-- Dynamically populated lab simulator -->
+              </div>
+            </div>
+
+            <!-- TAB CONTENT 4: KUIS PEMAHAMAN BAB (MULTI-SOAL) -->
+            <div id="tab-content-kuis" class="hidden space-y-4">
+              <div id="study-quiz-container" class="space-y-4">
+                <!-- Dynamically populated multi-question quiz -->
+              </div>
+            </div>
+
+            <!-- TAB CONTENT 5: CATATAN BAB SAYA -->
+            <div id="tab-content-catatan" class="hidden space-y-4">
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs text-navy space-y-1">
+                <div class="font-bold flex items-center gap-1.5 text-emerald-700">
+                  <span class="material-symbols-outlined text-[17px]">edit_note</span>
+                  <span>Buku Catatan Belajar Bab Ini</span>
+                </div>
+                <p class="text-text-muted">
+                  Tuliskan pemahaman pribadimu mengenai bab ini. Catatan tersimpan otomatis di perangkatmu dan dapat diakses dari menu Catatan Belajar.
+                </p>
+              </div>
+
+              <div class="space-y-3">
+                <input 
+                  type="text" 
+                  id="chapter-note-title"
+                  placeholder="Judul catatan (Contoh: Poin penting logika pencarian)"
+                  class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-semibold text-navy focus:outline-none focus:border-primary focus:bg-white"
+                >
+                <textarea 
+                  id="chapter-note-body"
+                  rows="4"
+                  placeholder="Tulis ringkasan atau rumus yang ingin kamu ingat..."
+                  class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs font-medium text-navy focus:outline-none focus:border-primary focus:bg-white leading-relaxed resize-none"
+                ></textarea>
+                <button onclick="saveChapterNote()" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                  <span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+                  <span>Simpan Catatan Bab</span>
+                </button>
+              </div>
+
+              <div id="chapter-saved-notes-list" class="space-y-2 pt-2">
+                <!-- Existing saved notes for this chapter -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white border-t border-slate-200/80 text-center text-xs text-text-muted px-4">
+      <p>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI • SMA Negeri 1 Batam</p>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" id="toast-indicator"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: ADMIN CHAPTER EDITOR (TAMBAH / EDIT BAB & MATERI)                  -->
+  <!-- ========================================================================= -->
+  <div id="admin-chapter-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200/90 flex items-center justify-between bg-slate-50/70 shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[22px]">edit_note</span>
+          </div>
+          <div>
+            <h2 id="modal-editor-title" class="text-base font-extrabold text-navy">
+              Tambah Bab Pembelajaran Baru
+            </h2>
+            <p class="text-xs text-text-muted mt-0.5">
+              Isi materi teks, video, kuis custom, dan atur lab praktik interaktif.
+            </p>
+          </div>
+        </div>
+        <button onclick="closeChapterModal()" class="text-slate-400 hover:text-navy p-1.5 rounded-xl hover:bg-slate-200/60 transition">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable Form) -->
+      <form id="chapter-editor-form" onsubmit="handleSaveChapter(event)" class="p-6 space-y-6 overflow-y-auto flex-1 text-xs">
+        <input type="hidden" id="edit-chapter-id" value="">
+
+        <!-- SECTION 1: INFORMASI DASAR BAB -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+            <span class="material-symbols-outlined text-[16px]">info</span>
+            <span>1. Informasi Umum Bab</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Nomor Bab</label>
+              <input type="number" id="modal-chapter-number" min="1" max="99" required placeholder="Contoh: 1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-navy font-semibold focus:outline-none focus:border-primary focus:bg-white transition">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Kategori / Badge</label>
+              <input type="text" id="modal-chapter-badge" required placeholder="Contoh: Algoritma & Pemrograman" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-navy font-medium focus:outline-none focus:border-primary focus:bg-white transition">
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Estimasi Waktu</label>
+              <input type="text" id="modal-chapter-duration" placeholder="Contoh: 20 Menit" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-navy font-medium focus:outline-none focus:border-primary focus:bg-white transition">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Judul Bab Lengkap</label>
+            <input type="text" id="modal-chapter-title" required placeholder="Contoh: Bab 01: Pengantar Pemrograman & Algoritma" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-navy font-bold focus:outline-none focus:border-primary focus:bg-white transition">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Deskripsi Ringkas Bab</label>
+            <textarea id="modal-chapter-desc" rows="2" required placeholder="Ringkasan capaian pembelajaran bab ini yang akan ditampilkan pada kartu materi..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-navy font-medium focus:outline-none focus:border-primary focus:bg-white leading-relaxed resize-none transition"></textarea>
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- SECTION 2: MATERI TEKS & SUB-BAB -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+              <span class="material-symbols-outlined text-[16px]">menu_book</span>
+              <span>2. Materi Teks / Sub-Bab</span>
+            </div>
+            <button type="button" onclick="addSubchapterInput()" class="px-3 py-1.5 rounded-xl bg-blue-50 text-primary hover:bg-blue-100 font-bold text-xs transition flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">add</span>
+              <span>Tambah Sub-Materi Teks</span>
+            </button>
+          </div>
+
+          <div id="modal-subchapters-container" class="space-y-3">
+            <!-- Dynamic subchapters list -->
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- SECTION 3: MATERI VIDEO -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+              <span class="material-symbols-outlined text-[16px]">smart_display</span>
+              <span>3. Video Pembelajaran (Opsional)</span>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+              <input type="checkbox" id="modal-enable-video" onchange="toggleVideoSection(this.checked)" checked class="rounded text-primary focus:ring-primary h-4 w-4">
+              <span>Sertakan Video</span>
+            </label>
+          </div>
+
+          <div id="modal-video-box" class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+            <!-- Segmented Switch: Tautan vs Upload File -->
+            <div class="flex items-center bg-slate-200/70 p-1 rounded-xl gap-1 max-w-sm">
+              <button type="button" id="tab-video-source-url" onclick="switchVideoInputMode('url')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-white text-navy shadow-xs">
+                <span class="material-symbols-outlined text-[15px]">link</span>
+                <span>Tautan Link (URL)</span>
+              </button>
+              <button type="button" id="tab-video-source-file" onclick="switchVideoInputMode('file')" class="flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-navy">
+                <span class="material-symbols-outlined text-[15px]">upload_file</span>
+                <span>Unggah Berkas Video</span>
+              </button>
+            </div>
+
+            <!-- Mode 1: URL Input -->
+            <div id="video-input-mode-url" class="space-y-1.5">
+              <label class="block font-bold text-slate-700">Tautan YouTube / Link MP4 Online</label>
+              <input type="url" id="modal-video-url" oninput="previewModalVideo()" placeholder="Contoh: https://www.youtube.com/watch?v=... atau https://domain.com/video.mp4" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-navy font-mono text-xs focus:outline-none focus:border-primary transition">
+              <p class="text-[11px] text-text-muted">Masukkan URL video YouTube atau tautan berkas MP4 langsung.</p>
+            </div>
+
+            <!-- Mode 2: Local File Upload -->
+            <div id="video-input-mode-file" class="hidden space-y-1.5">
+              <label class="block font-bold text-slate-700">Pilih Berkas Video dari Komputer / HP</label>
+              <div class="border-2 border-dashed border-slate-200 rounded-xl p-4 bg-white text-center hover:border-primary/50 transition">
+                <input type="file" id="modal-video-file" accept="video/*" onchange="handleModalVideoFile(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-primary file:text-white hover:file:bg-primary-dark cursor-pointer">
+                <p class="text-[11px] text-text-muted mt-1.5">Mendukung format video MP4, WebM, dsb. Disimpan langsung ke sistem penyimpanan browser.</p>
+              </div>
+            </div>
+
+            <!-- Video Preview Container -->
+            <div id="modal-video-preview-wrapper" class="hidden pt-2 border-t border-slate-200/80">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[11px] font-bold text-slate-700 flex items-center gap-1">
+                  <span class="material-symbols-outlined text-[14px] text-primary">visibility</span>
+                  <span>Pratinjau Video:</span>
+                </span>
+                <button type="button" onclick="clearModalVideo()" class="text-[11px] font-bold text-red-600 hover:underline">
+                  Hapus Video
+                </button>
+              </div>
+              <div id="modal-video-preview" class="rounded-xl overflow-hidden bg-black aspect-video max-h-52 w-full shadow-xs"></div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- SECTION 4: CUSTOM KUIS MULTI-SOAL FLEKSIBEL -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+              <span class="material-symbols-outlined text-[16px]">fact_check</span>
+              <span>4. Custom Kuis Pemahaman (Fleksibel &amp; Multi-Soal)</span>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+              <input type="checkbox" id="modal-enable-quiz" onchange="toggleQuizForm(this.checked)" checked class="rounded text-primary focus:ring-primary h-4 w-4">
+              <span>Sertakan Kuis</span>
+            </label>
+          </div>
+
+          <div id="modal-quiz-form-box" class="space-y-3">
+            <div class="flex items-center justify-between">
+              <p class="text-xs text-text-muted">
+                Tambahkan satu atau lebih soal kuis pilihan ganda untuk menguji pemahaman siswa pada bab ini.
+              </p>
+              <button type="button" onclick="addQuizQuestionItem()" class="px-3.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 font-bold text-xs transition flex items-center gap-1 shrink-0">
+                <span class="material-symbols-outlined text-[16px]">add_circle</span>
+                <span>Tambah Pertanyaan Kuis</span>
+              </button>
+            </div>
+
+            <div id="modal-quiz-questions-list" class="space-y-4">
+              <!-- Dynamically populated quiz questions -->
+            </div>
+          </div>
+        </div>
+
+        <hr class="border-slate-100">
+
+        <!-- SECTION 5: INTEGRASI LAB / SIMULATOR (EXACT PROGRAMMING LAB) -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-wider">
+              <span class="material-symbols-outlined text-[16px]">science</span>
+              <span>5. Lab Praktik Interaktif (Exact Simulator)</span>
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+              <input type="checkbox" id="modal-enable-lab" checked class="rounded text-primary focus:ring-primary h-4 w-4">
+              <span>Sertakan Tab Lab</span>
+            </label>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-blue-50/70 border border-border-focus space-y-2">
+            <p class="text-slate-700 leading-relaxed font-medium">
+              Lab praktik menggunakan modul lingkungan simulasi exact yang telah terintegrasi (terminal pencarian, operator search engine, crawler, indexing, dan simulator utama SMAN 1 Batam).
+            </p>
+            <div class="flex items-center gap-2 text-[11px] text-primary font-bold pt-1">
+              <span class="material-symbols-outlined text-[16px]">check_circle</span>
+              <span>Otomatis terhubung dengan tab Simulator &amp; Lab bab ini.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button in Form Footer -->
+        <div class="pt-4 border-t border-slate-200 flex items-center justify-end gap-3 sticky bottom-0 bg-white">
+          <button type="button" onclick="closeChapterModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition">
+            Batal
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold transition shadow-glow flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">save</span>
+            <span>Simpan Bab Pembelajaran</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // =========================================================================
+    // DYNAMIC CHAPTERS / MODULES MANAGEMENT (LOCALSTORAGE DRIVEN)
+    // =========================================================================
+    const CHAPTERS_STORAGE_KEY = 'xavetra_custom_chapters';
+
+    function getStoredChapters() {
+      try {
+        const raw = localStorage.getItem(CHAPTERS_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        console.error('Gagal membaca data bab:', e);
+        return [];
+      }
+    }
+
+    function saveStoredChapters(chapters) {
+      try {
+        localStorage.setItem(CHAPTERS_STORAGE_KEY, JSON.stringify(chapters));
+        return true;
+      } catch (e) {
+        console.error('Gagal menyimpan data bab:', e);
+        return false;
+      }
+    }
+
+    let currentActiveChapterId = null;
+    let uploadedVideoDataUrl = '';
+
+    // Auth user check
+    const authUser = typeof getAuthUser === 'function' ? getAuthUser() : null;
+    const isUserAdmin = authUser && (
+      authUser.username === 'admin' || 
+      (authUser.role && authUser.role.toLowerCase().includes('admin')) || 
+      (authUser.role && authUser.role.toLowerCase().includes('pengajar')) ||
+      (authUser.role && authUser.role.toLowerCase().includes('guru'))
+    );
+
+    // =========================================================================
+    // CATALOG RENDERING
+    // =========================================================================
+    function renderCatalog() {
+      const chapters = getStoredChapters();
+      const grid = document.getElementById('chapter-cards-grid');
+      const emptyState = document.getElementById('catalog-empty-state');
+      const countBadge = document.getElementById('catalog-count-badge');
+      const adminCatalogBar = document.getElementById('admin-catalog-bar');
+
+      if (countBadge) {
+        countBadge.textContent = `${chapters.length} Bab Tersedia`;
+      }
+
+      if (adminCatalogBar) {
+        if (isUserAdmin) {
+          adminCatalogBar.classList.remove('hidden');
+        } else {
+          adminCatalogBar.classList.add('hidden');
+        }
+      }
+
+      if (chapters.length === 0) {
+        grid.innerHTML = '';
+        grid.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+
+        if (isUserAdmin) {
+          emptyState.innerHTML = `
+            <div class="bg-white rounded-3xl border-2 border-dashed border-primary/30 p-8 sm:p-12 text-center space-y-4 shadow-card">
+              <div class="w-16 h-16 rounded-3xl bg-primary-subtle text-primary mx-auto flex items-center justify-center shadow-sm">
+                <span class="material-symbols-outlined text-[34px]">school</span>
+              </div>
+              <div class="max-w-md mx-auto space-y-1.5">
+                <h3 class="text-lg font-black text-navy">Belum Ada Bab / Materi Tersedia</h3>
+                <p class="text-xs text-text-muted leading-relaxed">
+                  Anda login sebagai <strong class="text-primary font-bold">Administrator / Pengajar</strong>. Semua materi contoh 4 bab telah dibersihkan sesuai permintaan Anda. Mulai tambahkan bab materi Anda sendiri sekarang!
+                </p>
+              </div>
+              <div class="pt-2">
+                <button onclick="openAddChapterModal()" class="px-6 py-3 rounded-2xl bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-extrabold transition shadow-glow inline-flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[20px]">add_circle</span>
+                  <span>Buat Bab Pembelajaran Baru</span>
+                </button>
+              </div>
+            </div>
+          `;
+        } else {
+          emptyState.innerHTML = `
+            <div class="bg-white rounded-3xl border border-slate-200 p-8 sm:p-12 text-center space-y-4 shadow-card">
+              <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
+                <span class="material-symbols-outlined text-[34px]">hourglass_empty</span>
+              </div>
+              <div class="max-w-md mx-auto space-y-1.5">
+                <h3 class="text-lg font-black text-navy">Materi Pembelajaran Sedang Disiapkan</h3>
+                <p class="text-xs text-text-muted leading-relaxed">
+                  Bapak/Ibu Guru dan Administrator sedang menyusun modul materi Kurikulum Merdeka Informatika Fase F. Silakan kembali lagi nanti untuk mempelajari materi terbaru.
+                </p>
+              </div>
+              <div class="pt-2">
+                <a href="dashboard.html" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition inline-flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                  <span>Kembali ke Dashboard</span>
+                </a>
+              </div>
+            </div>
+          `;
+        }
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.classList.remove('hidden');
+
+      const colorThemes = [
+        { bg: 'bg-blue-50', text: 'text-primary', badgeBg: 'bg-primary-subtle', badgeText: 'text-primary', border: 'border-border-focus' },
+        { bg: 'bg-emerald-50', text: 'text-emerald-600', badgeBg: 'bg-emerald-50', badgeText: 'text-emerald-700', border: 'border-emerald-200' },
+        { bg: 'bg-purple-50', text: 'text-purple-600', badgeBg: 'bg-purple-50', badgeText: 'text-purple-700', border: 'border-purple-200' },
+        { bg: 'bg-amber-50', text: 'text-accent', badgeBg: 'bg-amber-50', badgeText: 'text-accent', border: 'border-amber-200' },
+      ];
+
+      grid.innerHTML = chapters.map((c, idx) => {
+        const theme = colorThemes[idx % colorThemes.length];
+        const numFormatted = c.number < 10 ? `0${c.number}` : c.number;
+        const subCount = c.subchapters ? c.subchapters.length : 0;
+
+        let adminControlsHtml = '';
+        if (isUserAdmin) {
+          adminControlsHtml = `
+            <div class="flex items-center gap-1.5 pt-3 border-t border-slate-100/80 mt-2">
+              <button onclick="openEditChapterModal('${c.id}')" class="px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold text-[11px] transition flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">edit</span>
+                <span>Edit Materi</span>
+              </button>
+              <button onclick="deleteChapter('${c.id}')" class="px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 font-bold text-[11px] transition flex items-center gap-1">
+                <span class="material-symbols-outlined text-[14px]">delete</span>
+                <span>Hapus</span>
+              </button>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 hover:border-primary/50 shadow-card hover:shadow-card-hover transition-all flex flex-col justify-between group space-y-4">
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="w-12 h-12 rounded-2xl ${theme.bg} ${theme.text} flex items-center justify-center font-extrabold text-base shadow-xs group-hover:scale-105 transition">
+                  ${numFormatted}
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-bold ${theme.badgeText} ${theme.badgeBg} px-2.5 py-1 rounded-full border ${theme.border}">
+                    ${c.badge || 'Modul Pembelajaran'}
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-medium">${c.duration || '20 Menit'}</span>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-bold text-navy group-hover:text-primary transition leading-snug">
+                  ${c.title}
+                </h3>
+                <p class="text-xs text-text-muted mt-2 leading-relaxed">
+                  ${c.desc}
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                ${subCount > 0 ? `<span class="px-2 py-0.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-medium">${subCount} Sub-Materi</span>` : ''}
+                ${c.hasVideo ? `<span class="px-2 py-0.5 rounded-lg bg-blue-50 border border-blue-200 text-primary text-[10px] font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">smart_display</span>Video</span>` : ''}
+                ${c.hasLab ? `<span class="px-2 py-0.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">science</span>Lab</span>` : ''}
+                ${c.hasQuiz ? `<span class="px-2 py-0.5 rounded-lg bg-amber-50 border border-amber-200 text-accent text-[10px] font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">fact_check</span>Kuis</span>` : ''}
+              </div>
+            </div>
+
+            <div>
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
+                <button onclick="openChapterStudy('${c.id}', 'materi')" class="flex-1 whitespace-nowrap px-3.5 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+                  <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                  <span>Pelajari Bab Ini</span>
+                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                  ${c.hasVideo ? `
+                    <button onclick="openChapterStudy('${c.id}', 'video')" title="Video Pembelajaran" class="px-2.5 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-primary border border-blue-200/80 text-xs font-bold transition flex items-center justify-center gap-1">
+                      <span class="material-symbols-outlined text-[16px]">smart_display</span>
+                    </button>
+                  ` : ''}
+                  ${c.hasLab ? `
+                    <button onclick="openChapterStudy('${c.id}', 'simulator')" title="Lab Interaktif" class="px-2.5 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold transition flex items-center justify-center gap-1">
+                      <span class="material-symbols-outlined text-[16px] text-emerald-600">science</span>
+                    </button>
+                  ` : ''}
+                  ${c.hasQuiz ? `
+                    <button onclick="openChapterStudy('${c.id}', 'kuis')" title="Pilihan Kuis Bab" class="px-2.5 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-accent border border-amber-200/80 text-xs font-bold transition flex items-center justify-center gap-1">
+                      <span class="material-symbols-outlined text-[16px] text-accent">fact_check</span>
+                    </button>
+                  ` : ''}
+                  <a href="tanya-ai.html?bab=${c.number}" title="Tanya AI tentang Bab Ini" class="px-2.5 py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200/80 text-xs font-bold transition flex items-center justify-center gap-1">
+                    <span class="material-symbols-outlined text-[16px] text-purple-600">smart_toy</span>
+                  </a>
+                </div>
+              </div>
+
+              ${adminControlsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // STUDY SPACE LOGIC
+    // =========================================================================
+    function openChapterStudy(chapId, defaultTab = 'materi') {
+      const chapters = getStoredChapters();
+      const chapter = chapters.find(c => c.id === chapId || c.number == chapId);
+      if (!chapter) return;
+
+      currentActiveChapterId = chapter.id;
+
+      document.getElementById('view-catalog').classList.add('hidden');
+      document.getElementById('view-study-space').classList.remove('hidden');
+
+      const numFormatted = chapter.number < 10 ? `0${chapter.number}` : chapter.number;
+
+      // Update premium header band elements
+      const badgePill = document.getElementById('study-badge-pill');
+      const catPill = document.getElementById('study-category-pill');
+      const durText = document.getElementById('study-duration-text');
+      if (badgePill) badgePill.textContent = `BAB ${numFormatted}`;
+      if (catPill) catPill.textContent = chapter.badge || 'Informatika Fase F';
+      if (durText) durText.textContent = chapter.duration || '20 Menit';
+
+      document.getElementById('study-title').textContent = chapter.title;
+      document.getElementById('study-desc').textContent = chapter.desc;
+
+      // Update Ask AI link with chapter number
+      const aiBtn = document.getElementById('btn-study-ask-ai');
+      if (aiBtn) aiBtn.href = `tanya-ai.html?bab=${chapter.number}`;
+
+      const editBtn = document.getElementById('btn-admin-edit-current-chapter');
+      if (editBtn) {
+        if (isUserAdmin) editBtn.classList.remove('hidden');
+        else editBtn.classList.add('hidden');
+      }
+
+      // Show/hide tabs dynamically based on chapter features
+      const tabVideo = document.getElementById('tab-btn-video');
+      const tabSim = document.getElementById('tab-btn-simulator');
+      const tabKuis = document.getElementById('tab-btn-kuis');
+      if (tabVideo) tabVideo.style.display = chapter.hasVideo ? '' : 'none';
+      if (tabSim) tabSim.style.display = chapter.hasLab ? '' : 'none';
+      if (tabKuis) tabKuis.style.display = chapter.hasQuiz ? '' : 'none';
+
+      // Render Subchapters (Teks)
+      const subContainer = document.getElementById('study-subchapters');
+      if (chapter.subchapters && chapter.subchapters.length > 0) {
+        subContainer.innerHTML = chapter.subchapters.map((sub, idx) => `
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-bold text-navy flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-white border border-slate-200 text-primary flex items-center justify-center text-xs font-bold">${idx + 1}</span>
+                <span>${sub.title}</span>
+              </h3>
+              <span class="text-[10px] font-bold text-slate-400">Materi Inti</span>
+            </div>
+            <div class="text-xs text-slate-700 leading-relaxed whitespace-pre-line pt-1 font-medium">
+              ${sub.summary}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        subContainer.innerHTML = `<p class="text-xs text-slate-400 italic">Belum ada materi teks untuk bab ini.</p>`;
+      }
+
+      // Render Video Pembelajaran
+      const videoContainer = document.getElementById('study-video-container');
+      if (chapter.hasVideo && chapter.videoUrl) {
+        const embedUrl = formatVideoEmbedUrl(chapter.videoUrl);
+        const isEmbedIframe = embedUrl.includes('youtube.com/embed') || embedUrl.includes('vimeo.com');
+
+        videoContainer.innerHTML = `
+          <div class="p-5 rounded-2xl bg-white border border-slate-200/90 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+                  <span class="material-symbols-outlined text-[18px]">smart_display</span>
+                </span>
+                <div>
+                  <h4 class="text-xs font-bold text-navy">Video Edukasi Bab</h4>
+                  <p class="text-[11px] text-text-muted">Simak penjelasan visual konsep materi.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl overflow-hidden bg-black aspect-video max-h-[460px] w-full shadow-md flex items-center justify-center">
+              ${isEmbedIframe 
+                ? `<iframe src="${embedUrl}" class="w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+                : `<video src="${chapter.videoUrl}" controls class="w-full h-full object-contain"></video>`
+              }
+            </div>
+          </div>
+        `;
+      } else {
+        videoContainer.innerHTML = `
+          <div class="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+            <span class="material-symbols-outlined text-[32px] text-slate-300">videocam_off</span>
+            <p class="text-xs text-slate-500 font-medium">Bab ini tidak menyertakan berkas video pembelajaran.</p>
+          </div>
+        `;
+      }
+
+      // Render Exact Simulator & Lab
+      const labContainer = document.getElementById('study-lab-container');
+      if (chapter.hasLab) {
+        labContainer.innerHTML = `
+          <div class="p-4 rounded-2xl bg-blue-50/70 border border-border-focus text-xs text-navy space-y-1">
+            <div class="font-bold flex items-center gap-1.5 text-primary">
+              <span class="material-symbols-outlined text-[17px]">science</span>
+              <span>Laboratorium Praktik Interaktif (Exact Simulator)</span>
+            </div>
+            <p class="text-text-muted">
+              Uji langsung pemahaman materi bab ini dengan simulator exact berikut. Ketik perintah / query di bawah ini untuk melihat simulasi eksekusi secara langsung.
+            </p>
+          </div>
+
+          <!-- Integrated Sandbox -->
+          <div class="bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden shadow-card">
+            <div class="h-10 bg-slate-900 px-4 flex items-center justify-between border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+                <span class="ml-2 text-xs font-mono text-slate-400">lab_praktik_${chapter.number}.sh</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="copyIntegratedQuery()" class="text-[11px] text-slate-400 hover:text-white px-2.5 py-0.5 rounded bg-slate-800 font-mono">
+                  Salin Query
+                </button>
+                <a href="simulator.html" class="text-[11px] text-primary hover:underline px-2.5 py-0.5 rounded bg-slate-800 font-semibold flex items-center gap-1">
+                  <span>Buka Simulator Penuh</span>
+                  <span class="material-symbols-outlined text-[12px]">open_in_new</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="p-4 space-y-2 bg-slate-950">
+              <input 
+                type="text" 
+                id="integrated-query-input"
+                value='site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan'
+                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 font-mono text-xs text-emerald-300 focus:outline-none focus:border-primary shadow-inner"
+              >
+            </div>
+
+            <div class="p-3 bg-slate-900 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-[11px] font-mono text-slate-400">Eksekusi Simulator Terintegrasi</span>
+              <button onclick="runIntegratedSimulation()" id="btn-integrated-run" class="px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                <span>Jalankan Pengujian Lab</span>
+              </button>
+            </div>
+
+            <div class="p-4 bg-slate-950 border-t border-slate-800 text-xs font-mono">
+              <pre id="integrated-output" class="text-slate-300 font-mono whitespace-pre-wrap">Ketik query atau klik 'Jalankan Pengujian Lab' untuk melihat proses eksekusi bot simulator exact...</pre>
+            </div>
+          </div>
+        `;
+      } else {
+        labContainer.innerHTML = `
+          <div class="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
+            <span class="material-symbols-outlined text-[32px] text-slate-300">science</span>
+            <p class="text-xs text-slate-500 font-medium">Lab praktik khusus tidak disyaratkan untuk bab ini. Anda tetap dapat mencoba simulator umum melalui menu Simulator.</p>
+            <div>
+              <a href="simulator.html" class="px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition inline-flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[16px]">science</span>
+                <span>Buka Simulator Riset</span>
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      // Render Custom Quiz — supports multi-question array and legacy single question
+      const quizContainer = document.getElementById('study-quiz-container');
+      const quizQuestions = chapter.hasQuiz && chapter.quiz
+        ? (Array.isArray(chapter.quiz.questions) && chapter.quiz.questions.length > 0
+            ? chapter.quiz.questions
+            : chapter.quiz.question ? [chapter.quiz] : [])
+        : [];
+
+      if (quizQuestions.length > 0) {
+        const totalQ = quizQuestions.length;
+        const optLetters = ['A', 'B', 'C', 'D', 'E'];
+        quizContainer.innerHTML = `
+          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-navy flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2 font-bold text-accent">
+              <span class="material-symbols-outlined text-[17px]">fact_check</span>
+              <span>Kuis Pemahaman Bab</span>
+            </div>
+            <span class="text-[11px] font-semibold text-slate-500">${totalQ} Soal &mdash; Skor: <span id="quiz-score-display">0/${totalQ}</span></span>
+          </div>
+          <div class="space-y-5">${quizQuestions.map((q, qIdx) => `
+            <div class="p-5 rounded-2xl bg-white border border-slate-200/90 space-y-3 quiz-question-card" data-qidx="${qIdx}">
+              <div class="flex items-start gap-2">
+                <span class="w-6 h-6 rounded-lg bg-primary-subtle text-primary flex items-center justify-center text-xs font-extrabold shrink-0 mt-0.5">${qIdx + 1}</span>
+                <h4 class="text-xs sm:text-sm font-bold text-navy leading-snug">${q.question}</h4>
+              </div>
+              <div class="space-y-2">${(q.options || []).map((opt, oIdx) => `
+                <button onclick="checkMultiQuizAnswer(${opt.correct}, this, '${(q.explanation || 'Jawaban telah diverifikasi.').replace(/'/g, "\\'")}', ${qIdx})" class="chap-quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 hover:border-primary/50 text-xs font-medium text-navy transition flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-md border border-slate-300 bg-slate-50 flex items-center justify-center text-[10px] font-bold text-slate-600 shrink-0">${optLetters[oIdx] || oIdx+1}</span>
+                  <span class="flex-1">${opt.text}</span>
+                  <span class="opt-badge shrink-0"></span>
+                </button>`).join('')}
+              </div>
+              <div class="quiz-q-feedback hidden p-3 rounded-xl text-xs font-medium leading-relaxed"></div>
+            </div>`).join('')}
+          </div>
+        `;
+        window._quizAnswered = {};
+        window._quizTotal = totalQ;
+      } else {
+        quizContainer.innerHTML = `
+          <div class="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl space-y-2">
+            <span class="material-symbols-outlined text-[32px] text-slate-300">fact_check</span>
+            <p class="text-xs text-slate-500 font-medium">Belum ada kuis yang dikonfigurasi untuk bab ini.</p>
+          </div>
+        `;
+      }
+
+      // Load Saved Notes
+      loadChapterNotesList(chapter.id, chapter.title);
+
+      // If default tab feature is disabled, fall back to materi
+      const resolvedTab = (
+        (defaultTab === 'video' && !chapter.hasVideo) ||
+        (defaultTab === 'simulator' && !chapter.hasLab) ||
+        (defaultTab === 'kuis' && !chapter.hasQuiz)
+      ) ? 'materi' : (defaultTab || 'materi');
+      switchStudyTab(resolvedTab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function closeChapterStudy() {
+      document.getElementById('view-study-space').classList.add('hidden');
+      document.getElementById('view-catalog').classList.remove('hidden');
+      currentActiveChapterId = null;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchStudyTab(tabName) {
+      const tabs = ['materi', 'video', 'simulator', 'kuis', 'catatan'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const content = document.getElementById(`tab-content-${t}`);
+        if (t === tabName) {
+          if (btn) btn.className = 'study-tab-btn px-4 py-2 rounded-xl bg-primary text-white font-bold text-xs transition flex items-center gap-1.5 shrink-0 shadow-sm';
+          if (content) content.classList.remove('hidden');
+        } else {
+          if (btn) btn.className = 'study-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs transition flex items-center gap-1.5 shrink-0';
+          if (content) content.classList.add('hidden');
+        }
+      });
+    }
+
+    function editCurrentActiveChapter() {
+      if (currentActiveChapterId) {
+        openEditChapterModal(currentActiveChapterId);
+      }
+    }
+
+    // =========================================================================
+    // MODAL FORM MANAGEMENT (TAMBAH / EDIT / HAPUS)
+    // =========================================================================
+    function openAddChapterModal() {
+      if (!isUserAdmin) {
+        showToast('⚠️ Anda harus masuk sebagai Administrator untuk menambah modul.', 'alert');
+        return;
+      }
+      document.getElementById('modal-editor-title').textContent = 'Tambah Bab Pembelajaran Baru';
+      document.getElementById('edit-chapter-id').value = '';
+      
+      const chapters = getStoredChapters();
+      const nextNum = chapters.length + 1;
+      document.getElementById('modal-chapter-number').value = nextNum;
+      document.getElementById('modal-chapter-badge').value = 'Informatika Fase F';
+      document.getElementById('modal-chapter-duration').value = '20 Menit';
+      document.getElementById('modal-chapter-title').value = `Bab 0${nextNum}: `;
+      document.getElementById('modal-chapter-desc').value = '';
+
+      // Clear & add 1 subchapter input
+      const subContainer = document.getElementById('modal-subchapters-container');
+      subContainer.innerHTML = '';
+      addSubchapterInput(`Sub-Bab ${nextNum}.1: Pengantar`, '');
+
+      // Reset video
+      document.getElementById('modal-video-url').value = '';
+      document.getElementById('modal-video-file').value = '';
+      uploadedVideoDataUrl = '';
+      document.getElementById('modal-enable-video').checked = true;
+      toggleVideoSection(true);
+      switchVideoInputMode('url');
+      clearModalVideo();
+
+      // Reset quiz — multi-question
+      document.getElementById('modal-enable-quiz').checked = true;
+      toggleQuizForm(true);
+      document.getElementById('modal-quiz-questions-list').innerHTML = '';
+      addQuizQuestionItem(); // Start with 1 blank question
+
+      // Reset lab
+      document.getElementById('modal-enable-lab').checked = true;
+
+      document.getElementById('admin-chapter-modal').classList.remove('hidden');
+    }
+
+    function openEditChapterModal(chapId) {
+      if (!isUserAdmin) return;
+      const chapters = getStoredChapters();
+      const chapter = chapters.find(c => c.id === chapId || c.number == chapId);
+      if (!chapter) return;
+
+      document.getElementById('modal-editor-title').textContent = `Edit ${chapter.title}`;
+      document.getElementById('edit-chapter-id').value = chapter.id;
+      document.getElementById('modal-chapter-number').value = chapter.number;
+      document.getElementById('modal-chapter-badge').value = chapter.badge || '';
+      document.getElementById('modal-chapter-duration').value = chapter.duration || '20 Menit';
+      document.getElementById('modal-chapter-title').value = chapter.title;
+      document.getElementById('modal-chapter-desc').value = chapter.desc;
+
+      // Subchapters
+      const subContainer = document.getElementById('modal-subchapters-container');
+      subContainer.innerHTML = '';
+      if (chapter.subchapters && chapter.subchapters.length > 0) {
+        chapter.subchapters.forEach(s => addSubchapterInput(s.title, s.summary));
+      } else {
+        addSubchapterInput();
+      }
+
+      // Video — segmented tab
+      const hasVid = !!chapter.videoUrl;
+      document.getElementById('modal-enable-video').checked = hasVid;
+      toggleVideoSection(hasVid);
+      switchVideoInputMode('url');
+      document.getElementById('modal-video-url').value = chapter.videoUrl || '';
+      document.getElementById('modal-video-file').value = '';
+      uploadedVideoDataUrl = '';
+      previewModalVideo();
+
+      // Quiz — multi-question array
+      const hasQuiz = !!(chapter.hasQuiz && chapter.quiz);
+      document.getElementById('modal-enable-quiz').checked = hasQuiz;
+      toggleQuizForm(hasQuiz);
+      document.getElementById('modal-quiz-questions-list').innerHTML = '';
+      if (hasQuiz) {
+        // Support both legacy single-question and new multi-question array
+        let questionsToLoad = [];
+        if (Array.isArray(chapter.quiz.questions) && chapter.quiz.questions.length > 0) {
+          questionsToLoad = chapter.quiz.questions;
+        } else if (chapter.quiz.question) {
+          questionsToLoad = [chapter.quiz]; // legacy single-question
+        }
+        if (questionsToLoad.length > 0) {
+          questionsToLoad.forEach(q => addQuizQuestionItem(q));
+        } else {
+          addQuizQuestionItem();
+        }
+      } else {
+        addQuizQuestionItem();
+      }
+
+      // Lab
+      document.getElementById('modal-enable-lab').checked = !!chapter.hasLab;
+
+      document.getElementById('admin-chapter-modal').classList.remove('hidden');
+    }
+
+    function closeChapterModal() {
+      document.getElementById('admin-chapter-modal').classList.add('hidden');
+    }
+
+    function addSubchapterInput(title = '', summary = '') {
+      const container = document.getElementById('modal-subchapters-container');
+      const idx = container.children.length + 1;
+      const subCard = document.createElement('div');
+      subCard.className = 'p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 space-y-2 relative sub-item';
+      subCard.innerHTML = `
+        <div class="flex items-center justify-between gap-2">
+          <input type="text" placeholder="Judul Sub-Materi (Contoh: ${idx}.1 Pengenalan)" value="${title.replace(/"/g, '&quot;')}" class="sub-title-input w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-navy font-bold text-xs focus:outline-none focus:border-primary">
+          <button type="button" onclick="this.closest('.sub-item').remove()" class="text-slate-400 hover:text-red-500 p-1 rounded transition shrink-0" title="Hapus sub-materi ini">
+            <span class="material-symbols-outlined text-[18px]">delete</span>
+          </button>
+        </div>
+        <textarea rows="3" placeholder="Tuliskan rangkuman dan uraian materi teks untuk sub-bab ini..." class="sub-summary-input w-full bg-white border border-slate-200 rounded-lg p-2.5 text-navy font-medium text-xs focus:outline-none focus:border-primary leading-relaxed resize-none">${summary}</textarea>
+      `;
+      container.appendChild(subCard);
+    }
+
+    function toggleQuizForm(enabled) {
+      const box = document.getElementById('modal-quiz-form-box');
+      if (box) {
+        if (enabled) box.classList.remove('opacity-40', 'pointer-events-none');
+        else box.classList.add('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function toggleVideoSection(enabled) {
+      const box = document.getElementById('modal-video-box');
+      if (box) {
+        if (enabled) box.classList.remove('opacity-40', 'pointer-events-none');
+        else box.classList.add('opacity-40', 'pointer-events-none');
+      }
+    }
+
+    function switchVideoInputMode(mode) {
+      const urlPanel = document.getElementById('video-input-mode-url');
+      const filePanel = document.getElementById('video-input-mode-file');
+      const tabUrl = document.getElementById('tab-video-source-url');
+      const tabFile = document.getElementById('tab-video-source-file');
+      const activeClass = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 bg-white text-navy shadow-xs';
+      const inactiveClass = 'flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 text-slate-600 hover:text-navy';
+      if (mode === 'url') {
+        urlPanel?.classList.remove('hidden');
+        filePanel?.classList.add('hidden');
+        if (tabUrl) tabUrl.className = activeClass;
+        if (tabFile) tabFile.className = inactiveClass;
+      } else {
+        urlPanel?.classList.add('hidden');
+        filePanel?.classList.remove('hidden');
+        if (tabUrl) tabUrl.className = inactiveClass;
+        if (tabFile) tabFile.className = activeClass;
+      }
+    }
+
+    function clearModalVideo() {
+      uploadedVideoDataUrl = '';
+      const urlInput = document.getElementById('modal-video-url');
+      const fileInput = document.getElementById('modal-video-file');
+      if (urlInput) urlInput.value = '';
+      if (fileInput) fileInput.value = '';
+      const wrapper = document.getElementById('modal-video-preview-wrapper');
+      const preview = document.getElementById('modal-video-preview');
+      if (wrapper) wrapper.classList.add('hidden');
+      if (preview) preview.innerHTML = '';
+    }
+
+    // =========================================================================
+    // MULTI-QUESTION QUIZ BUILDER
+    // =========================================================================
+    function addQuizQuestionItem(existingQ = null) {
+      const list = document.getElementById('modal-quiz-questions-list');
+      const qIdx = list ? list.children.length + 1 : 1;
+      const optLetters = ['A', 'B', 'C', 'D'];
+      const card = document.createElement('div');
+      card.className = 'quiz-q-item p-4 rounded-2xl bg-amber-50/60 border border-amber-200/80 space-y-3 relative';
+
+      const optionsHtml = optLetters.map((letter, oIdx) => {
+        const optText = existingQ?.options?.[oIdx]?.text || '';
+        const isCorrect = existingQ?.options?.[oIdx]?.correct || (oIdx === 0 && !existingQ);
+        return `
+          <div class="flex items-center gap-2 bg-white p-2 rounded-xl border border-slate-200">
+            <input type="radio" name="qopt-correct-${qIdx}" value="${oIdx}" ${isCorrect ? 'checked' : ''} class="text-primary focus:ring-primary h-4 w-4 cursor-pointer qopt-radio">
+            <span class="font-bold text-primary w-5 shrink-0 text-xs">${letter}.</span>
+            <input type="text" value="${optText.replace(/"/g, '&quot;')}" placeholder="Pilihan jawaban ${letter}" class="qopt-text w-full bg-transparent focus:outline-none text-navy font-medium text-xs">
+          </div>
+        `;
+      }).join('');
+
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-extrabold text-amber-800 uppercase tracking-wider">Soal ${qIdx}</span>
+          <button type="button" onclick="this.closest('.quiz-q-item').remove()" class="text-slate-400 hover:text-red-500 transition p-1 rounded-lg" title="Hapus soal ini">
+            <span class="material-symbols-outlined text-[17px]">delete</span>
+          </button>
+        </div>
+        <textarea rows="2" class="qquestion-text w-full bg-white border border-slate-200 rounded-xl p-3 text-navy font-medium text-xs focus:outline-none focus:border-primary resize-none" placeholder="Tuliskan pertanyaan kuis soal ${qIdx} di sini...">${existingQ?.question || ''}</textarea>
+        <div class="space-y-2">
+          <p class="text-[11px] font-bold text-slate-700">Pilihan jawaban — tandai radio untuk kunci jawaban yang benar:</p>
+          ${optionsHtml}
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Penjelasan / Pembahasan</label>
+          <textarea rows="1" class="qexplanation-text w-full bg-white border border-slate-200 rounded-xl p-2.5 text-navy font-medium text-xs focus:outline-none focus:border-primary resize-none" placeholder="Penjelasan singkat jawaban yang benar...">${existingQ?.explanation || ''}</textarea>
+        </div>
+      `;
+
+      if (list) list.appendChild(card);
+    }
+
+    function handleModalVideoFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        uploadedVideoDataUrl = evt.target.result;
+        document.getElementById('modal-video-url').value = '';
+        previewModalVideo();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function formatVideoEmbedUrl(url) {
+      if (!url) return '';
+      const ytMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+      if (ytMatch && ytMatch[1]) {
+        return `https://www.youtube.com/embed/${ytMatch[1]}`;
+      }
+      return url;
+    }
+
+    function previewModalVideo() {
+      const urlInput = document.getElementById('modal-video-url').value.trim();
+      const wrapper = document.getElementById('modal-video-preview-wrapper');
+      const previewBox = document.getElementById('modal-video-preview');
+      const videoSrc = uploadedVideoDataUrl || urlInput;
+
+      if (!videoSrc) {
+        if (wrapper) wrapper.classList.add('hidden');
+        if (previewBox) previewBox.innerHTML = '';
+        return;
+      }
+
+      if (wrapper) wrapper.classList.remove('hidden');
+      const embedUrl = formatVideoEmbedUrl(videoSrc);
+      const isEmbed = embedUrl.includes('youtube.com/embed');
+
+      if (isEmbed) {
+        previewBox.innerHTML = `<iframe src="${embedUrl}" class="w-full h-full border-0" allowfullscreen></iframe>`;
+      } else {
+        previewBox.innerHTML = `<video src="${videoSrc}" controls class="w-full h-full object-contain"></video>`;
+      }
+    }
+
+    function handleSaveChapter(event) {
+      event.preventDefault();
+      const editId = document.getElementById('edit-chapter-id').value;
+      const num = parseInt(document.getElementById('modal-chapter-number').value, 10) || 1;
+      const badge = document.getElementById('modal-chapter-badge').value.trim();
+      const duration = document.getElementById('modal-chapter-duration').value.trim() || '20 Menit';
+      const title = document.getElementById('modal-chapter-title').value.trim();
+      const desc = document.getElementById('modal-chapter-desc').value.trim();
+
+      // Collect Subchapters
+      const subItems = document.querySelectorAll('#modal-subchapters-container .sub-item');
+      const subchapters = [];
+      subItems.forEach((item, i) => {
+        const subTitle = item.querySelector('.sub-title-input').value.trim() || `Sub-Materi ${i + 1}`;
+        const subSummary = item.querySelector('.sub-summary-input').value.trim();
+        subchapters.push({ title: subTitle, summary: subSummary });
+      });
+
+      // Video
+      const videoUrl = uploadedVideoDataUrl || document.getElementById('modal-video-url').value.trim();
+      const hasVideo = !!videoUrl;
+
+      // Quiz — multi-question array
+      const hasQuiz = document.getElementById('modal-enable-quiz').checked;
+      let quizData = null;
+      if (hasQuiz) {
+        const questionItems = document.querySelectorAll('#modal-quiz-questions-list .quiz-q-item');
+        const questions = [];
+        questionItems.forEach((item, qIdx) => {
+          const questionText = item.querySelector('.qquestion-text')?.value.trim() || `Pertanyaan ${qIdx + 1}`;
+          const explanation = item.querySelector('.qexplanation-text')?.value.trim() || 'Jawaban telah diverifikasi sistem.';
+          const correctRadio = item.querySelector('.qopt-radio:checked');
+          const correctIdx = correctRadio ? parseInt(correctRadio.value, 10) : 0;
+          const optInputs = item.querySelectorAll('.qopt-text');
+          const options = Array.from(optInputs).map((inp, oIdx) => ({
+            text: inp.value.trim() || `Pilihan ${oIdx + 1}`,
+            correct: oIdx === correctIdx
+          }));
+          questions.push({ question: questionText, options, explanation });
+        });
+        quizData = { questions };
+      }
+
+      // Lab
+      const hasLab = document.getElementById('modal-enable-lab').checked;
+
+      const chapters = getStoredChapters();
+      if (editId) {
+        // Update existing chapter
+        const existingIdx = chapters.findIndex(c => c.id === editId);
+        if (existingIdx !== -1) {
+          chapters[existingIdx] = {
+            ...chapters[existingIdx],
+            number: num,
+            badge: badge,
+            duration: duration,
+            title: title,
+            desc: desc,
+            subchapters: subchapters,
+            hasVideo: hasVideo,
+            videoUrl: videoUrl,
+            hasQuiz: hasQuiz,
+            quiz: quizData,
+            hasLab: hasLab
+          };
+        }
+      } else {
+        // Create new chapter
+        const newChapter = {
+          id: 'chap_' + Date.now(),
+          number: num,
+          badge: badge,
+          duration: duration,
+          title: title,
+          desc: desc,
+          subchapters: subchapters,
+          hasVideo: hasVideo,
+          videoUrl: videoUrl,
+          hasQuiz: hasQuiz,
+          quiz: quizData,
+          hasLab: hasLab
+        };
+        chapters.push(newChapter);
+      }
+
+      // Sort chapters by chapter number
+      chapters.sort((a, b) => a.number - b.number);
+      saveStoredChapters(chapters);
+
+      closeChapterModal();
+      renderCatalog();
+
+      if (currentActiveChapterId) {
+        openChapterStudy(currentActiveChapterId);
+      }
+
+      showToast(`🎉 Berhasil menyimpan ${title}!`);
+    }
+
+    function deleteChapter(chapId) {
+      if (!isUserAdmin) return;
+      const chapters = getStoredChapters();
+      const chapter = chapters.find(c => c.id === chapId || c.number == chapId);
+      if (!chapter) return;
+
+      if (confirm(`Apakah Anda yakin ingin menghapus "${chapter.title}"? Seluruh materi, video, kuis, dan data terkait akan dihapus.`)) {
+        const filtered = chapters.filter(c => c.id !== chapter.id && c.number != chapter.number);
+        saveStoredChapters(filtered);
+        closeChapterStudy();
+        renderCatalog();
+        showToast('🗑️ Modul bab berhasil dihapus.', 'warning');
+      }
+    }
+
+    // =========================================================================
+    // INTERACTIVE LAB & QUIZ CHECKING (EXACT LOGIC)
+    // =========================================================================
+    function checkMultiQuizAnswer(isCorrect, btn, explanation, qIdx) {
+      const card = btn.closest('.quiz-question-card');
+      if (!card) return;
+
+      // Disable all options in this question card
+      card.querySelectorAll('.chap-quiz-opt').forEach(b => {
+        b.disabled = true;
+        b.className = 'chap-quiz-opt w-full text-left p-3 rounded-xl border border-slate-200 text-xs font-medium text-navy transition flex items-center gap-2 opacity-70 cursor-not-allowed';
+        b.querySelector('.opt-badge').innerHTML = '';
+      });
+
+      const feedback = card.querySelector('.quiz-q-feedback');
+      if (isCorrect) {
+        btn.className = 'chap-quiz-opt w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold transition flex items-center gap-2 cursor-not-allowed';
+        btn.querySelector('.opt-badge').innerHTML = '<span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span>';
+        if (feedback) {
+          feedback.className = 'quiz-q-feedback p-3 rounded-xl text-xs font-medium leading-relaxed bg-emerald-50 text-emerald-800 border border-emerald-200';
+          feedback.innerHTML = `<strong>✓ Tepat!</strong> ${explanation}`;
+        }
+      } else {
+        btn.className = 'chap-quiz-opt w-full text-left p-3 rounded-xl border border-red-400 bg-red-50 text-red-800 text-xs font-bold transition flex items-center gap-2 cursor-not-allowed';
+        btn.querySelector('.opt-badge').innerHTML = '<span class="material-symbols-outlined text-red-500 text-[18px]">cancel</span>';
+        if (feedback) {
+          feedback.className = 'quiz-q-feedback p-3 rounded-xl text-xs font-medium leading-relaxed bg-red-50 text-red-800 border border-red-200';
+          feedback.innerHTML = `<strong>✗ Belum Tepat.</strong> ${explanation}`;
+        }
+      }
+
+      // Track score
+      if (!window._quizAnswered) window._quizAnswered = {};
+      if (!window._quizAnswered[qIdx]) {
+        window._quizAnswered[qIdx] = isCorrect;
+        const total = window._quizTotal || 1;
+        const correct = Object.values(window._quizAnswered).filter(Boolean).length;
+        const scoreEl = document.getElementById('quiz-score-display');
+        if (scoreEl) scoreEl.textContent = `${correct}/${total}`;
+      }
+    }
+
+    // Legacy single-question check (backward compat)
+    function checkCustomQuizAnswer(isCorrect, btn, explanation) {
+      checkMultiQuizAnswer(isCorrect, btn, explanation, 0);
+    }
+
+    function runIntegratedSimulation() {
+      const btn = document.getElementById('btn-integrated-run');
+      const output = document.getElementById('integrated-output');
+      const qInput = document.getElementById('integrated-query-input');
+      const q = qInput ? qInput.value.trim() : '';
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">sync</span><span>Memproses...</span>`;
+      }
+
+      setTimeout(() => {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span class="material-symbols-outlined text-[16px]">play_arrow</span><span>Jalankan Pengujian Lab</span>`;
+        }
+
+        let domainMatch = q.match(/site:([^\s]+)/);
+        let phraseMatch = q.match(/"([^"]+)"/);
+        let filetypeMatch = q.match(/filetype:([^\s]+)/);
+        let negativeMatch = q.match(/-([^\s]+)/);
+
+        if (output) {
+          output.textContent = `[TAHAP 1: CRAWLING]
+-> Robot penjelajah bot memindai struktur web target...
+-> Filter Domain Target: ${domainMatch ? domainMatch[1] : 'Semua Domain Publik'}
+
+[TAHAP 2: INDEXING]
+-> Melakukan pencarian pada perpustakaan basis data indeks server...
+-> Frasa Persis Terdeteksi: "${phraseMatch ? phraseMatch[1] : 'Kueri standar'}"
+-> Tipe Berkas Terisolasi: .${filetypeMatch ? filetypeMatch[1].toUpperCase() : 'SEMUA TIPE'}
+-> Negasi / Kata Dikecualikan: ${negativeMatch ? negativeMatch[1] : 'Tidak ada negasi'}
+
+[TAHAP 3: RANKING & EVALUASI PROGRAMMING]
+-> Skor Validasi Algoritma: 99.4% Relevansi Tinggi
+-> Integritas Data & Logika: Terverifikasi Konsisten
+-> Status Lab: Simulasi Berhasil Dijalankan!`;
+        }
+        showToast('🎉 Pengujian lab berhasil dijalankan!');
+      }, 400);
+    }
+
+    function copyIntegratedQuery() {
+      const q = document.getElementById('integrated-query-input')?.value || '';
+      navigator.clipboard.writeText(q).then(() => {
+        showToast('Query berhasil disalin ke clipboard! 📋');
+      });
+    }
+
+    // =========================================================================
+    // SAVED NOTES FOR CHAPTER
+    // =========================================================================
+    function saveChapterNote() {
+      const title = document.getElementById('chapter-note-title').value.trim();
+      const body = document.getElementById('chapter-note-body').value.trim();
+
+      const chapters = getStoredChapters();
+      const currentChapter = chapters.find(c => c.id === currentActiveChapterId);
+      const chapTitle = currentChapter ? currentChapter.title : 'Catatan Bab';
+
+      if (!title || !body) {
+        showToast('⚠️ Mohon isi judul dan ringkasan catatan!', 'alert');
+        return;
+      }
+
+      const newNote = {
+        id: 'note_' + Date.now(),
+        chapter: chapTitle,
+        title: title,
+        body: body,
+        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+      };
+
+      try {
+        const rawNotes = localStorage.getItem('xavetra_student_notes');
+        const notes = rawNotes ? JSON.parse(rawNotes) : [];
+        notes.unshift(newNote);
+        localStorage.setItem('xavetra_student_notes', JSON.stringify(notes));
+
+        document.getElementById('chapter-note-title').value = '';
+        document.getElementById('chapter-note-body').value = '';
+
+        loadChapterNotesList(currentActiveChapterId, chapTitle);
+        updateNotesBadge();
+        showToast('🎉 Catatan bab berhasil disimpan!');
+      } catch (e) {
+        console.error(e);
+        showToast('Gagal menyimpan catatan.', 'alert');
+      }
+    }
+
+    function loadChapterNotesList(chapId, chapTitle) {
+      const listEl = document.getElementById('chapter-saved-notes-list');
+      if (!listEl) return;
+      try {
+        const rawNotes = localStorage.getItem('xavetra_student_notes');
+        const notes = rawNotes ? JSON.parse(rawNotes) : [];
+        const filtered = notes.filter(n => n.chapter === chapTitle || (chapId && n.chapter.includes(chapId)));
+
+        if (filtered.length === 0) {
+          listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic">Belum ada catatan pribadi untuk bab ini.</p>`;
+          return;
+        }
+
+        listEl.innerHTML = `
+          <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Catatan Tersimpan (${filtered.length}):</div>
+          ${filtered.map(n => `
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+              <div class="flex items-center justify-between font-bold text-navy text-xs">
+                <span>${n.title}</span>
+                <span class="text-[10px] text-slate-400 font-normal">${n.date}</span>
+              </div>
+              <p class="text-xs text-text-muted leading-relaxed">${n.body}</p>
+            </div>
+          `).join('')}
+        `;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function updateNotesBadge() {
+      try {
+        const rawNotes = localStorage.getItem('xavetra_student_notes');
+        const notes = rawNotes ? JSON.parse(rawNotes) : [];
+        const badge = document.getElementById('sidebar-notes-badge');
+        if (badge) badge.textContent = `${notes.length} Notes`;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function searchModules(val) {
+      const q = val.toLowerCase();
+      const cards = document.querySelectorAll('#chapter-cards-grid > div');
+      cards.forEach(c => {
+        const text = c.innerText.toLowerCase();
+        c.style.display = text.includes(q) ? 'flex' : 'none';
+      });
+    }
+
+    // =========================================================================
+    // INITIALIZATION & USER DROPDOWN
+    // =========================================================================
+    function toggleUserDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-dropdown-menu');
+      const btn = document.getElementById('user-menu-btn');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && !btn?.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getAuthUser();
+      if (!user) {
+        window.location.replace('login.html?redirect=modul.html');
+        return;
+      }
+
+      const studentName = user.name || 'Siswa Xavetra';
+      const studentRole = user.role || 'Siswa XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'XS';
+
+      const displayNameEl = document.getElementById('student-display-name');
+      const displayRoleEl = document.getElementById('student-display-role');
+      const topAvatarEl = document.getElementById('top-user-avatar');
+
+      const dropAvatarEl = document.getElementById('dropdown-user-avatar');
+      const dropNameEl = document.getElementById('dropdown-user-name');
+      const dropRoleEl = document.getElementById('dropdown-user-role');
+
+      if (displayNameEl) displayNameEl.textContent = studentName;
+      if (displayRoleEl) displayRoleEl.textContent = studentRole;
+      if (topAvatarEl) topAvatarEl.textContent = initials;
+
+      if (dropAvatarEl) dropAvatarEl.textContent = initials;
+      if (dropNameEl) dropNameEl.textContent = studentName;
+      if (dropRoleEl) dropRoleEl.textContent = `${studentRole} • SMAN 1 Batam`;
+
+      updateNotesBadge();
+      renderCatalog();
+
+      // Check if URL has ?action=new to open Add Chapter modal
+      const urlParams = new URLSearchParams(window.location.search);
+      const actionParam = urlParams.get('action');
+      const babParam = urlParams.get('bab');
+      const tabParam = urlParams.get('tab') || 'materi';
+
+      if (actionParam === 'new' && isUserAdmin) {
+        openAddChapterModal();
+      } else if (babParam) {
+        const chapters = getStoredChapters();
+        const found = chapters.find(c => c.number == babParam || c.id === babParam);
+        if (found) {
+          openChapterStudy(found.id, tabParam);
+        }
+      }
+    });
+
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

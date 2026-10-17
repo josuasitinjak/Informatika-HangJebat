@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Literasi — XAVETRA SMAN 1 Batam</title>
+  <meta name="description" content="Kuis literasi digital dan evaluasi pemahaman materi Informatika Fase F Kelas XI SMAN 1 Batam.">
+  
+  <!-- Immediate Auth Guard -->
+  <script>
+    (function() {
+      const user = localStorage.getItem('xavetra_user');
+      if (!user) {
+        window.location.replace('login.html?redirect=kuis.html');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1F6BFF',
+            'primary-dark': '#0E4CD1',
+            'primary-subtle': '#EEF4FF',
+            navy: '#0B1528',
+            canvas: '#F4F6FA',
+            surface: '#FFFFFF',
+            accent: '#F59E0B',
+            'text-main': '#0F172A',
+            'text-muted': '#64748B',
+            'border-light': '#E2E8F0',
+            'border-focus': '#BFDBFE'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(11, 21, 40, 0.04), 0 2px 6px -1px rgba(11, 21, 40, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(11, 21, 40, 0.08), 0 4px 12px -2px rgba(31, 107, 255, 0.06)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+  <!-- ========================================================================= -->
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 select-none">
+    <div class="p-6 space-y-7 overflow-y-auto">
+      
+      <!-- Brand -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div>
+            <span class="text-lg font-black text-navy tracking-tight">Informatika</span>
+            <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Menus -->
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+          Menu Pembelajaran
+        </div>
+
+        <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+            <span>Modul Materi</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary">4 Bab</span>
+        </a>
+
+        <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+            <span>Catatan Belajar</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">Notes</span>
+        </a>
+
+        <!-- Tanya AI (Chatting AI) -->
+        <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-purple-500 group-hover:scale-110 transition">smart_toy</span>
+            <span>Tanya AI</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+        </a>
+
+        <!-- Komunitas (Media Sosial Siswa) -->
+        <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+            <span>Komunitas</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT                                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-xl">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span>
+          <span class="text-xs font-bold text-navy">Evaluasi Formatif Informatika</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- User Profile Dropdown Button -->
+        <div class="relative">
+          <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition focus:outline-none cursor-pointer">
+            <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+              XS
+            </div>
+            <div class="text-left hidden sm:block">
+              <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[130px]">
+                Siswa Xavetra
+              </div>
+              <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[130px]">
+                Siswa XI HJ 5
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
+          </button>
+
+          <!-- Dropdown Popover Menu -->
+          <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div class="px-4 py-2 border-b border-slate-100 flex items-center gap-3">
+              <div id="dropdown-user-avatar" class="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                XS
+              </div>
+              <div class="min-w-0">
+                <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Siswa Xavetra</div>
+                <div id="dropdown-user-role" class="text-[10px] text-text-muted truncate">XI HJ 5 • SMAN 1 Batam</div>
+                <div class="text-[9px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Akun Siswa Aktif
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2 border-t border-slate-100">
+              <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                <span class="material-symbols-outlined text-[18px]">logout</span>
+                <span>Keluar Akun (Logout)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-4xl mx-auto w-full">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+              Kuis Literasi &amp; Pemahaman
+            </h1>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-accent border border-amber-200">
+              Evaluasi Mandiri
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">
+            Jawab 3 pertanyaan berikut dengan memilih opsi yang paling tepat. Hasil skor riil Anda akan disimpan di profil.
+          </p>
+        </div>
+
+        <!-- Score Status Pill (If already taken) -->
+        <div id="quiz-status-pill" class="hidden items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-slate-200 shadow-sm text-xs font-bold text-navy">
+          <span>Nilai Tersimpan:</span>
+          <span id="saved-score-badge" class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 font-extrabold">100/100</span>
+        </div>
+      </div>
+
+      <!-- QUIZ QUESTIONS FORM -->
+      <div class="space-y-6" id="quiz-cards-container">
+
+        <!-- SOAL 1 -->
+        <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-primary bg-primary-subtle px-3 py-1 rounded-full border border-border-focus">
+              Soal 1 dari 3 • Operator Pencarian
+            </span>
+            <span class="text-xs font-bold text-slate-400">Bobot: 33.3 Poin</span>
+          </div>
+
+          <h3 class="text-sm sm:text-base font-bold text-navy leading-snug">
+            Jika kamu ingin mencari berkas modul resmi Informatika Kurikulum Merdeka hanya dari situs Kemdikbud dalam bentuk file PDF tanpa adanya iklan komersial, sintaks operator yang paling tepat adalah...
+          </h3>
+
+          <div class="space-y-2.5 pt-2" id="q1-options">
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q1" value="A" class="text-primary focus:ring-primary h-4 w-4">
+                <span>A. cari modul informatika kemdikbud bentuk pdf</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q1" value="B" class="text-primary focus:ring-primary h-4 w-4">
+                <span>B. <code class="font-bold text-primary font-mono">site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan</code></span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q1" value="C" class="text-primary focus:ring-primary h-4 w-4">
+                <span>C. kemdikbud.go.id + filetype + pdf</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q1" value="D" class="text-primary focus:ring-primary h-4 w-4">
+                <span>D. download gratis modul kurikulum merdeka pdf</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SOAL 2 -->
+        <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-primary bg-primary-subtle px-3 py-1 rounded-full border border-border-focus">
+              Soal 2 dari 3 • Cara Kerja Mesin Pencari
+            </span>
+            <span class="text-xs font-bold text-slate-400">Bobot: 33.3 Poin</span>
+          </div>
+
+          <h3 class="text-sm sm:text-base font-bold text-navy leading-snug">
+            Urutan 3 tahapan kerja fundamental mesin pencari saat mengumpulkan, mengarsipkan, dan menampilkan hasil penelusuran kepada pengguna adalah...
+          </h3>
+
+          <div class="space-y-2.5 pt-2" id="q2-options">
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q2" value="A" class="text-primary focus:ring-primary h-4 w-4">
+                <span>A. Indexing ➔ Ranking ➔ Crawling</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q2" value="B" class="text-primary focus:ring-primary h-4 w-4">
+                <span>B. Ranking ➔ Indexing ➔ Crawling</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q2" value="C" class="text-primary focus:ring-primary h-4 w-4">
+                <span>C. <strong class="text-primary">Crawling (Menjelajah) ➔ Indexing (Mengarsipkan) ➔ Ranking (Mengurutkan)</strong></span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q2" value="D" class="text-primary focus:ring-primary h-4 w-4">
+                <span>D. Crawling ➔ Ranking ➔ Indexing</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- SOAL 3 -->
+        <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-primary bg-primary-subtle px-3 py-1 rounded-full border border-border-focus">
+              Soal 3 dari 3 • Regulasi Hukum Digital
+            </span>
+            <span class="text-xs font-bold text-slate-400">Bobot: 33.4 Poin</span>
+          </div>
+
+          <h3 class="text-sm sm:text-base font-bold text-navy leading-snug">
+            Pasal dalam UU ITE yang secara tegas melarang perbuatan menyebarkan berita bohong (hoaks) yang menyesatkan serta informasi bermuatan permusuhan SARA adalah...
+          </h3>
+
+          <div class="space-y-2.5 pt-2" id="q3-options">
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q3" value="A" class="text-primary focus:ring-primary h-4 w-4">
+                <span>A. Pasal 27 UU ITE (Kesusilaan &amp; Perjudian)</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q3" value="B" class="text-primary focus:ring-primary h-4 w-4">
+                <span>B. <strong class="text-primary">Pasal 28 UU ITE (Berita Bohong / Hoaks &amp; Permusuhan SARA)</strong></span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q3" value="C" class="text-primary focus:ring-primary h-4 w-4">
+                <span>C. Pasal 30 UU ITE (Illegal Access / Hacking)</span>
+              </span>
+            </label>
+
+            <label class="q-opt block p-3.5 rounded-2xl border border-slate-200/80 hover:border-primary/50 cursor-pointer transition text-xs font-medium text-slate-700 flex items-center justify-between">
+              <span class="flex items-center gap-3">
+                <input type="radio" name="q3" value="D" class="text-primary focus:ring-primary h-4 w-4">
+                <span>D. Pasal 32 UU ITE (Perusakan Data)</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button Box -->
+        <div class="flex items-center justify-between pt-2">
+          <a href="dashboard.html" class="text-xs font-bold text-slate-500 hover:text-navy">
+            &larr; Kembali ke Dashboard
+          </a>
+          <button onclick="submitQuiz()" class="px-8 py-3 rounded-2xl bg-primary hover:bg-primary-dark text-white text-xs sm:text-sm font-extrabold transition shadow-glow flex items-center gap-2">
+            <span>Kirim Jawaban &amp; Hitung Nilai</span>
+            <span class="material-symbols-outlined text-[18px]">send</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RESULT CARD (SHOWN AFTER SUBMISSION) -->
+      <div id="quiz-result-card" class="hidden bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/80 shadow-card space-y-6">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              HASIL EVALUASI FORMATIF
+            </span>
+            <h2 class="text-xl font-extrabold text-navy mt-1">Hasil Kuis Mandiri Anda</h2>
+          </div>
+          <div class="text-right">
+            <span class="text-3xl font-black text-primary" id="result-score-number">100</span>
+            <span class="text-xs text-text-muted"> / 100</span>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed" id="result-feedback-text">
+          Memproses hasil kuis...
+        </div>
+
+        <div class="space-y-3 text-xs" id="result-breakdown">
+          <!-- Breakdown of answers dynamically generated -->
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-between flex-wrap gap-3">
+          <button onclick="retakeQuiz()" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-navy font-bold text-xs transition flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">refresh</span>
+            <span>Ulangi Pengerjaan Kuis</span>
+          </button>
+          <a href="dashboard.html" class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-xs transition flex items-center gap-1.5 shadow-sm">
+            <span>Lihat di Dashboard</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white border-t border-slate-200/80 text-center text-xs text-text-muted px-4">
+      <p>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI • SMA Negeri 1 Batam</p>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function toggleUserDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-dropdown-menu');
+      const btn = document.getElementById('user-menu-btn');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && !btn?.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getAuthUser();
+      if (!user) {
+        window.location.replace('login.html?redirect=kuis.html');
+        return;
+      }
+
+      const studentName = user.name || 'Siswa Xavetra';
+      const studentRole = user.role || 'Siswa XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'XS';
+
+      const displayNameEl = document.getElementById('student-display-name');
+      const displayRoleEl = document.getElementById('student-display-role');
+      const topAvatarEl = document.getElementById('top-user-avatar');
+
+      const dropAvatarEl = document.getElementById('dropdown-user-avatar');
+      const dropNameEl = document.getElementById('dropdown-user-name');
+      const dropRoleEl = document.getElementById('dropdown-user-role');
+
+      if (displayNameEl) displayNameEl.textContent = studentName;
+      if (displayRoleEl) displayRoleEl.textContent = studentRole;
+      if (topAvatarEl) topAvatarEl.textContent = initials;
+
+      if (dropAvatarEl) dropAvatarEl.textContent = initials;
+      if (dropNameEl) dropNameEl.textContent = studentName;
+      if (dropRoleEl) dropRoleEl.textContent = `${studentRole} • SMAN 1 Batam`;
+
+      // Cek nilai yang sudah ada sebelumnya
+      const savedScore = localStorage.getItem('xavetra_quiz_score');
+      if (savedScore !== null) {
+        const statusPill = document.getElementById('quiz-status-pill');
+        const savedBadge = document.getElementById('saved-score-badge');
+        statusPill.classList.remove('hidden');
+        statusPill.classList.add('flex');
+        savedBadge.textContent = `${savedScore}/100`;
+      }
+    });
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+
+    function submitQuiz() {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+
+      if (!q1 || !q2 || !q3) {
+        showToast('⚠️ Silakan jawab ketiga soal sebelum mengirimkan jawaban!', 'alert');
+        return;
+      }
+
+      let correctCount = 0;
+      if (q1.value === 'B') correctCount++;
+      if (q2.value === 'C') correctCount++;
+      if (q3.value === 'B') correctCount++;
+
+      let calculatedScore = 0;
+      if (correctCount === 3) calculatedScore = 100;
+      else if (correctCount === 2) calculatedScore = 67;
+      else if (correctCount === 1) calculatedScore = 33;
+      else calculatedScore = 0;
+
+      // Simpan nilai riil ke localStorage
+      localStorage.setItem('xavetra_quiz_score', calculatedScore);
+
+      // Tampilkan hasil
+      document.getElementById('quiz-cards-container').classList.add('hidden');
+      const resultCard = document.getElementById('quiz-result-card');
+      resultCard.classList.remove('hidden');
+
+      document.getElementById('result-score-number').textContent = calculatedScore;
+
+      const feedbackText = document.getElementById('result-feedback-text');
+      if (calculatedScore === 100) {
+        feedbackText.innerHTML = `<strong>Sempurna!</strong> Anda berhasil menjawab seluruh pertanyaan dengan benar. Anda memahami sintaks operator pencarian, alur 3 tahap mesin pencari, dan dasar regulasi UU ITE Pasal 28 dengan sangat baik. Nilai 100/100 telah disimpan di profil belajar Anda.`;
+      } else if (calculatedScore >= 66) {
+        feedbackText.innerHTML = `<strong>Bagus!</strong> Anda menjawab ${correctCount} dari 3 soal dengan benar (Nilai: ${calculatedScore}/100). Periksa kembali pembahasan materi di bawah untuk menyempurnakan pemahaman Anda.`;
+      } else {
+        feedbackText.innerHTML = `<strong>Perlu Penguatan Materi:</strong> Anda menjawab ${correctCount} dari 3 soal dengan benar (Nilai: ${calculatedScore}/100). Sangat disarankan untuk membaca kembali rangkuman pada menu Modul Materi sebelum mencoba lagi.`;
+      }
+
+      const breakdown = document.getElementById('result-breakdown');
+      breakdown.innerHTML = `
+        <div class="p-3.5 rounded-xl ${q1.value === 'B' ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' : 'bg-red-50 border border-red-200 text-red-800'}">
+          <div class="font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">${q1.value === 'B' ? 'check_circle' : 'cancel'}</span>
+            Soal 1: Operator Pencarian Berkas Resmi
+          </div>
+          <div class="mt-1 text-[11px]">Jawaban Anda: ${q1.value}. Jawaban Benar: B (site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan).</div>
+        </div>
+
+        <div class="p-3.5 rounded-xl ${q2.value === 'C' ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' : 'bg-red-50 border border-red-200 text-red-800'}">
+          <div class="font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">${q2.value === 'C' ? 'check_circle' : 'cancel'}</span>
+            Soal 2: Tiga Tahap Kerja Mesin Pencari
+          </div>
+          <div class="mt-1 text-[11px]">Jawaban Anda: ${q2.value}. Jawaban Benar: C (Crawling ➔ Indexing ➔ Ranking).</div>
+        </div>
+
+        <div class="p-3.5 rounded-xl ${q3.value === 'B' ? 'bg-emerald-50 border border-emerald-200 text-emerald-800' : 'bg-red-50 border border-red-200 text-red-800'}">
+          <div class="font-bold flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">${q3.value === 'B' ? 'check_circle' : 'cancel'}</span>
+            Soal 3: Pasal UU ITE Terkait Hoaks & SARA
+          </div>
+          <div class="mt-1 text-[11px]">Jawaban Anda: ${q3.value}. Jawaban Benar: B (Pasal 28 UU ITE).</div>
+        </div>
+      `;
+
+      showToast(`🎉 Kuis selesai! Nilai ${calculatedScore}/100 berhasil disimpan.`);
+    }
+
+    function retakeQuiz() {
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      document.getElementById('quiz-result-card').classList.add('hidden');
+      document.getElementById('quiz-cards-container').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-[#F8FAFC]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Komunitas Siswa — Informatika SMAN 1 Batam</title>
+  <meta name="description" content="Ruang komunitas dan media diskusi siswa Informatika SMAN 1 Batam. Berbagi catatan, tanya jawab, dan proyek bersama.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { DEFAULT: '#0052CC', dark: '#0747A6', light: '#2684FF', subtle: '#DEEBFF' },
+            navy: '#091E42',
+            surface: '#FFFFFF',
+            background: '#F8FAFC',
+            accent: '#FFAB00',
+            'text-main': '#172B4D',
+            'text-muted': '#6B778C',
+            'border-subtle': '#DFE1E6',
+            'border-focus': '#B3D4FF'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'card': '0 1px 3px 0 rgba(9,30,66,.08), 0 2px 4px 0 rgba(9,30,66,.05)',
+            'card-hover': '0 8px 24px -4px rgba(9,30,66,.12), 0 2px 6px -1px rgba(9,30,66,.06)',
+            'glow': '0 0 20px -3px rgba(0,82,204,.25)'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .scrollbar-none { scrollbar-width: none; }
+    .scrollbar-none::-webkit-scrollbar { display: none; }
+    .feed-tab-btn { white-space: nowrap; }
+    .post-content-text { white-space: pre-line; }
+    @keyframes slideUp { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .post-card { animation: slideUp .22s ease both; }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-text-main bg-background antialiased">
+
+  <!-- Mobile Sidebar Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 backdrop-blur-xs z-40 hidden lg:hidden"></div>
+
+  <div class="flex flex-1 min-h-screen">
+
+    <!-- ===== LEFT SIDEBAR ===== -->
+    <aside id="main-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0">
+      <!-- Brand -->
+      <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100">
+        <a href="dashboard.html" class="flex items-center gap-3 group">
+          <div>
+            <div class="font-extrabold text-base tracking-tight text-navy">Informatika</div>
+            <div class="text-[10px] font-semibold tracking-wider text-primary uppercase">SMAN 1 Batam</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Nav -->
+      <div class="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">Menu Pembelajaran</div>
+
+          <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+              <span>Dashboard</span>
+            </span>
+          </a>
+
+          <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+              <span>Modul Materi</span>
+            </span>
+          </a>
+
+          <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+              <span>Catatan Belajar</span>
+            </span>
+          </a>
+
+          <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-purple-500">smart_toy</span>
+              <span>Tanya AI</span>
+            </span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+          </a>
+
+          <!-- Komunitas (Active) -->
+          <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-glow transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px]">forum</span>
+              <span>Komunitas</span>
+            </span>
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar user card -->
+      <div class="p-4 border-t border-slate-100">
+        <div id="sidebar-user-card" class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+          <div id="sidebar-avatar" class="w-9 h-9 rounded-xl text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0 bg-gradient-to-tr from-primary to-blue-400">--</div>
+          <div class="min-w-0 flex-1">
+            <div id="sidebar-name" class="text-xs font-bold text-navy truncate">Memuat...</div>
+            <div id="sidebar-role" class="text-[10px] text-text-muted truncate">SMAN 1 Batam</div>
+          </div>
+          <button onclick="handleLogout()" title="Logout" class="p-1 rounded-lg text-slate-400 hover:text-red-500 transition">
+            <span class="material-symbols-outlined text-[18px]">logout</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+
+      <!-- Top Bar -->
+      <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 flex-1 max-w-xl">
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+            <span class="material-symbols-outlined text-[22px]">menu</span>
+          </button>
+          <div class="relative w-full max-w-md">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <span class="material-symbols-outlined text-[18px]">search</span>
+            </div>
+            <input type="text" id="community-search-input" oninput="handleSearchFeed(this.value)"
+              placeholder="Cari postingan, topik, atau nama siswa..."
+              class="w-full bg-[#F4F6FA] border border-slate-200/90 rounded-2xl pl-9 pr-4 py-1.5 text-xs text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition">
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- User Profile Dropdown -->
+          <div class="relative">
+            <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 pr-2 rounded-xl hover:bg-slate-100 transition focus:outline-none">
+              <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">--</div>
+              <div class="text-left hidden sm:block">
+                <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[110px]">Memuat...</div>
+                <div id="student-display-role" class="text-[10px] font-semibold text-text-muted">Siswa</div>
+              </div>
+              <span class="material-symbols-outlined text-[15px] text-slate-400">expand_more</span>
+            </button>
+
+            <!-- Dropdown — identitas + logout only -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50">
+              <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3">
+                <div id="dropdown-user-avatar" class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">--</div>
+                <div class="min-w-0 flex-1">
+                  <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Memuat...</div>
+                  <div id="dropdown-user-kelas" class="text-[10px] text-text-muted truncate">SMAN 1 Batam</div>
+                  <div id="dropdown-user-username" class="text-[9px] text-slate-400 truncate mt-0.5"></div>
+                  <div class="text-[9px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Akun Terverifikasi
+                  </div>
+                </div>
+              </div>
+
+              <div class="px-3 py-2 border-b border-slate-100 space-y-1 text-[11px] text-slate-600">
+                <div class="flex items-center gap-2 px-2 py-1.5 rounded-xl bg-slate-50">
+                  <span class="material-symbols-outlined text-[16px] text-primary">school</span>
+                  <span id="dropdown-user-role" class="font-semibold">Siswa</span>
+                </div>
+              </div>
+
+              <div class="p-2 pt-2">
+                <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                  <span class="material-symbols-outlined text-[18px]">logout</span>
+                  <span>Keluar Akun (Logout)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Feed -->
+      <main class="flex-grow p-4 sm:p-6 max-w-2xl mx-auto w-full space-y-5">
+
+        <!-- Page Header -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-extrabold text-navy tracking-tight">Komunitas & Media Diskusi</h1>
+            <p class="text-xs text-text-muted mt-0.5">Ruang kolaborasi pembelajaran Informatika • SMAN 1 Batam</p>
+          </div>
+          <div id="post-total-stat" class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">0 Postingan</div>
+        </div>
+
+        <!-- Create Post Card -->
+        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-start gap-3">
+            <div id="post-creator-avatar" class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary to-blue-500 text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">--</div>
+            <div class="flex-1 space-y-1">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span id="post-creator-name" class="text-xs font-bold text-navy">Nama Siswa</span>
+                  <span id="post-creator-role" class="text-[10px] text-text-muted ml-2">Siswa XI HJ 5</span>
+                </div>
+                <span id="active-category-pill" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200 flex items-center gap-1">
+                  <span id="active-category-text">Umum</span>
+                  <button type="button" onclick="clearCategory()" class="hover:text-red-500 font-bold ml-0.5">×</button>
+                </span>
+              </div>
+              <textarea id="new-post-content" rows="3"
+                placeholder="Apa yang sedang kamu pelajari atau ingin didiskusikan hari ini?"
+                class="w-full bg-slate-50/70 hover:bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs sm:text-sm text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/10 transition resize-none leading-relaxed"></textarea>
+            </div>
+          </div>
+
+          <!-- Image preview -->
+          <div id="image-preview-box" class="hidden relative rounded-2xl overflow-hidden border border-slate-200">
+            <img id="image-preview-img" src="" alt="Pratinjau Gambar" class="max-h-72 w-full object-cover">
+            <button onclick="removeAttachedImage()" class="absolute top-2 right-2 bg-navy/80 hover:bg-navy text-white px-2 py-1 rounded-xl text-xs flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">close</span><span class="text-[10px]">Hapus</span>
+            </button>
+          </div>
+
+          <!-- Category selector -->
+          <div id="category-selector-box" class="hidden p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-navy">Pilih Topik:</span>
+              <button type="button" onclick="toggleCategorySelector()" class="text-slate-400 hover:text-navy text-xs">Tutup</button>
+            </div>
+            <div id="dynamic-category-chips" class="flex flex-wrap gap-1.5"></div>
+            <div class="flex items-center gap-2 pt-1">
+              <input type="text" id="custom-category-input" placeholder="Atau ketik topik sendiri..." class="flex-1 bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-navy focus:outline-none focus:border-primary">
+              <button type="button" onclick="applyCustomCategory()" class="px-3 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-xs font-bold text-navy transition">Pakai</button>
+            </div>
+          </div>
+
+          <!-- Bottom action bar -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center gap-2 flex-wrap">
+              <label class="cursor-pointer px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[17px] text-primary">add_photo_alternate</span>
+                <span>Lampirkan Foto</span>
+                <input type="file" id="post-image-input" accept="image/*" onchange="handleImageSelected(event)" class="hidden">
+              </label>
+              <button type="button" onclick="toggleCategorySelector()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[17px] text-accent">label</span>
+                <span>Topik</span>
+              </button>
+            </div>
+            <button onclick="publishPost()" id="publish-btn" class="px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark active:scale-[0.98] text-white text-xs font-bold transition shadow-sm flex items-center justify-center gap-1.5">
+              <span>Bagikan</span>
+              <span class="material-symbols-outlined text-[16px]">send</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold scrollbar-none" id="feed-filter-bar">
+          <button onclick="filterFeed('all', this)" class="feed-tab-btn px-4 py-2 rounded-xl bg-primary text-white transition shadow-sm shrink-0">Semua</button>
+          <button onclick="filterFeed('my_posts', this)" class="feed-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition shrink-0">Postingan Saya</button>
+          <button onclick="filterFeed('Tanya Materi', this)" class="feed-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition shrink-0">Tanya Jawab</button>
+          <button onclick="filterFeed('Sharing Kode', this)" class="feed-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition shrink-0">Sharing Proyek</button>
+          <button onclick="filterFeed('Tips Belajar', this)" class="feed-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition shrink-0">Tips Belajar</button>
+        </div>
+
+        <!-- Feed List -->
+        <div id="community-feed-list" class="space-y-4"></div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: EDIT POST ===== -->
+  <div id="edit-post-modal" class="hidden fixed inset-0 z-50 bg-navy/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[20px]">edit_square</span>
+          <h3 class="text-sm font-bold text-navy">Edit Postingan</h3>
+        </div>
+        <button onclick="closeEditModal()" class="text-slate-400 hover:text-navy p-1 rounded-xl">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <input type="hidden" id="edit-post-id">
+      <div class="space-y-3">
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Isi Postingan</label>
+          <textarea id="edit-post-content" rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs sm:text-sm text-navy focus:outline-none focus:border-primary focus:bg-white transition resize-none leading-relaxed"></textarea>
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-slate-700 mb-1">Topik / Kategori (Opsional)</label>
+          <input type="text" id="edit-post-category" placeholder="Contoh: Diskusi Umum, Tanya Soal..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-navy focus:outline-none focus:border-primary">
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button onclick="closeEditModal()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition">Batal</button>
+        <button onclick="saveEditedPost()" class="px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition shadow-sm flex items-center gap-1.5">
+          <span>Simpan</span><span class="material-symbols-outlined text-[16px]">check</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: WHO LIKED ===== -->
+  <div id="view-likes-modal" class="hidden fixed inset-0 z-50 bg-navy/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-red-500 text-[20px]">favorite</span>
+          <h3 class="text-sm font-bold text-navy">Disukai oleh</h3>
+        </div>
+        <button onclick="closeLikesModal()" class="text-slate-400 hover:text-navy p-1 rounded-xl">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div id="likes-list-container" class="max-h-64 overflow-y-auto space-y-2 pr-1 scrollbar-none"></div>
+      <button onclick="closeLikesModal()" class="w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-navy transition">Tutup</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-[100] transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3 pointer-events-none">
+    <span id="toast-icon" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+    <span id="toast-message">Notifikasi</span>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // =========================================================================
+    // STATE
+    // =========================================================================
+    let attachedImageBase64 = null;
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let selectedCategory = '';
+
+    // =========================================================================
+    // AVATAR COLOR PALETTE (consistent per name hash)
+    // =========================================================================
+    const AVATAR_PALETTES = [
+      'from-blue-500 to-indigo-600',
+      'from-purple-500 to-pink-500',
+      'from-emerald-500 to-teal-600',
+      'from-orange-500 to-amber-500',
+      'from-rose-500 to-red-600',
+      'from-cyan-500 to-blue-500',
+      'from-violet-500 to-purple-600',
+      'from-fuchsia-500 to-pink-600',
+      'from-lime-500 to-green-600',
+      'from-sky-500 to-cyan-600',
+    ];
+
+    function getAvatarColor(name) {
+      if (!name) return AVATAR_PALETTES[0];
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      return AVATAR_PALETTES[Math.abs(hash) % AVATAR_PALETTES.length];
+    }
+
+    // =========================================================================
+    // DEFAULT DEMO POSTS
+    // =========================================================================
+    const DEFAULT_POSTS = [
+      {
+        id: 'post-demo-1',
+        author: 'Fajar Nugraha',
+        username: 'fajar_nugraha',
+        role: 'Siswa XI HJ 5',
+        category: 'Operator Riset',
+        time: '15 menit yang lalu',
+        timestamp: Date.now() - 15 * 60 * 1000,
+        content: 'Baru aja nyobain simulator operator logika mesin pencari di modul. Ternyata kalau dikombinasikan "site:kemdikbud.go.id" sama "filetype:pdf" hasilnya beneran langsung dapet juknis resmi! Recommended banget dicoba.',
+        image: null,
+        likes: ['Siti Rahmawati', 'Budi Santoso', 'Josua Sitinjak'],
+        comments: [
+          { id: 'c-demo-1', author: 'Siti Rahmawati', role: 'Siswa XI HJ 5', timestamp: Date.now() - 10 * 60 * 1000, time: '10 menit yang lalu', content: 'Bener banget jar! Aku tadi nyari silabus langsung ketemu file aslinya.' }
+        ]
+      },
+      {
+        id: 'post-demo-2',
+        author: 'Siti Rahmawati',
+        username: 'siti_rahmawati',
+        role: 'Siswa XI HJ 5',
+        category: 'Regulasi UU ITE',
+        time: '1 jam yang lalu',
+        timestamp: Date.now() - 60 * 60 * 1000,
+        content: 'Teman-teman, ingat ya pas sharing informasi di medsos jangan asal re-post. Di Pasal 28 UU ITE ancaman sanksinya tegas buat yang menyebarkan berita bohong. Tetap utamakan verifikasi 3 sumber dulu!',
+        image: null,
+        likes: ['Fajar Nugraha', 'Budi Santoso'],
+        comments: [
+          { id: 'c-demo-2', author: 'Pak Budi (Guru)', role: 'Guru Informatika', timestamp: Date.now() - 45 * 60 * 1000, time: '45 menit yang lalu', content: 'Sangat tepat Siti. Literasi digital dan netiket adalah kompetensi kunci di Fase F ini.' }
+        ]
+      }
+    ];
+
+    // =========================================================================
+    // UTILS
+    // =========================================================================
+    function escapeHtml(text) {
+      if (!text) return '';
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return text.toString().replace(/[&<>"']/g, m => map[m]);
+    }
+
+    function getInitials(name) {
+      if (!name) return 'SI';
+      const parts = name.trim().split(/\s+/);
+      if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+      return name.substring(0, 2).toUpperCase();
+    }
+
+    function relativeTime(timestamp) {
+      if (!timestamp) return 'Baru saja';
+      const diff = Date.now() - timestamp;
+      const m = Math.floor(diff / 60000);
+      if (m < 1) return 'Baru saja';
+      if (m < 60) return `${m} menit yang lalu`;
+      const h = Math.floor(m / 60);
+      if (h < 24) return `${h} jam yang lalu`;
+      const d = Math.floor(h / 24);
+      if (d < 7) return `${d} hari yang lalu`;
+      return new Date(timestamp).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      const message = document.getElementById('toast-message');
+      const icon = document.getElementById('toast-icon');
+      if (!toast || !message) return;
+      message.textContent = msg;
+      icon.className = `w-2.5 h-2.5 rounded-full shrink-0 animate-pulse ${type === 'error' ? 'bg-red-400' : type === 'warning' ? 'bg-yellow-400' : 'bg-emerald-400'}`;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('pointer-events-auto');
+      clearTimeout(toast._tid);
+      toast._tid = setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('pointer-events-auto');
+      }, 3000);
+    }
+
+    // =========================================================================
+    // AUTH
+    // =========================================================================
+    function getCurrentUser() {
+      if (typeof getAuthUser === 'function') {
+        const u = getAuthUser();
+        if (u) return u;
+      }
+      return null;
+    }
+
+    function requireAuth() {
+      const user = getCurrentUser();
+      if (!user) {
+        window.location.href = 'login.html?redirect=komunitas.html';
+        return false;
+      }
+      return true;
+    }
+
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        if (typeof removeAuthUser === 'function') removeAuthUser();
+        else localStorage.removeItem('xavetra_user');
+        window.location.href = 'login.html';
+      }
+    }
+
+    // =========================================================================
+    // STORAGE
+    // =========================================================================
+    function getStoredPosts() {
+      try {
+        const raw = localStorage.getItem('xavetra_community_posts');
+        if (!raw) {
+          localStorage.setItem('xavetra_community_posts', JSON.stringify(DEFAULT_POSTS));
+          return JSON.parse(JSON.stringify(DEFAULT_POSTS));
+        }
+        return JSON.parse(raw);
+      } catch (e) {
+        return JSON.parse(JSON.stringify(DEFAULT_POSTS));
+      }
+    }
+
+    function saveStoredPosts(posts) {
+      localStorage.setItem('xavetra_community_posts', JSON.stringify(posts));
+    }
+
+    // =========================================================================
+    // INIT
+    // =========================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Don't force auth guard — allow viewing, but posting requires login
+      syncUserProfile();
+      initDynamicCategoryChips();
+      loadPosts();
+    });
+
+    function syncUserProfile() {
+      const user = getCurrentUser();
+      const name = user ? user.name : 'Tamu';
+      const role = user ? (user.role || 'Siswa XI HJ 5') : 'Belum Login';
+      const kelas = user ? (user.kelas || 'XI HJ 5') : '-';
+      const username = user ? (user.username || '') : '';
+      const initials = getInitials(name);
+      const avatarColor = getAvatarColor(name);
+
+      const avatarClass = `w-10 h-10 rounded-2xl bg-gradient-to-tr ${avatarColor} text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0`;
+
+      // Top bar
+      const topAvatar = document.getElementById('top-user-avatar');
+      const topName = document.getElementById('student-display-name');
+      const topRole = document.getElementById('student-display-role');
+      if (topAvatar) { topAvatar.textContent = initials; topAvatar.className = `w-8 h-8 rounded-xl bg-gradient-to-tr ${avatarColor} text-white flex items-center justify-center font-bold text-[10px] shadow-sm`; }
+      if (topName) topName.textContent = name;
+      if (topRole) topRole.textContent = role;
+
+      // Dropdown
+      const dropAvatar = document.getElementById('dropdown-user-avatar');
+      const dropName = document.getElementById('dropdown-user-name');
+      const dropKelas = document.getElementById('dropdown-user-kelas');
+      const dropUsername = document.getElementById('dropdown-user-username');
+      const dropRole = document.getElementById('dropdown-user-role');
+      if (dropAvatar) { dropAvatar.textContent = initials; dropAvatar.className = `w-11 h-11 rounded-2xl bg-gradient-to-tr ${avatarColor} text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0`; }
+      if (dropName) dropName.textContent = name;
+      if (dropKelas) dropKelas.textContent = `Kelas ${kelas} • SMAN 1 Batam`;
+      if (dropUsername) dropUsername.textContent = username ? `@${username}` : '';
+      if (dropRole) dropRole.textContent = role;
+
+      // Sidebar card
+      const sbAvatar = document.getElementById('sidebar-avatar');
+      const sbName = document.getElementById('sidebar-name');
+      const sbRole = document.getElementById('sidebar-role');
+      if (sbAvatar) { sbAvatar.textContent = initials; sbAvatar.className = `w-9 h-9 rounded-xl bg-gradient-to-tr ${avatarColor} text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0`; }
+      if (sbName) sbName.textContent = name;
+      if (sbRole) sbRole.textContent = role;
+
+      // Post creator box
+      const creatorAvatar = document.getElementById('post-creator-avatar');
+      const creatorName = document.getElementById('post-creator-name');
+      const creatorRole = document.getElementById('post-creator-role');
+      const postTextarea = document.getElementById('new-post-content');
+      if (creatorAvatar) { creatorAvatar.textContent = initials; creatorAvatar.className = avatarClass; }
+      if (creatorName) creatorName.textContent = name;
+      if (creatorRole) creatorRole.textContent = role;
+      if (postTextarea && user) {
+        postTextarea.placeholder = `Apa yang sedang kamu pelajari atau ingin didiskusikan, ${name.split(' ')[0]}?`;
+      }
+    }
+
+    function initDynamicCategoryChips() {
+      const container = document.getElementById('dynamic-category-chips');
+      if (!container) return;
+      const chips = ['Diskusi Umum', 'Tanya Materi', 'Sharing Kode', 'Tips Belajar', 'Proyek', 'Operator Riset', 'Regulasi UU ITE'];
+      container.innerHTML = chips.map(chip => `
+        <button type="button" onclick="selectCategoryChip('${chip.replace(/'/g, "\\'")}')"
+          class="px-2.5 py-1 rounded-xl bg-white hover:bg-primary-subtle text-slate-700 hover:text-primary text-[11px] font-bold border border-slate-200 transition">
+          #${chip}
+        </button>
+      `).join('');
+    }
+
+    // =========================================================================
+    // SIDEBAR & DROPDOWN
+    // =========================================================================
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+
+    function toggleUserDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-dropdown-menu');
+      const btn = document.getElementById('user-menu-btn');
+      if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // =========================================================================
+    // CATEGORY
+    // =========================================================================
+    function toggleCategorySelector() {
+      const box = document.getElementById('category-selector-box');
+      if (box) box.classList.toggle('hidden');
+    }
+
+    function selectCategoryChip(cat) {
+      selectedCategory = cat;
+      updateActiveCategoryPill();
+      toggleCategorySelector();
+    }
+
+    function applyCustomCategory() {
+      const inp = document.getElementById('custom-category-input');
+      if (!inp) return;
+      const val = inp.value.trim();
+      if (val) { selectedCategory = val; updateActiveCategoryPill(); inp.value = ''; toggleCategorySelector(); }
+    }
+
+    function clearCategory() {
+      selectedCategory = '';
+      updateActiveCategoryPill();
+    }
+
+    function updateActiveCategoryPill() {
+      const pill = document.getElementById('active-category-pill');
+      const text = document.getElementById('active-category-text');
+      if (!pill || !text) return;
+      if (selectedCategory) { text.textContent = '#' + selectedCategory; pill.classList.remove('hidden'); }
+      else { pill.classList.add('hidden'); }
+    }
+
+    // =========================================================================
+    // IMAGE
+    // =========================================================================
+    function handleImageSelected(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        attachedImageBase64 = evt.target.result;
+        document.getElementById('image-preview-img').src = attachedImageBase64;
+        document.getElementById('image-preview-box').classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeAttachedImage() {
+      attachedImageBase64 = null;
+      document.getElementById('image-preview-img').src = '';
+      document.getElementById('image-preview-box').classList.add('hidden');
+      document.getElementById('post-image-input').value = '';
+    }
+
+    // =========================================================================
+    // POST CRUD
+    // =========================================================================
+    function publishPost() {
+      if (!requireAuth()) return;
+      const text = document.getElementById('new-post-content').value.trim();
+      if (!text && !attachedImageBase64) { showToast('⚠️ Tulis isi pesan atau sertakan foto.', 'warning'); return; }
+
+      const user = getCurrentUser();
+      const newPost = {
+        id: 'post-' + Date.now(),
+        author: user.name,
+        username: user.username || user.name.toLowerCase().replace(/\s+/g, '_'),
+        role: user.role || 'Siswa XI HJ 5',
+        category: selectedCategory || '',
+        timestamp: Date.now(),
+        content: text,
+        image: attachedImageBase64,
+        likes: [],
+        comments: []
+      };
+
+      const posts = getStoredPosts();
+      posts.unshift(newPost);
+      saveStoredPosts(posts);
+
+      document.getElementById('new-post-content').value = '';
+      clearCategory();
+      removeAttachedImage();
+      loadPosts();
+      showToast('🎉 Postingan berhasil dibagikan!');
+    }
+
+    function deletePost(postId) {
+      if (!requireAuth()) return;
+      if (!confirm('Apakah Anda yakin ingin menghapus postingan ini?')) return;
+      let posts = getStoredPosts();
+      posts = posts.filter(p => p.id !== postId);
+      saveStoredPosts(posts);
+      loadPosts();
+      showToast('🗑️ Postingan telah dihapus.');
+    }
+
+    function openEditModal(postId) {
+      if (!requireAuth()) return;
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (!post) return;
+      document.getElementById('edit-post-id').value = post.id;
+      document.getElementById('edit-post-content').value = post.content || '';
+      document.getElementById('edit-post-category').value = post.category || '';
+      document.getElementById('edit-post-modal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-post-modal').classList.add('hidden');
+    }
+
+    function saveEditedPost() {
+      const postId = document.getElementById('edit-post-id').value;
+      const newContent = document.getElementById('edit-post-content').value.trim();
+      const newCategory = document.getElementById('edit-post-category').value.trim();
+      if (!newContent) { showToast('⚠️ Isi postingan tidak boleh kosong.', 'warning'); return; }
+
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (post) {
+        post.content = newContent;
+        post.category = newCategory;
+        post.isEdited = true;
+        post.editedAt = Date.now();
+        saveStoredPosts(posts);
+        closeEditModal();
+        loadPosts();
+        showToast('✓ Postingan berhasil diperbarui!');
+      }
+    }
+
+    // =========================================================================
+    // LIKES
+    // =========================================================================
+    function toggleLike(postId) {
+      if (!requireAuth()) return;
+      const user = getCurrentUser();
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (!post) return;
+
+      if (!Array.isArray(post.likes)) post.likes = [];
+      const idx = post.likes.indexOf(user.name);
+      if (idx > -1) post.likes.splice(idx, 1);
+      else post.likes.push(user.name);
+
+      saveStoredPosts(posts);
+
+      // Partial DOM update for like button (avoid full re-render flickering)
+      const likeBtn = document.getElementById(`like-btn-${postId}`);
+      const likeCount = document.getElementById(`like-count-${postId}`);
+      const likeViewBtn = document.getElementById(`like-view-${postId}`);
+      const isLiked = post.likes.includes(user.name);
+      if (likeBtn) {
+        likeBtn.className = `flex items-center gap-1.5 font-bold transition cursor-pointer ${isLiked ? 'text-red-500' : 'text-slate-600 hover:text-red-500'}`;
+        likeBtn.querySelector('span').textContent = isLiked ? 'favorite' : 'favorite_border';
+      }
+      if (likeCount) likeCount.textContent = `${post.likes.length} Suka`;
+      if (likeViewBtn) {
+        if (post.likes.length > 0) { likeViewBtn.classList.remove('hidden'); }
+        else { likeViewBtn.classList.add('hidden'); }
+      }
+    }
+
+    function openLikesModal(postId) {
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (!post) return;
+
+      const likes = Array.isArray(post.likes) ? post.likes : [];
+      const container = document.getElementById('likes-list-container');
+      if (!container) return;
+
+      if (likes.length === 0) {
+        container.innerHTML = `<div class="py-6 text-center text-xs text-slate-400">Belum ada yang menyukai postingan ini.</div>`;
+      } else {
+        container.innerHTML = likes.map(name => {
+          const initials = getInitials(name);
+          const color = getAvatarColor(name);
+          return `
+            <div class="flex items-center gap-3 p-2 rounded-2xl hover:bg-slate-50 transition">
+              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr ${color} text-white flex items-center justify-center font-bold text-[11px] shadow-xs shrink-0">${initials}</div>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-bold text-navy truncate">${escapeHtml(name)}</div>
+                <div class="text-[10px] text-slate-400">Menyukai postingan ini</div>
+              </div>
+              <span class="material-symbols-outlined text-[16px] text-red-500">favorite</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('view-likes-modal').classList.remove('hidden');
+    }
+
+    function closeLikesModal() {
+      document.getElementById('view-likes-modal').classList.add('hidden');
+    }
+
+    // =========================================================================
+    // COMMENTS
+    // =========================================================================
+    function toggleComments(postId) {
+      const box = document.getElementById(`comments-drawer-${postId}`);
+      if (box) box.classList.toggle('hidden');
+    }
+
+    function addComment(postId, event) {
+      event.preventDefault();
+      if (!requireAuth()) return;
+      const input = document.getElementById(`comment-input-${postId}`);
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+
+      const user = getCurrentUser();
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (!post) return;
+
+      if (!Array.isArray(post.comments)) post.comments = [];
+
+      const newComment = {
+        id: 'c-' + Date.now(),
+        author: user.name,
+        username: user.username || '',
+        role: user.role || 'Siswa XI HJ 5',
+        timestamp: Date.now(),
+        content: text
+      };
+
+      post.comments.push(newComment);
+      saveStoredPosts(posts);
+      input.value = '';
+
+      // Re-render only this post's comments section
+      renderPostComments(postId, post.comments, user);
+      showToast('✓ Komentar berhasil dikirim!');
+
+      // Update comment count badge
+      const countEl = document.getElementById(`comment-count-${postId}`);
+      if (countEl) countEl.textContent = `${post.comments.length} Komentar`;
+    }
+
+    function deleteComment(postId, commentId) {
+      if (!requireAuth()) return;
+      const user = getCurrentUser();
+      const posts = getStoredPosts();
+      const post = posts.find(p => p.id === postId);
+      if (!post || !Array.isArray(post.comments)) return;
+
+      const comment = post.comments.find(c => c.id === commentId);
+      if (!comment) return;
+      const isAdmin = user.role && (user.role.toLowerCase().includes('guru') || user.role.toLowerCase().includes('admin'));
+      if (comment.author !== user.name && !isAdmin) { showToast('⚠️ Anda hanya dapat menghapus komentar Anda sendiri.', 'warning'); return; }
+
+      post.comments = post.comments.filter(c => c.id !== commentId);
+      saveStoredPosts(posts);
+      renderPostComments(postId, post.comments, user);
+      showToast('🗑️ Komentar dihapus.');
+
+      const countEl = document.getElementById(`comment-count-${postId}`);
+      if (countEl) countEl.textContent = `${post.comments.length} Komentar`;
+    }
+
+    function renderPostComments(postId, commentsArr, user) {
+      const listEl = document.getElementById(`comments-list-${postId}`);
+      if (!listEl) return;
+
+      const isAdmin = user && user.role && (user.role.toLowerCase().includes('guru') || user.role.toLowerCase().includes('admin'));
+
+      if (commentsArr.length === 0) {
+        listEl.innerHTML = `<p class="text-xs text-slate-400 italic py-1">Belum ada komentar. Berikan tanggapan pertamamu!</p>`;
+        return;
+      }
+
+      listEl.innerHTML = commentsArr.map(c => {
+        const initials = getInitials(c.author);
+        const color = getAvatarColor(c.author);
+        const isGuru = c.role && c.role.toLowerCase().includes('guru');
+        const canDelete = user && (c.author === user.name || isAdmin);
+        return `
+          <div class="flex items-start gap-2.5 bg-white p-3 rounded-2xl border border-slate-200/70 shadow-sm" id="comment-${c.id}">
+            <div class="w-7 h-7 rounded-xl bg-gradient-to-tr ${color} text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${initials}</div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <div class="flex items-center gap-1.5 min-w-0">
+                  <span class="text-xs font-bold text-navy truncate">${escapeHtml(c.author)}</span>
+                  ${isGuru ? `<span class="material-symbols-outlined text-[13px] text-blue-500" title="Guru Terverifikasi">verified</span>` : ''}
+                  <span class="text-[9px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-full shrink-0">${escapeHtml(c.role || 'Siswa')}</span>
+                </div>
+                <div class="flex items-center gap-1 shrink-0">
+                  <span class="text-[10px] text-slate-400">${relativeTime(c.timestamp)}</span>
+                  ${canDelete ? `<button onclick="deleteComment('${postId}', '${c.id}')" title="Hapus Komentar" class="p-0.5 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition"><span class="material-symbols-outlined text-[14px]">delete</span></button>` : ''}
+                </div>
+              </div>
+              <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${escapeHtml(c.content)}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function sharePost(postId) {
+      const url = window.location.origin + window.location.pathname + '#' + postId;
+      navigator.clipboard.writeText(url).then(() => showToast('🔗 Tautan postingan disalin!')).catch(() => showToast('✓ Tautan siap dibagikan.'));
+    }
+
+    // =========================================================================
+    // FEED RENDERING
+    // =========================================================================
+    function handleSearchFeed(val) {
+      searchQuery = (val || '').toLowerCase().trim();
+      loadPosts();
+    }
+
+    function filterFeed(filterKey, btn) {
+      currentFilter = filterKey;
+      document.querySelectorAll('.feed-tab-btn').forEach(b => {
+        b.className = 'feed-tab-btn px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition shrink-0';
+      });
+      btn.className = 'feed-tab-btn px-4 py-2 rounded-xl bg-primary text-white transition shadow-sm shrink-0';
+      loadPosts();
+    }
+
+    function loadPosts() {
+      const user = getCurrentUser();
+      const allPosts = getStoredPosts();
+      const container = document.getElementById('community-feed-list');
+      const totalStat = document.getElementById('post-total-stat');
+
+      if (totalStat) totalStat.textContent = `${allPosts.length} Postingan`;
+
+      let filtered = [...allPosts];
+
+      if (currentFilter === 'my_posts') {
+        if (!user) { filtered = []; }
+        else { filtered = filtered.filter(p => p.author === user.name || p.username === user.username); }
+      } else if (currentFilter !== 'all') {
+        filtered = filtered.filter(p => p.category && p.category.toLowerCase().includes(currentFilter.toLowerCase()));
+      }
+
+      if (searchQuery) {
+        filtered = filtered.filter(p =>
+          (p.content && p.content.toLowerCase().includes(searchQuery)) ||
+          (p.author && p.author.toLowerCase().includes(searchQuery)) ||
+          (p.category && p.category.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-12 text-center bg-white border border-slate-200/80 rounded-3xl space-y-3 shadow-card">
+            <span class="material-symbols-outlined text-[42px] text-slate-300">chat_bubble</span>
+            <div class="space-y-1">
+              <h3 class="text-sm font-bold text-navy">Belum Ada Postingan</h3>
+              <p class="text-xs text-slate-500">Jadilah yang pertama membagikan catatan atau pertanyaan di komunitas!</p>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => {
+        const likesArr = Array.isArray(p.likes) ? p.likes : [];
+        const commentsArr = Array.isArray(p.comments) ? p.comments : [];
+        const isLikedByMe = user ? likesArr.includes(user.name) : false;
+        const isAuthor = user && (p.author === user.name || p.username === user.username);
+        const isAdmin = user && user.role && (user.role.toLowerCase().includes('guru') || user.role.toLowerCase().includes('admin'));
+        const canManage = isAuthor || isAdmin;
+        const isGuru = p.role && p.role.toLowerCase().includes('guru');
+        const avatarColor = getAvatarColor(p.author);
+
+        return `
+          <div class="post-card bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-card hover:border-slate-300 hover:shadow-card-hover transition-all duration-200" id="${p.id}">
+
+            <!-- Post Header -->
+            <div class="flex items-start justify-between gap-2 mb-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr ${avatarColor} text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">
+                  ${getInitials(p.author)}
+                </div>
+                <div>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs sm:text-sm font-extrabold text-navy">${escapeHtml(p.author)}</span>
+                    ${isGuru ? `<span class="material-symbols-outlined text-[14px] text-blue-500" title="Guru Terverifikasi">verified</span>` : ''}
+                  </div>
+                  <p class="text-[10px] text-text-muted font-medium">
+                    ${escapeHtml(p.role || 'Siswa')} · ${relativeTime(p.timestamp)}
+                    ${p.isEdited ? '<span class="text-slate-400 ml-1">(diedit)</span>' : ''}
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-1.5 shrink-0">
+                ${p.category ? `<span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200/80">#${escapeHtml(p.category)}</span>` : ''}
+                ${canManage ? `
+                  <button onclick="openEditModal('${p.id}')" title="Edit" class="p-1 rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 transition">
+                    <span class="material-symbols-outlined text-[16px]">edit</span>
+                  </button>
+                  <button onclick="deletePost('${p.id}')" title="Hapus" class="p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition">
+                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- Content -->
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed post-content-text mb-3">${escapeHtml(p.content)}</p>
+
+            ${p.image ? `
+              <div class="rounded-2xl overflow-hidden border border-slate-100 max-h-80 mb-3">
+                <img src="${p.image}" alt="Lampiran Foto" class="w-full object-cover">
+              </div>
+            ` : ''}
+
+            <!-- Action Row -->
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-text-muted gap-2">
+
+              <!-- Like -->
+              <div class="flex items-center gap-1.5">
+                <button id="like-btn-${p.id}" onclick="toggleLike('${p.id}')"
+                  class="flex items-center gap-1.5 font-bold transition cursor-pointer ${isLikedByMe ? 'text-red-500' : 'text-slate-600 hover:text-red-500'}">
+                  <span class="material-symbols-outlined text-[19px]">${isLikedByMe ? 'favorite' : 'favorite_border'}</span>
+                  <span id="like-count-${p.id}">${likesArr.length} Suka</span>
+                </button>
+                <button id="like-view-${p.id}" onclick="openLikesModal('${p.id}')"
+                  class="text-[10px] text-slate-400 hover:text-primary hover:underline ml-1 font-semibold ${likesArr.length === 0 ? 'hidden' : ''}">
+                  (Lihat penyuka)
+                </button>
+              </div>
+
+              <!-- Comment -->
+              <button onclick="toggleComments('${p.id}')" class="flex items-center gap-1.5 font-semibold text-slate-600 hover:text-primary transition cursor-pointer">
+                <span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+                <span id="comment-count-${p.id}">${commentsArr.length} Komentar</span>
+              </button>
+
+              <!-- Share -->
+              <button onclick="sharePost('${p.id}')" class="flex items-center gap-1 text-slate-500 hover:text-navy transition cursor-pointer">
+                <span class="material-symbols-outlined text-[17px]">share</span>
+                <span class="hidden sm:inline">Bagikan</span>
+              </button>
+            </div>
+
+            <!-- Comments Drawer -->
+            <div id="comments-drawer-${p.id}" class="hidden pt-4 border-t border-slate-100 mt-3 space-y-3 bg-slate-50/60 -mx-5 -mb-5 sm:-mx-6 sm:-mb-6 px-4 py-4 sm:px-5 rounded-b-3xl">
+              <!-- Comments List -->
+              <div id="comments-list-${p.id}" class="space-y-2.5">
+                ${commentsArr.length === 0
+                  ? `<p class="text-xs text-slate-400 italic py-1">Belum ada komentar. Berikan tanggapan pertamamu!</p>`
+                  : commentsArr.map(c => {
+                    const initials = getInitials(c.author);
+                    const color = getAvatarColor(c.author);
+                    const isGu = c.role && c.role.toLowerCase().includes('guru');
+                    const canDel = user && (c.author === user.name || (user.role && (user.role.toLowerCase().includes('guru') || user.role.toLowerCase().includes('admin'))));
+                    return `
+                      <div class="flex items-start gap-2.5 bg-white p-3 rounded-2xl border border-slate-200/70 shadow-sm" id="comment-${c.id}">
+                        <div class="w-7 h-7 rounded-xl bg-gradient-to-tr ${color} text-white flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">${initials}</div>
+                        <div class="flex-1 min-w-0">
+                          <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                              <span class="text-xs font-bold text-navy truncate">${escapeHtml(c.author)}</span>
+                              ${isGu ? `<span class="material-symbols-outlined text-[13px] text-blue-500">verified</span>` : ''}
+                              <span class="text-[9px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded-full shrink-0">${escapeHtml(c.role || 'Siswa')}</span>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                              <span class="text-[10px] text-slate-400">${relativeTime(c.timestamp)}</span>
+                              ${canDel ? `<button onclick="deleteComment('${p.id}', '${c.id}')" title="Hapus" class="p-0.5 rounded-lg text-slate-300 hover:text-red-500 hover:bg-red-50 transition"><span class="material-symbols-outlined text-[14px]">delete</span></button>` : ''}
+                            </div>
+                          </div>
+                          <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${escapeHtml(c.content)}</p>
+                        </div>
+                      </div>
+                    `;
+                  }).join('')
+                }
+              </div>
+
+              <!-- Comment Input -->
+              <form onsubmit="addComment('${p.id}', event)" class="flex items-center gap-2 pt-1">
+                <div class="w-7 h-7 rounded-xl bg-gradient-to-tr ${getAvatarColor(user ? user.name : '')} text-white flex items-center justify-center font-bold text-[10px] shrink-0">
+                  ${user ? getInitials(user.name) : '?'}
+                </div>
+                <input type="text" id="comment-input-${p.id}"
+                  placeholder="${user ? 'Tulis komentar...' : 'Login untuk berkomentar...'}"
+                  ${user ? '' : 'disabled'}
+                  class="flex-1 bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition ${user ? '' : 'opacity-60 cursor-not-allowed'}">
+                <button type="submit" ${user ? '' : 'disabled'} class="p-2 rounded-xl bg-primary hover:bg-primary-dark text-white transition flex items-center justify-center shadow-xs ${user ? '' : 'opacity-60 cursor-not-allowed'}">
+                  <span class="material-symbols-outlined text-[16px]">send</span>
+                </button>
+              </form>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+*.log
+.env
+*.env
+*.key
+node_modules/
+
+# Database backend scripts (Kept private for cybersecurity protection)
+google_sheets_auth_script.gs

@@ -1,0 +1,453 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tugas & Riset — XAVETRA SMAN 1 Batam</title>
+  <meta name="description" content="Penugasan kelompok dan investigasi mandiri materi Informatika Fase F Kelas XI SMAN 1 Batam.">
+  
+  <!-- Immediate Auth Guard -->
+  <script>
+    (function() {
+      const user = localStorage.getItem('xavetra_user');
+      if (!user) {
+        window.location.replace('login.html?redirect=tugas.html');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1F6BFF',
+            'primary-dark': '#0E4CD1',
+            'primary-subtle': '#EEF4FF',
+            navy: '#0B1528',
+            canvas: '#F4F6FA',
+            surface: '#FFFFFF',
+            accent: '#F59E0B',
+            'text-main': '#0F172A',
+            'text-muted': '#64748B',
+            'border-light': '#E2E8F0',
+            'border-focus': '#BFDBFE'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(11, 21, 40, 0.04), 0 2px 6px -1px rgba(11, 21, 40, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(11, 21, 40, 0.08), 0 4px 12px -2px rgba(31, 107, 255, 0.06)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+  <!-- ========================================================================= -->
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 select-none">
+    <div class="flex-1 p-6 space-y-7 overflow-y-auto">
+      
+      <!-- Brand -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div>
+            <span class="text-lg font-black text-navy tracking-tight">Informatika</span>
+            <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Menus -->
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+          Menu Pembelajaran
+        </div>
+
+        <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+            <span>Modul Materi</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary">4 Bab</span>
+        </a>
+
+        <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+            <span>Catatan Belajar</span>
+          </span>
+          <span id="sidebar-notes-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">Notes</span>
+        </a>
+
+        <!-- Tanya AI -->
+        <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-purple-500 group-hover:scale-110 transition">smart_toy</span>
+            <span>Tanya AI</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+        </a>
+
+        <!-- Komunitas -->
+        <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+            <span>Komunitas</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+        </a>
+
+        <!-- Tugas & Riset (Active) -->
+        <a href="tugas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-glow transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px]">assignment</span>
+            <span>Tugas &amp; Riset</span>
+          </span>
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT                                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-xl">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+          <span class="text-xs font-bold text-navy">Pusat Penugasan Siswa • SMAN 1 Batam</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-3 pl-1">
+          <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+            XS
+          </div>
+          <div class="text-left hidden sm:block">
+            <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[130px]">
+              Siswa Xavetra
+            </div>
+            <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[130px]">
+              Siswa XI HJ 5
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-5xl mx-auto w-full">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+              Penugasan Pembelajaran
+            </h1>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-600 border border-amber-200">
+              Semester Ganjil 2024/2025
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">
+            Instruksi resmi penugasan kelompok 7 siswa dan investigasi isu mandiri sesuai silabus Informatika Fase F.
+          </p>
+        </div>
+
+        <button onclick="showToast('Template Format Penulisan Laporan (PDF) berhasil diunduh!')" class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-navy text-xs font-bold transition flex items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined text-[17px] text-primary">download</span>
+          <span>Unduh Template Laporan (PDF)</span>
+        </button>
+      </div>
+
+      <!-- 2 TUGAS BESAR CARDS -->
+      <div class="space-y-6">
+
+        <!-- TUGAS 1: TUGAS KELOMPOK (SLIDE 12 PPT HUKUM DIGITAL) -->
+        <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/80 shadow-card space-y-6">
+          <div class="flex items-start justify-between flex-wrap gap-4 border-b border-slate-100 pb-5">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold text-primary bg-primary-subtle px-2.5 py-0.5 rounded-full border border-border-focus">
+                  Tugas Kelompok (7 Siswa per Kelompok)
+                </span>
+                <span class="text-xs text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded-full">
+                  Batas Waktu: 1 Minggu
+                </span>
+              </div>
+              <h2 class="text-xl font-extrabold text-navy mt-1.5">
+                Analisis Kasus Pelanggaran Hukum Digital di Indonesia
+              </h2>
+              <p class="text-xs text-text-muted mt-1">Sumber: Slide 12 Bahan Tayang PPT Regulasi Siber &amp; UU ITE</p>
+            </div>
+            <span class="px-3.5 py-1.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-bold border border-slate-200">
+              Format: Laporan PDF &amp; Presentasi
+            </span>
+          </div>
+
+          <!-- Rincian Instruksi Tugas 1 -->
+          <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h4 class="font-bold text-navy text-sm mb-1.5 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-[18px]">task_alt</span>
+                <span>Instruksi Pengerjaan:</span>
+              </h4>
+              <p class="text-text-muted">
+                Bentuk kelompok yang beranggotakan <strong>7 orang siswa</strong>. Pilihlah <strong>1 kasus nyata</strong> pelanggaran hukum siber yang terjadi di Indonesia dalam kurun waktu <strong>2 tahun terakhir</strong>.
+              </p>
+            </div>
+
+            <!-- Pilihan Kategori Topik Kasus -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+              <span class="font-bold text-navy block">Pilihan Topik Kasus Kasus yang Dapat Dipilih:</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-xl bg-white border border-slate-200/80">
+                  <span class="font-bold text-primary">Kategori A:</span> Penyebaran Hoaks Bencana / Pemilu / Isu SARA (UU ITE Pasal 28).
+                </div>
+                <div class="p-2.5 rounded-xl bg-white border border-slate-200/80">
+                  <span class="font-bold text-primary">Kategori B:</span> Kebocoran Data Pribadi / Penyalahgunaan KTP Pinjol (UU PDP No. 27/2022).
+                </div>
+                <div class="p-2.5 rounded-xl bg-white border border-slate-200/80">
+                  <span class="font-bold text-primary">Kategori C:</span> Peretasan Akun / Illegal Access Situs Pemerintah (UU ITE Pasal 30 &amp; 32).
+                </div>
+                <div class="p-2.5 rounded-xl bg-white border border-slate-200/80">
+                  <span class="font-bold text-primary">Kategori D:</span> Penipuan Daring &amp; Pemerasan Digital (UU ITE Pasal 27 &amp; Pasal 45).
+                </div>
+              </div>
+            </div>
+
+            <!-- Sistematika Laporan -->
+            <div class="space-y-2">
+              <span class="font-bold text-navy block">Sistematika Laporan (2-3 Halaman PDF):</span>
+              <ol class="list-decimal list-inside space-y-1.5 text-text-muted pl-1">
+                <li><strong>Kronologi Kasus:</strong> Deskripsi lengkap peristiwa, waktu kejadian, media yang digunakan, dan pihak terdampak.</li>
+                <li><strong>Analisis Pasal Pelanggaran:</strong> Menentukan secara tepat pasal UU ITE atau UU PDP yang dilanggar beserta alasannya.</li>
+                <li><strong>Sanksi Hukum:</strong> Vonis hakim atau tuntutan hukum yang dijatuhkan (hukuman penjara dan besaran denda).</li>
+                <li><strong>Triangulasi 3 Sumber:</strong> Melampirkan minimal 3 rujukan berita resmi yang memvalidasi kasus tersebut.</li>
+                <li><strong>Solusi &amp; Pencegahan:</strong> Rekomendasi langkah etis (netiket) agar masyarakat tidak terjerat kasus serupa.</li>
+              </ol>
+            </div>
+
+            <!-- Output & Presentasi -->
+            <div class="p-4 rounded-2xl bg-blue-50/70 border border-border-focus flex items-center justify-between flex-wrap gap-3">
+              <div>
+                <span class="font-bold text-navy block">Keluaran (Output) Akhir:</span>
+                <span class="text-text-muted">Laporan format PDF (2-3 halaman) dan file slide presentasi singkat (durasi presentasi 5 menit per kelompok).</span>
+              </div>
+              <button onclick="showToast('Form pengumpulan tugas kelompok akan dibuka saat sesi tatap muka.')" class="px-4 py-2 rounded-xl bg-primary hover:bg-primary-dark text-white font-bold text-xs transition shadow-sm">
+                Kumpulkan Laporan (PDF)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TUGAS 2: TUGAS MANDIRI (SLIDE 18 PPT MESIN PENCARI) -->
+        <div class="bg-white p-7 sm:p-8 rounded-3xl border border-slate-200/80 shadow-card space-y-6">
+          <div class="flex items-start justify-between flex-wrap gap-4 border-b border-slate-100 pb-5">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  Tugas Individu / Mandiri
+                </span>
+                <span class="text-xs text-text-muted">Batas Pengumpulan: Pertemuan Berikutnya</span>
+              </div>
+              <h2 class="text-xl font-extrabold text-navy mt-1.5">
+                Investigasi Isu Digital &amp; Triangulasi 3 Sumber
+              </h2>
+              <p class="text-xs text-text-muted mt-1">Sumber: Slide 18 Bahan Tayang PPT Mesin Pencari &amp; Literasi Digital</p>
+            </div>
+            <span class="px-3.5 py-1.5 rounded-xl bg-slate-50 text-slate-600 text-xs font-bold border border-slate-200">
+              Format: Laporan Singkat 1-2 Hal
+            </span>
+          </div>
+
+          <!-- Rincian Instruksi Tugas 2 -->
+          <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+            <div>
+              <h4 class="font-bold text-navy text-sm mb-1.5 flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-emerald-600 text-[18px]">search</span>
+                <span>Langkah Praktik Investigasi:</span>
+              </h4>
+              <p class="text-text-muted">
+                Lakukan investigasi mandiri untuk membuktikan kebenaran sebuah isu hangat atau informasi yang sedang beredar di internet:
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="font-bold text-navy">Langkah 1: Pemilihan Isu</div>
+                <p class="text-[11px] text-text-muted">Pilih satu isu berita viral yang berpotensi menjadi misinformasi atau hoaks.</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="font-bold text-navy">Langkah 2: Operator Logika</div>
+                <p class="text-[11px] text-text-muted">Gunakan minimal 2 mesin pencari berbeda dan terapkan operator <code class="text-primary font-mono">site:</code>, <code class="text-primary font-mono">filetype:</code>, dan <code class="text-primary font-mono">" "</code>.</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div class="font-bold text-navy">Langkah 3: Triangulasi Fakta</div>
+                <p class="text-[11px] text-text-muted">Kumpulkan 3 rujukan independen (Lembaga resmi, Media Dewan Pers, Pakar/Jurnal).</p>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between flex-wrap gap-3">
+              <span class="text-xs text-slate-400">Ingin menguji query operator terlebih dahulu?</span>
+              <a href="simulator.html" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-navy font-bold text-xs transition flex items-center gap-1.5">
+                <span>Buka Simulator Riset</span>
+                <span class="material-symbols-outlined text-[16px]">manage_search</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RUBRIK PENILAIAN RESMI -->
+        <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+              <span class="material-symbols-outlined text-[18px]">verified</span>
+            </span>
+            <div>
+              <h3 class="text-sm font-extrabold text-navy">Rubrik Penilaian Pembelajaran</h3>
+              <p class="text-xs text-text-muted">Standar evaluasi kurikulum Informatika Fase F SMAN 1 Batam</p>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto pt-1">
+            <table class="w-full text-left text-xs border border-slate-200 rounded-2xl overflow-hidden">
+              <thead class="bg-slate-50 text-navy font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-3">Komponen Penilaian</th>
+                  <th class="p-3">Bobot</th>
+                  <th class="p-3">Indikator Keberhasilan</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr>
+                  <td class="p-3 font-semibold">Ketepatan Analisis Regulasi Digital</td>
+                  <td class="p-3 font-bold text-primary">40%</td>
+                  <td class="p-3 text-text-muted">Mampu memetakan pasal UU ITE / UU PDP yang dilanggar secara akurat beserta landasan hukumnya.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Validitas Triangulasi 3 Sumber</td>
+                  <td class="p-3 font-bold text-primary">30%</td>
+                  <td class="p-3 text-text-muted">Sumber rujukan memenuhi syarat (resmi, media terdaftar Dewan Pers, pakar independen) tanpa rujukan anonim.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Sistematika &amp; Kerapian Laporan</td>
+                  <td class="p-3 font-bold text-primary">20%</td>
+                  <td class="p-3 text-text-muted">Penulisan runtut, tata bahasa baik, format PDF terstruktur, dan sitasi jelas.</td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-semibold">Etika &amp; Netiket Digital</td>
+                  <td class="p-3 font-bold text-primary">10%</td>
+                  <td class="p-3 text-text-muted">Menjaga privasi korban, tidak menyebarkan data sensitif (doxing), dan objektif dalam menarik simpulan.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white border-t border-slate-200/80 text-center text-xs text-text-muted px-4">
+      <p>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI • SMA Negeri 1 Batam</p>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getAuthUser();
+      if (!user) {
+        window.location.replace('login.html?redirect=tugas.html');
+        return;
+      }
+
+      const studentName = user.name || 'Siswa Xavetra';
+      const studentRole = user.role || 'Siswa XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'XS';
+
+      const displayNameEl = document.getElementById('student-display-name');
+      const displayRoleEl = document.getElementById('student-display-role');
+      const topAvatarEl = document.getElementById('top-user-avatar');
+      
+      const sidebarNameEl = document.getElementById('student-name-sidebar');
+      const sidebarRoleEl = document.getElementById('student-role-sidebar');
+      const sidebarAvatarEl = document.getElementById('student-avatar-sidebar');
+
+      if (displayNameEl) displayNameEl.textContent = studentName;
+      if (displayRoleEl) displayRoleEl.textContent = studentRole;
+      if (topAvatarEl) topAvatarEl.textContent = initials;
+
+      if (sidebarNameEl) sidebarNameEl.textContent = studentName;
+      if (sidebarRoleEl) sidebarRoleEl.textContent = studentRole;
+      if (sidebarAvatarEl) sidebarAvatarEl.textContent = initials;
+    });
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

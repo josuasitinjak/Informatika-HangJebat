@@ -1,0 +1,111 @@
+/*
+ * XAVETRA — Platform Pembelajaran Informatika Fase F
+ * SMAN 1 Batam • Kelas XI HJ 5
+ * Main Stylesheet & Custom UI Utilities
+ */
+
+/* Material Symbols configuration */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 450, 'GRAD' 0, 'opsz' 20;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Atmospheric Mesh Gradient (Branding XAVETRA) */
+.mesh-gradient-bg {
+  background-color: #1a56db;
+  background-image: 
+    radial-gradient(at 12% 22%, #1e40af 0px, transparent 52%),
+    radial-gradient(at 88% 18%, #60a5fa 0px, transparent 50%),
+    radial-gradient(at 50% 60%, #2563eb 0px, transparent 60%),
+    radial-gradient(at 82% 85%, #3b82f6 0px, transparent 50%),
+    radial-gradient(at 20% 90%, #1d4ed8 0px, transparent 50%);
+}
+
+/* Atmospheric glow effect */
+.orb-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Form Inputs */
+.form-input {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form-input:focus {
+  background-color: #ffffff;
+  border-color: #1F6BFF;
+  box-shadow: 0 0 0 3px rgba(31, 107, 255, 0.15);
+  outline: none;
+}
+
+/* Micro Animations: Floating Cards */
+@keyframes subtleFloatA {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+}
+@keyframes subtleFloatB {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-9px); }
+}
+@keyframes subtleFloatC {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-card-1 {
+  animation: subtleFloatA 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+.float-card-2 {
+  animation: subtleFloatB 7s cubic-bezier(0.45, 0, 0.55, 1) 0.8s infinite;
+}
+.float-card-3 {
+  animation: subtleFloatC 6.5s cubic-bezier(0.45, 0, 0.55, 1) 1.5s infinite;
+}
+
+/* Hover Cards and Button Interactions */
+.clean-hover-card {
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.clean-hover-card:hover {
+  transform: translateY(-3px);
+}
+
+.interactive-btn {
+  transition: all 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.interactive-btn:active {
+  transform: scale(0.97);
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .float-card-1, .float-card-2, .float-card-3 {
+    animation: none !important;
+  }
+  .clean-hover-card, .interactive-btn {
+    transition: none !important;
+  }
+  .clean-hover-card:hover {
+    transform: none !important;
+  }
+}

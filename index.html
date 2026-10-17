@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI | SMAN 1 Batam</title>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono (hanya untuk code snippet) -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind Configuration verbatim per palet & tema -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1F6BFF",
+            "primary-dark": "#0047B8",
+            "primary-subtle": "#EBF2FF",
+            navy: "#0F1B33",
+            "on-surface": "#0F1B33",
+            "text-muted": "#5B6679",
+            accent: "#FF7A2F",
+            "accent-subtle": "#FFF2EA",
+            canvas: "#F7F8FB",
+            surface: "#FFFFFF",
+            "border-light": "#E2E7F0",
+            "border-focus": "#C5D5F6",
+          },
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"],
+          },
+          borderRadius: {
+            'card': '22px',
+          },
+          boxShadow: {
+            'card': '0 10px 30px -4px rgba(15, 27, 51, 0.05), 0 4px 12px -2px rgba(15, 27, 51, 0.03)',
+            'card-hover': '0 18px 36px -6px rgba(15, 27, 51, 0.09), 0 8px 18px -4px rgba(31, 107, 255, 0.08)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+            'float': '0 12px 28px -4px rgba(15, 27, 51, 0.12)',
+          }
+        },
+      },
+    }
+  </script>
+  <!-- Custom UI & Design Utilities -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-navy font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-primary-subtle selection:text-primary">
+  <!-- ========================================================================= -->
+  <!-- 1. TOP NAVIGATION BAR                                                     -->
+  <!-- ========================================================================= -->
+  <header class="bg-surface/90 backdrop-blur-md top-0 sticky z-50 border-b border-border-light">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between w-full">
+      <!-- Logo & Class Identity Pill -->
+      <div class="flex items-center gap-3">
+        <a class="text-xl font-extrabold tracking-tight text-navy flex items-center gap-2" href="#">
+          <span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white shadow-sm">
+            <span class="material-symbols-outlined text-[19px]">terminal</span>
+          </span>
+          <span>XAVETRA</span>
+        </a>
+        <span class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-primary-subtle text-primary border border-border-focus">
+          XI HJ 5 • SMAN 1 BATAM
+        </span>
+      </div>
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-7 text-sm font-medium">
+        <a class="text-primary font-semibold border-b-2 border-primary pb-1 transition-colors" href="#fitur">
+          Fitur
+        </a>
+        <a class="text-text-muted hover:text-primary transition-colors" href="#modul-materi">
+          Modul Materi
+        </a>
+        <a class="text-text-muted hover:text-primary transition-colors" href="#preview-platform">
+          Preview Platform
+        </a>
+        <a class="text-text-muted hover:text-primary transition-colors" href="#guru-evaluasi">
+          Untuk Guru
+        </a>
+        <a class="text-text-muted hover:text-primary transition-colors" href="#tentang-kami">
+          Tentang
+        </a>
+      </nav>
+      <!-- Actions (Auth Sensitive: Single Prominent Button) -->
+      <div id="navbar-auth-section" class="flex items-center">
+        <a class="interactive-btn inline-flex items-center justify-center px-7 py-2.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary-dark shadow-glow tracking-wide" href="login.html">
+          Mulai Belajar
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- ========================================================================= -->
+    <!-- 2. HERO SECTION                                                           -->
+    <!-- ========================================================================= -->
+    <section class="relative pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden bg-gradient-to-b from-white via-canvas to-canvas">
+      <div class="max-w-7xl mx-auto px-6">
+        <!-- Top Pitch Headline -->
+        <div class="text-center max-w-3xl mx-auto space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-border-light shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span class="text-xs font-semibold text-primary">Platform Belajar Informatika Fase F Kelas XI • SMAN 1 Batam</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-navy tracking-tight leading-tight">
+            Eksplorasi Mesin Pencari &amp; Hukum Digital secara Kritis.
+          </h1>
+          <p class="text-base sm:text-lg text-text-muted max-w-2xl mx-auto leading-relaxed">
+            Kuasai strategi riset cerdas, teknik membaca lateral, triangulasi sumber kredibel, serta pemahaman regulasi UU ITE &amp; UU PDP di Indonesia.
+          </p>
+          <!-- CTA Pill Buttons -->
+          <div class="flex flex-wrap items-center justify-center gap-3.5 pt-3">
+            <button onclick="handleProtectedAction('#modul-materi', 'Mulai Belajar')" class="interactive-btn inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold text-white bg-primary hover:bg-primary-dark shadow-glow">
+              <span>Mulai Belajar Sekarang</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+            <button onclick="handleProtectedAction('#modul-materi', 'Modul Belajar Fase F')" class="interactive-btn inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-navy bg-surface border border-border-light hover:bg-slate-50 shadow-sm">
+              <span class="material-symbols-outlined text-[18px] text-primary">menu_book</span>
+              <span>Jelajahi Modul Belajar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 3. SECTION FITUR UTAMA                                                    -->
+    <!-- ========================================================================= -->
+    <section class="py-20 bg-surface border-y border-border-light" id="fitur">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <span class="text-xs font-bold text-primary px-3.5 py-1 rounded-full bg-primary-subtle border border-border-focus">
+            FITUR UTAMA XAVETRA
+          </span>
+          <h2 class="text-3xl font-extrabold text-navy tracking-tight">
+            Pusat Belajar Informatika yang Menyeluruh
+          </h2>
+          <p class="text-base text-text-muted">
+            Dirancang khusus untuk mendukung capaian pembelajaran Kurikulum Merdeka Informatika Fase F secara terarah dan interaktif.
+          </p>
+        </div>
+
+        <!-- 4 Bento Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <!-- Card 1: Materi Terstruktur -->
+          <div class="clean-hover-card bg-white p-6 rounded-card border border-border-light shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-primary-subtle text-primary flex items-center justify-center mb-5">
+                <span class="material-symbols-outlined text-[26px]">menu_book</span>
+              </div>
+              <h3 class="text-base font-bold text-navy mb-2">Materi Terstruktur</h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Konsep runtut Fase F 4 Bab, dilengkapi ilustrasi logika penalaran dan contoh baris kode siap dieksekusi.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border-light flex items-center justify-between text-xs font-semibold text-primary">
+              <span>Kurikulum Fase F</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Video Pembelajaran -->
+          <div class="clean-hover-card bg-white p-6 rounded-card border border-border-light shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-accent-subtle text-accent flex items-center justify-center mb-5">
+                <span class="material-symbols-outlined text-[26px]">play_circle</span>
+              </div>
+              <h3 class="text-base font-bold text-navy mb-2">Video Pembelajaran</h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Visualisasi konsep animasi siswa dan rangkuman intisari modul agar logika algoritma mudah dipahami.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border-light flex items-center justify-between text-xs font-semibold text-accent">
+              <span>Visual &amp; Jelas</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Kuis Interaktif -->
+          <div class="clean-hover-card bg-white p-6 rounded-card border border-border-light shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-5">
+                <span class="material-symbols-outlined text-[26px]">quiz</span>
+              </div>
+              <h3 class="text-base font-bold text-navy mb-2">Kuis Interaktif</h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Evaluasi komputasional dengan instant feedback dan review pembahasan mendalam setiap butir soal.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border-light flex items-center justify-between text-xs font-semibold text-emerald-600">
+              <span>Instant Feedback</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Progress Tracking -->
+          <div class="clean-hover-card bg-white p-6 rounded-card border border-border-light shadow-card flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5">
+                <span class="material-symbols-outlined text-[26px]">monitoring</span>
+              </div>
+              <h3 class="text-base font-bold text-navy mb-2">Progress Tracking</h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Pantau capaian belajar mandiri, indikator kompetensi tuntas, dan akurasi skor kuis per bab secara transparan.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border-light flex items-center justify-between text-xs font-semibold text-indigo-600">
+              <span>Grafik Kemajuan</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Baris Pendukung Menarik -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <!-- Pendukung 1: Interactive Tooling -->
+          <div class="p-5 rounded-2xl bg-canvas border border-border-light flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-white border border-border-light text-primary flex items-center justify-center shrink-0 shadow-sm">
+              <span class="material-symbols-outlined text-[22px]">code_blocks</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-navy">Komponen Interaktif</h4>
+              <p class="text-xs text-text-muted mt-1 leading-relaxed">
+                Code Playground langsung di browser, visualisasi langkah algoritma sorting, dan perancang flowchart digital.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pendukung 2: Gamifikasi Ringan -->
+          <div class="p-5 rounded-2xl bg-canvas border border-border-light flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-white border border-border-light text-accent flex items-center justify-center shrink-0 shadow-sm">
+              <span class="material-symbols-outlined text-[22px]">military_tech</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-navy">Gamifikasi Ringan &amp; XP</h4>
+              <p class="text-xs text-text-muted mt-1 leading-relaxed">
+                Akumulasi poin XP saat menyelesaikan latihan materi dan koleksi lencana heksagon pencapaian konsep.
+              </p>
+            </div>
+          </div>
+
+          <!-- Pendukung 3: Dashboard Guru -->
+          <div class="p-5 rounded-2xl bg-canvas border border-border-light flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-white border border-border-light text-secondary flex items-center justify-center shrink-0 shadow-sm">
+              <span class="material-symbols-outlined text-[22px]">analytics</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-navy">Dashboard Guru &amp; Analitik</h4>
+              <p class="text-xs text-text-muted mt-1 leading-relaxed">
+                Visibilitas menyeluruh bagi pengajar untuk memantau ketuntasan kurikulum kelas XI HJ 5 SMAN 1 Batam.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 4. SECTION DAFTAR MODUL BELAJAR (KURIKULUM FASE F)                        -->
+    <!-- ========================================================================= -->
+    <section class="py-20 md:py-24" id="modul-materi">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-3xl mb-12 space-y-3">
+          <span class="text-xs font-bold text-primary px-3.5 py-1 rounded-full bg-primary-subtle border border-border-focus">
+            KURIKULUM MERDEKA INFORMATIKA
+          </span>
+          <h2 class="text-3xl font-extrabold text-navy tracking-tight">
+            Daftar Modul Pembelajaran Fase F
+          </h2>
+          <p class="text-base text-text-muted">
+            4 Bab inti terverifikasi dengan materi bacaan, video panduan, dan kuis pemahaman konsep mendalam.
+          </p>
+        </div>
+
+        <!-- 4 Chapter Module Cards Grid (Materi Riil Kelas XI SMAN 1 Batam) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Bab 01: Mesin Pencari & Cara Kerja -->
+          <div class="clean-hover-card p-7 rounded-card bg-white border border-border-light shadow-card flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-primary px-2.5 py-0.5 rounded-md bg-primary-subtle">
+                  BAB 01 • FASE F
+                </span>
+                <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  Tuntas Dipelajari
+                </span>
+              </div>
+              <h3 class="text-xl font-bold text-navy">
+                Mesin Pencari &amp; Arsitektur Informasi Web
+              </h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Konsep gerbang informasi digital, perbandingan mesin pencari (Google, Bing, DuckDuckGo, Ecosia), dan 3 tahap kerja inti: Crawling, Indexing, serta Ranking.
+              </p>
+              <!-- Content Badges -->
+              <div class="flex items-center gap-3 text-xs text-text-muted pt-1">
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-primary">article</span> 5 Modul Teori
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-accent">play_circle</span> 2 Video Animasi
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600">quiz</span> 1 Kuis Cara Kerja
+                </span>
+              </div>
+            </div>
+
+            <!-- Progress Bar & Action -->
+            <div class="pt-4 border-t border-border-light space-y-2.5">
+              <div class="flex justify-between text-xs font-semibold text-text-muted">
+                <span>Tingkat Pemahaman</span>
+                <span class="text-emerald-600 font-bold">100% Tuntas</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-emerald-500 h-full rounded-full" style="width: 100%;"></div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button onclick="handleProtectedAction('dashboard.html', 'Bab 01: Mesin Pencari')" class="interactive-btn text-xs font-bold text-primary hover:text-primary-dark inline-flex items-center gap-1">
+                  <span>Buka Materi</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bab 02: Strategi Riset & Triangulasi (Sedang Dipelajari) -->
+          <div class="clean-hover-card p-7 rounded-card bg-white border-2 border-primary/40 shadow-card flex flex-col justify-between space-y-6 relative overflow-hidden">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-primary px-2.5 py-0.5 rounded-md bg-primary-subtle">
+                  BAB 02 • FASE F
+                </span>
+                <span class="text-xs font-semibold text-primary bg-primary-subtle px-2.5 py-0.5 rounded-full border border-border-focus">
+                  Sedang Dipelajari
+                </span>
+              </div>
+              <h3 class="text-xl font-bold text-navy">
+                Strategi Riset, Operator &amp; Triangulasi Sumber
+              </h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Teknik riset cerdas dengan operator (" ", -, site:, filetype:), teknik membaca lateral, serta triangulasi 3 sumber independen untuk menguji kredibilitas informasi.
+              </p>
+              <!-- Content Badges -->
+              <div class="flex items-center gap-3 text-xs text-text-muted pt-1">
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-primary">article</span> 6 Modul Riset
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-accent">fact_check</span> 1 Praktik Triangulasi
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600">quiz</span> 1 Kuis Operator
+                </span>
+              </div>
+            </div>
+
+            <!-- Progress Bar & Action -->
+            <div class="pt-4 border-t border-border-light space-y-2.5">
+              <div class="flex justify-between text-xs font-semibold text-text-muted">
+                <span>Tingkat Pemahaman</span>
+                <span class="text-primary font-bold">75% Berjalan</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-primary h-full rounded-full" style="width: 75%;"></div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button onclick="handleProtectedAction('dashboard.html', 'Bab 02: Strategi Riset')" class="interactive-btn text-xs font-bold text-primary hover:text-primary-dark inline-flex items-center gap-1">
+                  <span>Lanjutkan Materi</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bab 03: UU ITE & UU PDP -->
+          <div class="clean-hover-card p-7 rounded-card bg-white border border-border-light shadow-card flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-accent px-2.5 py-0.5 rounded-md bg-accent-subtle">
+                  BAB 03 • FASE F
+                </span>
+                <span class="text-xs font-semibold text-text-muted bg-slate-100 px-2.5 py-0.5 rounded-full">
+                  Siap Diakses
+                </span>
+              </div>
+              <h3 class="text-xl font-bold text-navy">
+                Hukum Digital Indonesia: UU ITE &amp; UU PDP
+              </h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                Kajian pasal krusial UU ITE (27, 28 hoaks/SARA, 30 hacking, 45 sanksi) dan UU Pelindungan Data Pribadi No. 27/2022 guna mencegah kejahatan siber &amp; kebocoran data.
+              </p>
+              <!-- Content Badges -->
+              <div class="flex items-center gap-3 text-xs text-text-muted pt-1">
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-primary">gavel</span> 5 Modul Hukum
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-accent">play_circle</span> 2 Studi Kasus
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600">quiz</span> 1 Kuis Kasus ITE
+                </span>
+              </div>
+            </div>
+
+            <!-- Progress Bar & Action -->
+            <div class="pt-4 border-t border-border-light space-y-2.5">
+              <div class="flex justify-between text-xs font-semibold text-text-muted">
+                <span>Tingkat Pemahaman</span>
+                <span class="text-accent font-semibold">25% Modul</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-accent h-full rounded-full" style="width: 25%;"></div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button onclick="handleProtectedAction('dashboard.html', 'Bab 03: Hukum Digital')" class="interactive-btn text-xs font-bold text-primary hover:text-primary-dark inline-flex items-center gap-1">
+                  <span>Buka Materi</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bab 04: Hak Cipta & Netiket -->
+          <div class="clean-hover-card p-7 rounded-card bg-white border border-border-light shadow-card flex flex-col justify-between space-y-6">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-text-muted px-2.5 py-0.5 rounded-md bg-slate-100">
+                  BAB 04 • FASE F
+                </span>
+                <span class="text-xs font-semibold text-text-muted bg-slate-100 px-2.5 py-0.5 rounded-full">
+                  Terjadwal Pekan Depan
+                </span>
+              </div>
+              <h3 class="text-xl font-bold text-navy">
+                Hak Cipta Digital, Netiket &amp; Studi Kasus Nyata
+              </h3>
+              <p class="text-sm text-text-muted leading-relaxed">
+                UU Hak Cipta No. 28/2014, perlindungan karya kreatif digital, pencegahan plagiarisme tugas, lisensi konten, serta etika kesantunan bermedia sosial (netiket).
+              </p>
+              <!-- Content Badges -->
+              <div class="flex items-center gap-3 text-xs text-text-muted pt-1">
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-primary">copyright</span> 4 Modul Etika
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-accent">group</span> 1 Tugas Kelompok
+                </span>
+                <span>•</span>
+                <span class="flex items-center gap-1 font-medium">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600">quiz</span> 1 Uji Netiket
+                </span>
+              </div>
+            </div>
+
+            <!-- Progress Bar & Action -->
+            <div class="pt-4 border-t border-border-light space-y-2.5">
+              <div class="flex justify-between text-xs font-semibold text-text-muted">
+                <span>Tingkat Pemahaman</span>
+                <span>0%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-slate-300 h-full rounded-full" style="width: 0%;"></div>
+              </div>
+              <div class="pt-2 flex justify-end">
+                <button onclick="handleProtectedAction('dashboard.html', 'Bab 04: Hak Cipta & Netiket')" class="interactive-btn text-xs font-bold text-text-muted hover:text-navy inline-flex items-center gap-1">
+                  <span>Lihat Silabus</span>
+                  <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 5. SECTION PREVIEW PLATFORM (DASHBOARD SISWA & INTERACTIVE QUIZ)          -->
+    <!-- ========================================================================= -->
+    <!-- ========================================================================= -->
+    <!-- 5. SECTION PREVIEW PLATFORM (SHOWCASE FITUR & EKOSISTEM BELAJAR)          -->
+    <!-- ========================================================================= -->
+    <section class="py-20 bg-surface border-y border-border-light relative overflow-hidden" id="preview-platform">
+      <!-- Ambient Glow Orbs -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <span class="text-xs font-bold text-primary px-3.5 py-1 rounded-full bg-primary-subtle border border-border-focus tracking-wide">
+            EKOSISTEM BELAJAR DIGITAL
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
+            Ruang Belajar yang Fokus, Interaktif &amp; Terukur
+          </h2>
+          <p class="text-base text-text-muted leading-relaxed">
+            Dirancang khusus untuk mendukung capaian Fase F Kurikulum Merdeka. Memadukan teori mendalam, simulasi kode langsung di peramban, dan evaluasi berbasis logika.
+          </p>
+        </div>
+
+        <!-- 3 Feature Highlights Showcase -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          
+          <!-- Feature 1: Search Engine & Operator Simulator (7 Cols) -->
+          <div class="lg:col-span-7 bg-white rounded-2xl border border-border-light shadow-card overflow-hidden flex flex-col">
+            <!-- Mockup Header -->
+            <div class="h-11 bg-slate-900 px-4 flex items-center justify-between border-b border-slate-800">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+                <span class="ml-2 text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[14px] text-primary">search</span>
+                  <span>simulator_operator_riset.sh</span>
+                </span>
+              </div>
+              <span class="text-[11px] font-medium text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-800/60 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Mesin Riset Digital Siap
+              </span>
+            </div>
+
+            <!-- Query Simulation Area -->
+            <div class="p-5 bg-slate-950 font-mono text-xs leading-relaxed text-slate-300 overflow-x-auto space-y-2">
+              <div class="text-slate-500"># Simulasi Riset Cerdas Kelas XI • Pengujian Operator Logika Pencarian</div>
+              <div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200">
+                <span class="text-primary font-bold">INPUT QUERY:</span> <span class="text-emerald-400 font-semibold">site:kemdikbud.go.id</span> <span class="text-amber-300">"informatika fase f"</span> <span class="text-purple-400 font-bold">filetype:pdf</span> <span class="text-red-400">-iklan</span>
+              </div>
+              <div class="text-[11px] text-slate-400 space-y-1 pt-1">
+                <div><span class="text-blue-400">&gt; Filter Domain:</span> Membatasi pencarian hanya pada domain resmi pemerintah (.go.id)</div>
+                <div><span class="text-amber-400">&gt; Frasa Persis:</span> Memastikan susunan kata "informatika fase f" tidak terpisah</div>
+                <div><span class="text-purple-400">&gt; Format Berkas:</span> Mengunduh dokumen modul otentik langsung berekstensi .PDF</div>
+                <div><span class="text-red-400">&gt; Negasi / Minus:</span> Menyaring konten promosi &amp; spam komersial (-iklan)</div>
+              </div>
+            </div>
+
+            <!-- Terminal Output Simulation -->
+            <div class="p-4 bg-slate-900 border-t border-slate-800 text-xs font-mono space-y-1.5 mt-auto">
+              <div class="flex items-center justify-between text-slate-400 text-[11px] pb-1 border-b border-slate-800">
+                <span class="flex items-center gap-1"><span class="text-emerald-400 font-bold">&gt;</span> Status Alur Mesin Pencari</span>
+                <span class="text-slate-500">Waktu Respon: 0.12 detik</span>
+              </div>
+              <div class="text-emerald-400 font-semibold">[✓] Crawling ➔ Indexing ➔ Ranking: 1.240 Dokumen Resmi Terverifikasi</div>
+              <div class="text-slate-300 text-[11px]">&gt; Triangulasi 3 Sumber: Sumber Berita (✓) | Lembaga Resmi (✓) | Jurnal Pakar (✓)</div>
+            </div>
+
+            <!-- Card Footer Description -->
+            <div class="p-5 bg-white border-t border-border-light flex items-center justify-between gap-4">
+              <div>
+                <h4 class="text-sm font-bold text-navy">Simulator Riset &amp; Operator Mesin Pencari</h4>
+                <p class="text-xs text-text-muted mt-0.5">Praktikkan teknik riset akurat untuk membedakan fakta, opini, dan informasi kredibel.</p>
+              </div>
+              <a href="login.html" class="interactive-btn shrink-0 text-xs font-bold text-primary hover:text-primary-dark inline-flex items-center gap-1">
+                <span>Coba di Portal</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Feature 2 & 3: Structured Path & Adaptive Quiz (5 Cols) -->
+          <div class="lg:col-span-5 flex flex-col justify-between gap-6">
+            
+            <!-- Pillar A: Evaluasi Sumber Kredibel & Triangulasi -->
+            <div class="bg-white p-6 rounded-2xl border border-border-light shadow-sm space-y-4 hover:border-primary-subtle transition-all">
+              <div class="w-10 h-10 rounded-xl bg-primary-subtle text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[22px]">verified_user</span>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-navy">Membaca Lateral &amp; Triangulasi 3 Sumber</h3>
+                <p class="text-xs text-text-muted leading-relaxed mt-1">
+                  Uji kebenaran informasi dengan membuka tab pembanding independen, mengecek domain resmi, rujukan primer, serta penelusuran gambar terbalik (*reverse image search*).
+                </p>
+              </div>
+              <div class="pt-2 flex flex-wrap gap-2 text-[11px]">
+                <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 font-semibold">Cek Kredibilitas Teks</span>
+                <span class="px-2.5 py-1 rounded-full bg-blue-50 text-primary font-semibold">Reverse Search Gambar</span>
+                <span class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 font-semibold">Deteksi Video Deepfake</span>
+              </div>
+            </div>
+
+            <!-- Pillar B: Kasus Hukum Siber (UU ITE & UU PDP) -->
+            <div class="bg-white p-6 rounded-2xl border border-border-light shadow-sm space-y-4 hover:border-primary-subtle transition-all">
+              <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                <span class="material-symbols-outlined text-[22px]">gavel</span>
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-navy">Studi Kasus Hukum &amp; Netiket Digital</h3>
+                <p class="text-xs text-text-muted leading-relaxed mt-1">
+                  Pahami batasan hukum UU ITE (Pasal 27, 28 hoaks/SARA, 30 hacking), UU Pelindungan Data Pribadi No. 27/2022, serta etika berwarganet yang bertanggung jawab.
+                </p>
+              </div>
+              <div class="pt-2 flex items-center justify-between text-xs text-text-muted border-t border-border-light pt-3">
+                <span class="flex items-center gap-1.5 font-medium text-navy">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600">verified</span>
+                  Tersedia di Dashboard Siswa
+                </span>
+                <a href="login.html" class="text-primary font-bold hover:underline inline-flex items-center gap-0.5">
+                  <span>Masuk Belajar</span>
+                  <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Banner Ajakan Masuk Portal Siswa -->
+            <div class="p-5 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white shadow-card flex items-center justify-between gap-4">
+              <div>
+                <h4 class="text-sm font-bold text-white">Mulai Investigasi &amp; Belajar Mandiri</h4>
+                <p class="text-xs text-blue-100 mt-0.5">Akses materi PPT lengkap, studi kasus, dan evaluasi kuis.</p>
+              </div>
+              <a href="login.html" class="interactive-btn shrink-0 px-4 py-2 rounded-xl bg-white text-primary text-xs font-bold hover:bg-blue-50 shadow-sm flex items-center gap-1.5">
+                <span>Buka Dashboard</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 6. SECTION UNTUK GURU & EVALUASI                                          -->
+    <!-- ========================================================================= -->
+    <section class="py-20 md:py-24" id="guru-evaluasi">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <!-- Deskripsi Visibilitas Pengajar -->
+          <div class="lg:col-span-5 space-y-4">
+            <span class="text-xs font-bold text-primary px-3.5 py-1 rounded-full bg-primary-subtle border border-border-focus">
+              VISIBILITAS PENGAJAR
+            </span>
+            <h2 class="text-3xl font-extrabold text-navy tracking-tight">
+              Pantau Ketercapaian Kelas XI HJ 5 Secara Nyata
+            </h2>
+            <p class="text-sm text-text-muted leading-relaxed">
+              Guru pengampu Informatika SMAN 1 Batam dapat memantau distribusi pemahaman tiap siswa, topik yang memerlukan remedial, dan tingkat kelulusan kuis komputasional secara transparan.
+            </p>
+            <div class="space-y-3 pt-2">
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+                <div>
+                  <h4 class="text-xs font-bold text-navy">Analitik Realtime Tiap Bab</h4>
+                  <p class="text-xs text-text-muted">Data submisi kuis dan latihan kode langsung terangkum rapi.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-6 h-6 rounded-full bg-primary-subtle text-primary flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+                <div>
+                  <h4 class="text-xs font-bold text-navy">Ketuntasan Kurikulum Merdeka</h4>
+                  <p class="text-xs text-text-muted">Kesesuaian capaian pembelajaran Fase F per siswa dapat diekspor secara mudah.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Visual Statistik & Bar Chart Mini -->
+          <div class="lg:col-span-7 bg-white p-7 rounded-card border border-border-light shadow-card space-y-6">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 border-b border-border-light gap-2">
+              <div>
+                <h3 class="text-base font-bold text-navy">Laporan Capaian Kelas XI HJ 5</h3>
+                <p class="text-xs text-text-muted">SMA Negeri 1 Batam • Semester Genap 2024/2025</p>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+                34 / 36 Siswa Tuntas (94.4%)
+              </span>
+            </div>
+
+            <!-- Mini Bar Chart Per Bab -->
+            <div class="space-y-4">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-navy">Rata-rata Pemahaman Konsep per Bab:</span>
+                <span class="text-text-muted">Target Kelulusan: 75.0</span>
+              </div>
+
+              <!-- Bar 1 -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold">
+                  <span class="text-navy">Bab 01: Mesin Pencari &amp; Arsitektur Web</span>
+                  <span class="text-text-muted">Rata-rata: 94.2</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3">
+                  <div class="bg-slate-700 h-full rounded-full" style="width: 94.2%;"></div>
+                </div>
+              </div>
+
+              <!-- Bar 2 (Highlighted with Accent Color) -->
+              <div class="space-y-1.5 p-3 rounded-xl bg-primary-subtle/40 border border-primary/20">
+                <div class="flex justify-between text-xs font-bold">
+                  <span class="text-primary flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                    Bab 02: Strategi Riset &amp; Triangulasi Sumber (Aktif)
+                  </span>
+                  <span class="text-primary">Rata-rata: 89.5</span>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                  <div class="bg-primary h-full rounded-full" style="width: 89.5%;"></div>
+                </div>
+                <div class="text-[12px] text-text-muted">Topik terkini: Operator Pencarian Cerdas &amp; Membaca Lateral 3 Sumber.</div>
+              </div>
+
+              <!-- Bar 3 -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold">
+                  <span class="text-navy">Bab 03: Hukum Digital Indonesia (UU ITE &amp; UU PDP)</span>
+                  <span class="text-text-muted">Rata-rata: 85.0</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3">
+                  <div class="bg-slate-700 h-full rounded-full" style="width: 85%;"></div>
+                </div>
+              </div>
+
+              <!-- Bar 4 -->
+              <div class="space-y-1.5">
+                <div class="flex justify-between text-xs font-semibold">
+                  <span class="text-navy">Bab 04: Hak Cipta Karya Digital &amp; Netiket</span>
+                  <span class="text-text-muted">Jadwal Pekan Depan</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-3">
+                  <div class="bg-slate-300 h-full rounded-full" style="width: 20%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer summary note -->
+            <div class="pt-3 border-t border-border-light flex items-center justify-between text-xs text-text-muted">
+              <span>Diperbarui otomatis dari submisi kuis siswa</span>
+              <span class="font-semibold text-primary">Status: Kelas Sangat Aktif</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 7. SECTION TENTANG XI HJ 5                                                -->
+    <!-- ========================================================================= -->
+    <section class="py-20 bg-canvas border-t border-border-light" id="tentang-kami">
+      <div class="max-w-5xl mx-auto px-6">
+        <div class="bg-white p-8 md:p-12 rounded-card border border-border-light shadow-card space-y-6 text-center md:text-left">
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+            <span class="px-3 py-1 rounded-full bg-primary-subtle text-primary text-xs font-bold border border-border-focus">
+              INISIATIF KELAS
+            </span>
+            <span class="px-3 py-1 rounded-full bg-slate-100 text-navy text-xs font-semibold">
+              XI HJ 5 • SMAN 1 Batam
+            </span>
+            <span class="px-3 py-1 rounded-full bg-slate-100 text-text-muted text-xs font-semibold">
+              Kurikulum Merdeka Fase F
+            </span>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight leading-snug">
+            Dari Kelas Kami di SMAN 1 Batam, untuk Pembelajaran yang Bermakna.
+          </h2>
+
+          <div class="space-y-4 text-sm text-text-muted leading-relaxed">
+            <p>
+              XAVETRA lahir dari kolaborasi siswa kelas XI HJ 5 SMA Negeri 1 Batam yang ingin menjembatani celah antara materi teori buku teks dengan praktik nyata pemrograman. Kami percaya bahwa memahami algoritma dan logika komputasional tidak harus membingungkan jika disajikan dengan langkah terstruktur, visualisasi konsep yang jelas, dan umpan balik langsung.
+            </p>
+            <p>
+              Setiap modul dan kuis disusun berdasarkan capaian pembelajaran Informatika Fase F, dirancang untuk memudahkan teman-teman sekelas dan siapa saja yang ingin memperdalam literasi digital, analisis data, serta rekayasa perangkat lunak secara menyenangkan.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-border-light flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm">
+                X5
+              </div>
+              <div class="text-left">
+                <div class="text-xs font-bold text-navy">Keluarga Besar XI HJ 5</div>
+                <div class="text-[12px] text-text-muted">SMA Negeri 1 Batam • 2024/2025</div>
+              </div>
+            </div>
+            <div class="text-xs font-semibold text-primary flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">verified</span>
+              <span>Dukungan Kurikulum Merdeka Fase F</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- 8. CLEAN BOTTOM ACTION BANNER                                             -->
+    <!-- ========================================================================= -->
+    <section class="py-20 bg-surface border-t border-border-light">
+      <div class="max-w-4xl mx-auto px-6 text-center space-y-6">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-subtle text-primary text-xs font-bold border border-border-focus">
+          <span class="material-symbols-outlined text-[16px]">school</span>
+          <span>LANGKAH BELAJAR BERIKUTNYA</span>
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
+          Siap Memahami Informatika Secara Nyata?
+        </h2>
+        <p class="text-base text-text-muted max-w-xl mx-auto leading-relaxed">
+          Mulai jelajahi materi 4 Bab Fase F, coba tantangan logika komputasional, dan pantau pemahaman konsepmu secara mandiri.
+        </p>
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <button onclick="handleProtectedAction('#modul-materi', 'Pembelajaran Lengkap Fase F')" class="interactive-btn inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary-dark shadow-glow">
+            <span>Buka Pembelajaran Sekarang</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 9. FOOTER                                                                 -->
+  <!-- ========================================================================= -->
+  <footer class="bg-white border-t border-border-light w-full">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      <!-- Brand & School Credit -->
+      <div class="flex flex-col items-center md:items-start gap-1">
+        <div class="text-lg font-extrabold text-navy tracking-tight flex items-center gap-2">
+          <span class="w-6 h-6 rounded bg-primary text-white flex items-center justify-center text-xs">
+            <span class="material-symbols-outlined text-[15px]">terminal</span>
+          </span>
+          <span>XAVETRA</span>
+        </div>
+        <p class="text-xs text-text-muted">
+          Dibuat oleh XI HJ 5 — SMA Negeri 1 Batam. Kurikulum Merdeka Informatika Fase F.
+        </p>
+      </div>
+      <!-- Navigation Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-text-muted">
+        <a class="hover:text-primary transition-colors" href="#modul-materi">
+          Berpikir Komputasional
+        </a>
+        <a class="hover:text-primary transition-colors" href="#modul-materi">
+          Algoritma
+        </a>
+        <a class="hover:text-primary transition-colors" href="#modul-materi">
+          Analisis Data
+        </a>
+        <a class="hover:text-primary transition-colors" href="#modul-materi">
+          Jaringan Komputer
+        </a>
+        <a class="hover:text-primary transition-colors" href="#tentang-kami">
+          Tentang Kami
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- MINI JAVASCRIPT UNTUK INTERAKTIVITAS KUIS PREVIEW                         -->
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- MODAL PEMBELAJARAN (KHUSUS SISWA YANG SUDAH LOGIN)                       -->
+  <!-- ========================================================================= -->
+  <div id="learning-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-[28px] max-w-2xl w-full shadow-2xl border border-border-light overflow-hidden my-8 transform transition-all">
+      <!-- Modal Header -->
+      <div class="p-6 bg-slate-900 text-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-[20px]">school</span>
+          </span>
+          <div>
+            <div class="text-[11px] font-semibold text-blue-300 uppercase tracking-wider">Kurikulum Merdeka • Fase F Kelas XI</div>
+            <h3 id="modal-module-title" class="text-lg font-bold text-white">Bab 02: Algoritma & Pemrograman</h3>
+          </div>
+        </div>
+        <button onclick="closeLearningModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Content Body -->
+      <div class="p-6 sm:p-8 space-y-6">
+        <!-- Status Siswa Card -->
+        <div class="flex items-center justify-between p-3.5 bg-primary-subtle/60 border border-border-focus rounded-2xl">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary text-white font-bold text-sm flex items-center justify-center" id="modal-student-avatar">JK</div>
+            <div>
+              <div class="text-xs font-bold text-navy" id="modal-student-name">Juliette Karapetyan</div>
+              <div class="text-[11px] text-text-muted">Akses Siswa Aktif • SMAN 1 Batam</div>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">Terverifikasi</span>
+        </div>
+
+        <!-- Module Details -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-navy flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[18px] text-primary">menu_book</span>
+            <span>Rangkuman Materi & Panduan Belajar</span>
+          </h4>
+          <p id="modal-module-desc" class="text-xs text-text-muted leading-relaxed">
+            Materi ini membahas struktur data larik/array, algoritma pencarian biner (Binary Search), pengurutan data cepat, dan efisiensi komputasi Big-O Notation.
+          </p>
+        </div>
+
+        <!-- Code Playground Preview Inside Modal -->
+        <div class="bg-slate-900 rounded-xl p-4 text-xs font-mono text-slate-200 space-y-2 border border-slate-800">
+          <div class="flex items-center justify-between text-slate-400 pb-2 border-b border-slate-800 text-[11px]">
+            <span>interactive_sample.py</span>
+            <span class="text-emerald-400">Siap Dijalankan</span>
+          </div>
+          <pre class="overflow-x-auto text-[12px] leading-relaxed"><code id="modal-code-snippet"># Contoh Algoritma Pembelajaran
+data = [12, 24, 35, 47, 59, 68, 79, 91]
+target = 59
+print(f"Target {target} ditemukan pada indeks: 4")</code></pre>
+        </div>
+
+        <!-- Actions in Modal -->
+        <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-3 border-t border-border-light">
+          <button type="button" onclick="closeLearningModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-full border border-border-light text-text-muted hover:text-navy text-xs font-semibold">
+            Tutup
+          </button>
+          <a href="dashboard.html" onclick="closeLearningModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-full bg-primary hover:bg-primary-dark text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-glow">
+            <span>Buka Dashboard Siswa</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification -->
+  <div id="global-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-2xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" id="toast-indicator"></span>
+    <span id="global-toast-text">Pemberitahuan</span>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/quiz.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

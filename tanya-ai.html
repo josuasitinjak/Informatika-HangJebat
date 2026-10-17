@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full bg-[#F8FAFC]">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tanya AI Tutor — XAVETRA SMAN 1 Batam</title>
+  <meta name="referrer" content="no-referrer">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: '#0052CC',
+              dark: '#0747A6',
+              light: '#2684FF',
+              subtle: '#DEEBFF'
+            },
+            navy: '#091E42',
+            surface: '#FFFFFF',
+            background: '#F8FAFC',
+            accent: '#FFAB00',
+            'text-main': '#172B4D',
+            'text-muted': '#6B778C',
+            'border-subtle': '#DFE1E6',
+            'border-focus': '#B3D4FF'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          },
+          boxShadow: {
+            'card': '0 1px 3px 0 rgba(9, 30, 66, 0.08), 0 2px 4px 0 rgba(9, 30, 66, 0.05)',
+            'card-hover': '0 8px 24px -4px rgba(9, 30, 66, 0.12), 0 2px 6px -1px rgba(9, 30, 66, 0.06)',
+            'glow': '0 0 20px -3px rgba(0, 82, 204, 0.25)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── AI Chat Visual Elements ──────────────────────────────── */
+
+    /* Fade-in animation for new AI responses */
+    @keyframes ai-fade-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0);   }
+    }
+    #chat-messages > div {
+      animation: ai-fade-in 0.3s ease-out forwards;
+    }
+
+    /* Step flow vertical connector line */
+    .ai-step-connector {
+      position: absolute;
+      left: 15px;
+      top: 36px;
+      bottom: -10px;
+      width: 2px;
+      background: linear-gradient(to bottom, #a78bfa, #e0e7ff, transparent);
+      pointer-events: none;
+    }
+
+    /* Smooth card hover in card grids */
+    .ai-card-grid > div {
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .ai-card-grid > div:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px -3px rgba(139, 92, 246, 0.18);
+    }
+
+    /* Chat scrollbar */
+    #chat-messages::-webkit-scrollbar        { width: 5px; }
+    #chat-messages::-webkit-scrollbar-track  { background: transparent; }
+    #chat-messages::-webkit-scrollbar-thumb  { background: #c4b5fd; border-radius: 99px; }
+
+    /* Code block scroll */
+    pre::-webkit-scrollbar        { height: 5px; }
+    pre::-webkit-scrollbar-track  { background: #1C2541; }
+    pre::-webkit-scrollbar-thumb  { background: #7c3aed; border-radius: 4px; }
+
+    /* Callout border animation on hover */
+    .callout-card { transition: transform 0.15s ease; }
+    .callout-card:hover { transform: translateX(2px); }
+
+    /* Step flow number badge pulse on first render */
+    @keyframes step-pop {
+      0%   { transform: scale(0.7); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+    .ai-step-flow > div > div:first-child {
+      animation: step-pop 0.35s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans text-text-main bg-background antialiased selection:bg-purple-100 selection:text-purple-700">
+
+  <!-- Mobile Sidebar Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"></div>
+
+  <div class="flex flex-1 min-h-screen">
+    
+    <!-- ========================================================================= -->
+    <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+    <!-- ========================================================================= -->
+    <aside id="main-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0">
+      
+      <!-- Brand Logo -->
+      <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100">
+        <a href="dashboard.html" class="flex items-center gap-3 group">
+          <div>
+            <div class="font-extrabold text-base tracking-tight text-navy">Informatika</div>
+            <div class="text-[10px] font-semibold tracking-wider text-primary uppercase">SMAN 1 Batam</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Navigation Menus -->
+      <div class="flex-1 overflow-y-auto px-4 py-6 space-y-6">
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+            Menu Pembelajaran
+          </div>
+
+          <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+              <span>Dashboard</span>
+            </span>
+          </a>
+
+          <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+              <span>Modul Materi</span>
+            </span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary">4 Bab</span>
+          </a>
+
+          <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+              <span>Catatan Belajar</span>
+            </span>
+            <span id="sidebar-notes-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">Notes</span>
+          </a>
+
+          <!-- Tanya AI (Active) -->
+          <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-purple-600 text-white font-bold text-xs shadow-glow transition group">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px]">smart_toy</span>
+              <span>Tanya AI Guru</span>
+            </span>
+            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+          </a>
+
+          <!-- Komunitas -->
+          <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+            <span class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+              <span>Komunitas</span>
+            </span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+          </a>
+        </div>
+
+        <!-- AI Engine Status Card in Sidebar -->
+        <div class="p-4 rounded-2xl bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 border border-purple-200 space-y-2.5 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold text-navy flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[17px] text-purple-600">neurology</span>
+              AI Interaktif Aktif
+            </span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-100 text-emerald-800 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Online
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-tight">
+            Didukung model AI cerdas dengan fitur <strong>Mini Kuis</strong>, <strong>Flashcard</strong>, &amp; <strong>Suara AI</strong>.
+          </p>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- ========================================================================= -->
+    <!-- 2. MAIN APPLICATION CONTENT                                               -->
+    <!-- ========================================================================= -->
+    <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+      
+      <!-- Top Bar -->
+      <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 sm:gap-4 flex-1">
+          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+            <span class="material-symbols-outlined text-[24px]">menu</span>
+          </button>
+          
+          <div class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
+              <span class="material-symbols-outlined text-[19px]">smart_toy</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs sm:text-sm font-extrabold text-navy">XAVETRA AI Tutor</span>
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span>Interactive Engine</span>
+                </span>
+              </div>
+              <span class="text-[10px] text-slate-500 font-semibold hidden sm:inline">Guru & Asisten Interaktif Informatika Fase F</span>
+            </div>
+          </div>
+
+          <!-- Focus Chapter Selector in Header -->
+          <div class="hidden md:block ml-2 sm:ml-4">
+            <select id="chat-chapter-filter" onchange="filterContext(this.value)" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold text-navy focus:outline-none focus:border-purple-500 cursor-pointer shadow-xs">
+              <option value="all">🎯 Fokus: Semua Bab (Umum)</option>
+              <option value="1">Bab 01: Mesin Pencari &amp; Arsitektur</option>
+              <option value="2">Bab 02: Operator Riset &amp; Triangulasi</option>
+              <option value="3">Bab 03: UU ITE &amp; Pelindungan Data</option>
+              <option value="4">Bab 04: Hak Cipta &amp; Netiket Digital</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Reset Chat Button -->
+          <button onclick="clearChatHistory()" class="px-3 py-1.5 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 border border-slate-200 text-xs font-bold transition flex items-center gap-1" title="Bersihkan Percakapan">
+            <span class="material-symbols-outlined text-[17px]">delete_sweep</span>
+            <span class="hidden sm:inline">Reset Chat</span>
+          </button>
+
+          <!-- User Profile Dropdown Button -->
+          <div class="relative">
+            <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition focus:outline-none cursor-pointer">
+              <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+                XS
+              </div>
+              <div class="text-left hidden sm:block">
+                <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[120px]">
+                  Siswa Xavetra
+                </div>
+                <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[120px]">
+                  Siswa XI HJ 5
+                </div>
+              </div>
+              <span class="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
+            </button>
+
+            <!-- Dropdown Popover Menu -->
+            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50">
+              <div class="px-4 py-2 border-b border-slate-100 flex items-center gap-3">
+                <div id="dropdown-user-avatar" class="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                  XS
+                </div>
+                <div class="min-w-0">
+                  <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Siswa Xavetra</div>
+                  <div id="dropdown-user-role" class="text-[10px] text-text-muted truncate">XI HJ 5 • SMAN 1 Batam</div>
+                </div>
+              </div>
+
+              <div class="p-2 space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                  <span class="material-symbols-outlined text-[18px] text-primary">dashboard</span>
+                  <span>Dashboard Belajar</span>
+                </a>
+                <a href="modul.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                  <span class="material-symbols-outlined text-[18px] text-blue-600">auto_stories</span>
+                  <span>Modul Materi</span>
+                </a>
+                <a href="catatan.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                  <span class="material-symbols-outlined text-[18px] text-emerald-600">edit_note</span>
+                  <span>Buku Catatan Saya</span>
+                </a>
+                <a href="tanya-ai.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 transition">
+                  <span class="material-symbols-outlined text-[18px] text-purple-600">smart_toy</span>
+                  <span>Tanya AI Guru</span>
+                </a>
+                <a href="komunitas.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
+                  <span class="material-symbols-outlined text-[18px] text-blue-500">forum</span>
+                  <span>Komunitas Siswa</span>
+                </a>
+              </div>
+
+              <div class="p-2 border-t border-slate-100">
+                <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                  <span class="material-symbols-outlined text-[18px]">logout</span>
+                  <span>Keluar Akun (Logout)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Chat Main Interface -->
+      <main class="flex-1 flex flex-col overflow-hidden" style="height: calc(100vh - 4rem);">
+
+        <!-- Chat Messages Area (scrollable) -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6 bg-[#F8FAFC]">
+
+          <!-- Bot Welcome Interactive Card -->
+          <div class="flex items-start gap-3.5 max-w-3xl">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
+              <span class="material-symbols-outlined text-[20px]">smart_toy</span>
+            </div>
+            <div class="space-y-2 flex-1">
+              <div class="p-5 rounded-3xl rounded-tl-sm bg-white border border-slate-200/90 shadow-card space-y-3">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <div class="flex items-center gap-2">
+                    <span class="font-extrabold text-navy text-sm">XAVETRA AI Tutor</span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Mode Interaktif</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" onclick="toggleVoiceSpeech('welcome-bot-msg', this)" class="px-2.5 py-1 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] font-bold transition flex items-center gap-1 shadow-xs border border-purple-200/60" title="Dengarkan Suara AI (Aksen Indonesia)">
+                      <span class="material-symbols-outlined text-[15px] voice-icon">volume_up</span>
+                      <span class="voice-label">Baca Suara</span>
+                    </button>
+                    <span class="text-[10px] text-slate-400 font-medium">Baru saja</span>
+                  </div>
+                </div>
+                <div id="welcome-bot-msg-tab-full" class="space-y-3">
+                  <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    Halo! Saya adalah <strong>Asisten Belajar Interaktif</strong> untuk mata pelajaran Informatika Kelas XI. Saya siap membantu kamu memahami konsep mesin pencari, rumus operator riset, pasal hukum UU ITE &amp; PDP, serta etika digital dengan format yang rapi dan mudah dipahami.
+                  </p>
+                  <div class="p-3 rounded-2xl bg-purple-50/70 border border-purple-200/80 flex items-center gap-2.5 text-xs text-purple-900 font-medium">
+                    <span class="material-symbols-outlined text-[19px] text-purple-600">auto_awesome</span>
+                    <span>Setiap jawaban dilengkapi <strong>Penjelasan Rapi</strong>, <strong>Flashcard Poin Kunci</strong>, dan <strong>Mini Kuis</strong> untuk menguji pemahamanmu!</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Suggested Prompt Chips -->
+              <div id="quick-chips" class="flex flex-wrap gap-2 pt-1">
+                <button onclick="askPrompt('Jelaskan bagaimana proses Crawling, Indexing, dan Ranking pada Google bekerja secara terstruktur.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
+                  <span>🔍 Cara kerja Spider Bot &amp; Indexing?</span>
+                </button>
+                <button onclick="askPrompt('Berikan contoh nyata penggunaan operator site: dan filetype: untuk riset akademik terpercaya.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
+                  <span>⚡ Contoh operator site: &amp; filetype:?</span>
+                </button>
+                <button onclick="askPrompt('Jelaskan pasal kunci UU ITE dan sanksi terkait penyebaran hoaks (Pasal 28) serta perlindungan data pribadi.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
+                  <span>⚖️ Sanksi UU ITE Pasal 28 (Hoaks)?</span>
+                </button>
+                <button onclick="askPrompt('Apa itu lisensi Creative Commons (CC-BY, CC-NC) dan bagaimana cara mengutip gambar legal untuk tugas sekolah?')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
+                  <span>🎨 Cara legal pakai gambar Creative Commons?</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Chat Input Bar -->
+        <div class="bg-white border-t border-slate-200/80 px-4 sm:px-8 py-3.5 shadow-sm">
+          <form onsubmit="handleSendMessage(event)" class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 focus-within:border-purple-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-purple-100 transition shadow-xs">
+            <input 
+              type="text" 
+              id="chat-user-input"
+              placeholder="Tanyakan topik Informatika, cara riset, pasal hukum, atau bantuan materi..."
+              class="flex-1 bg-transparent py-1 text-xs sm:text-sm text-navy placeholder-slate-400 focus:outline-none"
+              autocomplete="off"
+              required
+            >
+            <button type="submit" id="btn-send-chat" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shrink-0">
+              <span>Kirim</span>
+              <span class="material-symbols-outlined text-[16px]">send</span>
+            </button>
+          </form>
+          <div class="flex items-center justify-between mt-2 px-1 text-[10px] text-slate-400 font-medium">
+            <span>Jawaban AI terstruktur secara otomatis tanpa tanda format mentah.</span>
+            <span class="flex items-center gap-1 text-purple-600 font-bold">
+              <span class="material-symbols-outlined text-[13px]">bolt</span>
+              <span>LPU Cloud Fast Engine</span>
+            </span>
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Floating AI Audio Player Bar (Aksen Indonesia) -->
+  <div id="ai-floating-player" class="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none max-w-md w-[92%] sm:w-auto">
+    <div class="bg-navy/95 backdrop-blur-md text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 border border-purple-500/40">
+      
+      <!-- Voice Wave & Progress -->
+      <div class="flex items-center gap-2.5 min-w-0">
+        <div class="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center text-white shrink-0 shadow-sm relative">
+          <span class="material-symbols-outlined text-[17px] animate-pulse">volume_up</span>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-1.5">
+            <span id="player-accent-badge" class="text-[10px] font-extrabold text-purple-300 tracking-wide">🇮🇩 Aksen Indonesia Asli</span>
+            <span id="player-progress-badge" class="px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-purple-500/30 text-purple-200 border border-purple-400/30">1 / 1</span>
+          </div>
+          <p id="player-snippet-text" class="text-[11px] text-slate-300 truncate max-w-[160px] sm:max-w-[220px]">
+            Membacakan kalimat...
+          </p>
+        </div>
+      </div>
+
+      <!-- Controls: Speed, Pause/Resume, Stop -->
+      <div class="flex items-center gap-1.5 shrink-0 pointer-events-auto">
+        <!-- Speed button -->
+        <button type="button" onclick="cyclePlayerRate()" id="player-speed-btn" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-[10px] font-extrabold transition border border-slate-700" title="Kecepatan Bicara">
+          1.0x
+        </button>
+
+        <!-- Pause / Resume button -->
+        <button type="button" onclick="togglePlayerPause()" id="player-pause-btn" class="w-7 h-7 rounded-lg bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition shadow-sm" title="Jeda / Lanjut">
+          <span class="material-symbols-outlined text-[16px]" id="player-pause-icon">pause</span>
+        </button>
+
+        <!-- Stop button -->
+        <button type="button" onclick="stopPlayer()" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-red-500/80 hover:text-white text-slate-300 flex items-center justify-center transition border border-slate-700" title="Berhenti">
+          <span class="material-symbols-outlined text-[16px]">stop</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Global Toast Notification -->
+  <div id="global-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-navy text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700/50">
+      <span id="toast-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span id="global-toast-text" class="text-xs font-semibold">Notifikasi</span>
+    </div>
+  </div>
+
+  <!-- Load Core Scripts -->
+  <script src="assets/js/gemini.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    let chatConversationHistory = [];
+    let currentSpeakingUtterance = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sync user profile
+      const studentName = localStorage.getItem('xavetra_student_name') || 'Siswa Xavetra';
+      const studentRole = localStorage.getItem('xavetra_student_role') || 'XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+
+      const nameEl = document.getElementById('student-display-name');
+      if (nameEl) nameEl.textContent = studentName;
+      const roleEl = document.getElementById('student-display-role');
+      if (roleEl) roleEl.textContent = studentRole;
+      const topAvatar = document.getElementById('top-user-avatar');
+      if (topAvatar) topAvatar.textContent = initials;
+      const dropAvatar = document.getElementById('dropdown-user-avatar');
+      if (dropAvatar) dropAvatar.textContent = initials;
+      const dropName = document.getElementById('dropdown-user-name');
+      if (dropName) dropName.textContent = studentName;
+      const dropRole = document.getElementById('dropdown-user-role');
+      if (dropRole) dropRole.textContent = `${studentRole} • SMAN 1 Batam`;
+
+      // Check URL query param for ?bab=X
+      const urlParams = new URLSearchParams(window.location.search);
+      const bab = urlParams.get('bab');
+      if (bab) {
+        const select = document.getElementById('chat-chapter-filter');
+        if (select) select.value = bab;
+        askPrompt(`Halo AI, tolong buatkan ringkasan poin-poin paling penting dari Bab 0${bab} yang wajib saya kuasai untuk ulangan.`);
+      }
+
+      // Update notes badge in sidebar
+      try {
+        const rawNotes = localStorage.getItem('xavetra_student_notes');
+        const notes = rawNotes ? JSON.parse(rawNotes) : [];
+        const badge = document.getElementById('sidebar-notes-badge');
+        if (badge) badge.textContent = `${notes.length} Notes`;
+      } catch (e) {}
+    });
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+
+    function toggleUserDropdown(e) {
+      e.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-dropdown-menu');
+      const btn = document.getElementById('user-menu-btn');
+      if (menu && !menu.classList.contains('hidden') && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun ini?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function filterContext(val) {
+      const container = document.getElementById('chat-messages');
+      const note = document.createElement('div');
+      note.className = 'text-center my-2';
+      const babText = val === 'all' ? 'Semua Bab (Umum)' : 'Bab 0' + val;
+      note.innerHTML = `<span class="px-3.5 py-1.5 rounded-full text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200 shadow-xs">🎯 Fokus materi diubah ke: ${babText}</span>`;
+      container.appendChild(note);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function askPrompt(text) {
+      document.getElementById('chat-user-input').value = text;
+      handleSendMessage(new Event('submit'));
+    }
+
+    async function handleSendMessage(e) {
+      if (e) e.preventDefault();
+      const input = document.getElementById('chat-user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const container = document.getElementById('chat-messages');
+      const sendBtn = document.getElementById('btn-send-chat');
+
+      // Stop previous voice if speaking
+      if (window.XavetraTTS) {
+        XavetraTTS.stop();
+      }
+      _resetTtsBtn(_activeTtsBtn);
+      _activeTtsBtn      = null;
+      _activeTtsTargetId = null;
+      _hideFloatingAudioPlayer();
+
+      // Get user initials
+      const studentName = localStorage.getItem('xavetra_student_name') || 'Siswa Xavetra';
+      const initials = studentName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+
+      // 1. Append User Message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'flex items-end justify-end gap-3';
+      userMsg.innerHTML = `
+        <div class="space-y-1 text-right max-w-2xl">
+          <div class="px-4 py-3 rounded-2xl rounded-tr-sm bg-primary text-white text-xs sm:text-sm leading-relaxed text-left shadow-sm">
+            ${GeminiAI.escapeHtml(text)}
+          </div>
+          <span class="text-[10px] text-slate-400 font-medium mr-1">${studentName} &bull; Baru saja</span>
+        </div>
+        <div class="w-9 h-9 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-xs">
+          ${initials}
+        </div>
+      `;
+      container.appendChild(userMsg);
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Disable send button while generating
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+
+      // 2. Append Typing Indicator
+      const typing = document.createElement('div');
+      typing.id = 'ai-typing';
+      typing.className = 'flex items-center gap-3.5 pl-1';
+      typing.innerHTML = `
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 shadow-md">
+          <span class="material-symbols-outlined text-[20px]">smart_toy</span>
+        </div>
+        <div class="px-4 py-3 rounded-2xl rounded-tl-sm bg-white border border-slate-200 shadow-card flex items-center gap-2.5 text-xs text-purple-700 font-semibold">
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:0ms"></span>
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:150ms"></span>
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:300ms"></span>
+          <span class="ml-1 text-[11px] text-slate-600">Menyusun penjelasan interaktif...</span>
+        </div>
+      `;
+      container.appendChild(typing);
+      container.scrollTop = container.scrollHeight;
+
+      const chapterFocus = document.getElementById('chat-chapter-filter')?.value || 'all';
+
+      // 3. Call AI with Multi-turn history
+      try {
+        const result = await GeminiAI.sendMessage(text, chatConversationHistory, chapterFocus);
+        
+        // Remove typing indicator
+        const typingEl = document.getElementById('ai-typing');
+        if (typingEl) typingEl.remove();
+
+        // Add to multi-turn conversation history
+        chatConversationHistory.push({ role: 'user', text: text });
+        chatConversationHistory.push({ role: 'assistant', text: result.text });
+
+        const uniqueId = 'ai-resp-' + Date.now();
+        const formattedHtml = GeminiAI.formatMarkdown(result.text);
+        const keyPoints = GeminiAI.extractKeyPoints(result.text);
+        const quizData = GeminiAI.generateInteractiveQuiz(text, result.text);
+
+        // Render Interactive Rich AI Bubble
+        const botMsg = document.createElement('div');
+        botMsg.className = 'flex items-start gap-3.5 max-w-3xl';
+        botMsg.innerHTML = `
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
+            <span class="material-symbols-outlined text-[20px]">smart_toy</span>
+          </div>
+          <div class="space-y-2.5 flex-1 min-w-0">
+            
+            <!-- Main Content Container -->
+            <div class="bg-white rounded-3xl rounded-tl-sm border border-slate-200/90 shadow-card overflow-hidden">
+              
+              <!-- Tab Mode Header -->
+              <div class="px-4 py-2.5 bg-slate-50/90 border-b border-slate-100 flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-1.5 p-1 bg-slate-200/70 rounded-xl text-[11px] font-bold">
+                  <button type="button" onclick="switchTab('${uniqueId}', 'full', this)" class="tab-btn active px-3 py-1 rounded-lg bg-white text-purple-700 shadow-xs transition flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">menu_book</span>
+                    <span>Penjelasan</span>
+                  </button>
+                  <button type="button" onclick="switchTab('${uniqueId}', 'flashcard', this)" class="tab-btn px-3 py-1 rounded-lg text-slate-600 hover:text-navy transition flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">bolt</span>
+                    <span>Poin Inti</span>
+                  </button>
+                  <button type="button" onclick="switchTab('${uniqueId}', 'quiz', this)" class="tab-btn px-3 py-1 rounded-lg text-slate-600 hover:text-navy transition flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">quiz</span>
+                    <span>Mini Kuis</span>
+                  </button>
+                </div>
+
+                <!-- Voice TTS Button -->
+                <button type="button" onclick="toggleVoiceSpeech('${uniqueId}', this)" class="px-2.5 py-1 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] font-bold transition flex items-center gap-1 shadow-xs border border-purple-200/60" title="Dengarkan Suara AI">
+                  <span class="material-symbols-outlined text-[15px] voice-icon">volume_up</span>
+                  <span class="voice-label">Baca Suara</span>
+                </button>
+              </div>
+
+              <!-- VIEW 1: FULL EXPLANATION -->
+              <div id="${uniqueId}-tab-full" class="p-5 text-sm text-navy leading-relaxed space-y-2">
+                ${formattedHtml}
+              </div>
+
+              <!-- VIEW 2: FLASHCARD / POIN KUNCI -->
+              <div id="${uniqueId}-tab-flashcard" class="p-5 hidden space-y-3 bg-gradient-to-br from-purple-50/50 to-indigo-50/50">
+                <div class="flex items-center gap-2 text-xs font-extrabold text-purple-900 border-b border-purple-200/70 pb-2">
+                  <span class="material-symbols-outlined text-[18px] text-purple-600">bookmark_star</span>
+                  <span>Rangkuman Cepat (Cheat Sheet):</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  ${keyPoints.map((pt, i) => `
+                    <div class="p-3 rounded-2xl bg-white border border-purple-200/80 shadow-xs flex items-start gap-2.5">
+                      <span class="w-6 h-6 rounded-lg bg-purple-100 text-purple-700 font-extrabold text-xs flex items-center justify-center shrink-0">
+                        ${i + 1}
+                      </span>
+                      <p class="text-xs text-slate-700 leading-relaxed font-medium">${pt}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- VIEW 3: MINI QUIZ -->
+              <div id="${uniqueId}-tab-quiz" class="p-5 hidden space-y-3 bg-slate-50/80">
+                <div class="flex items-center gap-2 text-xs font-extrabold text-navy border-b border-slate-200 pb-2">
+                  <span class="material-symbols-outlined text-[18px] text-amber-500">military_tech</span>
+                  <span>Uji Pemahaman Materi (1 Soal Cepat):</span>
+                </div>
+                <p class="text-xs sm:text-sm font-bold text-slate-800">${quizData.question}</p>
+                <div class="space-y-2 pt-1" id="${uniqueId}-quiz-options">
+                  ${quizData.options.map((opt, i) => `
+                    <button type="button" onclick="handleQuizAnswer('${uniqueId}', ${opt.correct}, '${GeminiAI.escapeHtml(opt.explanation)}', this)" class="w-full text-left p-3 rounded-2xl bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-xs text-slate-700 font-medium transition flex items-center justify-between group shadow-xs">
+                      <span>${opt.text}</span>
+                      <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-purple-600">arrow_forward</span>
+                    </button>
+                  `).join('')}
+                </div>
+                <div id="${uniqueId}-quiz-feedback" class="hidden p-3 rounded-2xl text-xs font-semibold"></div>
+              </div>
+
+            </div>
+            
+            <!-- Bottom Toolbar & Dynamic Follow-up Suggestions -->
+            <div class="space-y-2 px-1">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                <span class="flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span class="text-emerald-700 font-bold">XAVETRA AI (Terverifikasi)</span>
+                </span>
+                <div class="flex items-center gap-3">
+                  <button type="button" onclick="copyMessageText('${uniqueId}-tab-full')" class="hover:text-purple-700 transition flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                    <span>Salin Teks</span>
+                  </button>
+                  <button type="button" onclick="saveAiToNotes('${uniqueId}-tab-full', '${GeminiAI.escapeHtml(text)}')" class="hover:text-emerald-700 transition flex items-center gap-1 text-slate-600 font-bold">
+                    <span class="material-symbols-outlined text-[14px] text-emerald-600">bookmark_add</span>
+                    <span>Simpan ke Catatan</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Dynamic Interactive Follow-up Chips -->
+              <div class="flex items-center flex-wrap gap-1.5 pt-1">
+                <span class="text-[10px] text-slate-400 font-semibold mr-1">Tanya Lanjutan:</span>
+                <button type="button" onclick="askPrompt('Berikan contoh kasus nyata sehari-hari terkait penjelasan ini.')" class="px-2.5 py-1 rounded-xl bg-white hover:bg-purple-50 text-purple-700 border border-slate-200 shadow-xs text-[10px] font-bold transition">
+                  💡 Contoh Kasus Nyata
+                </button>
+                <button type="button" onclick="askPrompt('Bagaimana cara menerapkan atau menghindari kesalahan terkait topik ini?')" class="px-2.5 py-1 rounded-xl bg-white hover:bg-purple-50 text-purple-700 border border-slate-200 shadow-xs text-[10px] font-bold transition">
+                  ⚡ Cara Penerapan / Tips
+                </button>
+                <button type="button" onclick="askPrompt('Buatkan rangkuman 2 kalimat padat yang mudah dihafal.')" class="px-2.5 py-1 rounded-xl bg-white hover:bg-purple-50 text-purple-700 border border-slate-200 shadow-xs text-[10px] font-bold transition">
+                  📝 Rangkuman Singkat
+                </button>
+              </div>
+            </div>
+
+          </div>
+        `;
+        container.appendChild(botMsg);
+        container.scrollTop = container.scrollHeight;
+
+      } catch (err) {
+        const typingEl = document.getElementById('ai-typing');
+        if (typingEl) typingEl.remove();
+
+        const errDiv = document.createElement('div');
+        errDiv.className = 'p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-700 ml-12';
+        errDiv.innerHTML = `⚠️ Terjadi kendala saat memproses jawaban: <strong>${GeminiAI.escapeHtml(err.message)}</strong>`;
+        container.appendChild(errDiv);
+        container.scrollTop = container.scrollHeight;
+      } finally {
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        input.focus();
+      }
+    }
+
+    // Tab Switcher inside AI Bubble
+    function switchTab(uniqueId, tabName, btn) {
+      const parent = btn.closest('.bg-white');
+      const tabs = ['full', 'flashcard', 'quiz'];
+      
+      tabs.forEach(t => {
+        const el = document.getElementById(`${uniqueId}-tab-${t}`);
+        if (el) {
+          if (t === tabName) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+      });
+
+      // Update button styles
+      const allBtns = parent.querySelectorAll('.tab-btn');
+      allBtns.forEach(b => {
+        b.className = 'tab-btn px-3 py-1 rounded-lg text-slate-600 hover:text-navy transition flex items-center gap-1';
+      });
+      btn.className = 'tab-btn active px-3 py-1 rounded-lg bg-white text-purple-700 shadow-xs transition flex items-center gap-1';
+    }
+
+    // Mini Quiz Interactive Answer Handler
+    function handleQuizAnswer(uniqueId, isCorrect, explanation, btn) {
+      const feedback = document.getElementById(`${uniqueId}-quiz-feedback`);
+      const optionsContainer = document.getElementById(`${uniqueId}-quiz-options`);
+
+      if (!feedback) return;
+
+      // Disable all buttons in this quiz
+      const buttons = optionsContainer.querySelectorAll('button');
+      buttons.forEach(b => {
+        b.disabled = true;
+        b.classList.add('opacity-60', 'cursor-default');
+      });
+
+      if (isCorrect) {
+        btn.className = 'w-full text-left p-3 rounded-2xl bg-emerald-50 border-2 border-emerald-500 text-xs text-emerald-900 font-bold transition flex items-center justify-between shadow-sm';
+        feedback.className = 'p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs leading-relaxed space-y-1 block';
+        feedback.innerHTML = `
+          <div class="font-extrabold flex items-center gap-1.5 text-emerald-700">
+            <span class="material-symbols-outlined text-[18px]">check_circle</span>
+            Jawaban Benar! 🎉
+          </div>
+          <p>${explanation}</p>
+        `;
+      } else {
+        btn.className = 'w-full text-left p-3 rounded-2xl bg-red-50 border-2 border-red-400 text-xs text-red-900 font-bold transition flex items-center justify-between shadow-sm';
+        feedback.className = 'p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed space-y-1 block';
+        feedback.innerHTML = `
+          <div class="font-extrabold flex items-center gap-1.5 text-amber-700">
+            <span class="material-symbols-outlined text-[18px]">info</span>
+            Kurang Tepat
+          </div>
+          <p>${explanation}</p>
+        `;
+      }
+    }
+
+    // ── Text-to-Speech (TTS) — Integrasi Aksen Bahasa Indonesia ───────────────
+    let _activeTtsBtn      = null;
+    let _activeTtsTargetId = null;
+    let _currentTtsRate    = 1.0;
+
+    function _resetTtsBtn(btn) {
+      if (!btn) return;
+      const icon  = btn.querySelector('.voice-icon');
+      const label = btn.querySelector('.voice-label');
+      if (icon)  icon.textContent  = 'volume_up';
+      if (label) label.textContent = 'Baca Suara';
+      btn.classList.remove('bg-purple-600', 'text-white', 'border-purple-600', 'shadow-md');
+      btn.classList.add('bg-purple-50', 'text-purple-700');
+    }
+
+    function _setTtsBtnActive(btn) {
+      if (!btn) return;
+      const icon  = btn.querySelector('.voice-icon');
+      const label = btn.querySelector('.voice-label');
+      if (icon)  icon.textContent  = 'stop';
+      if (label) label.textContent = 'Berhenti';
+      btn.classList.remove('bg-purple-50', 'text-purple-700');
+      btn.classList.add('bg-purple-600', 'text-white', 'border-purple-600', 'shadow-md');
+    }
+
+    function toggleVoiceSpeech(uniqueId, btn) {
+      if (!window.XavetraTTS) {
+        showToast('Modul suara sedang dimuat, silakan coba sesaat lagi.', 'warning');
+        return;
+      }
+
+      // Jika tombol yang sama ditekan kembali saat bersuara -> Hentikan
+      if (XavetraTTS.isPlaying() && _activeTtsTargetId === uniqueId) {
+        XavetraTTS.stop();
+        _resetTtsBtn(btn);
+        _activeTtsBtn      = null;
+        _activeTtsTargetId = null;
+        _hideFloatingAudioPlayer();
+        return;
+      }
+
+      // Jika sedang membaca pesan lain -> Hentikan dulu
+      if (XavetraTTS.isPlaying()) {
+        XavetraTTS.stop();
+        _resetTtsBtn(_activeTtsBtn);
+        _activeTtsBtn      = null;
+        _activeTtsTargetId = null;
+        _hideFloatingAudioPlayer();
+      }
+
+      // Ambil teks bacaan
+      let text = '';
+      if (uniqueId === 'welcome-bot-msg') {
+        const welcomeEl = document.getElementById('welcome-bot-msg-tab-full');
+        text = welcomeEl ? welcomeEl.innerText : '';
+      } else {
+        const tabFull      = document.getElementById(`${uniqueId}-tab-full`);
+        const tabFlashcard = document.getElementById(`${uniqueId}-tab-flashcard`);
+        let contentEl = tabFull;
+        if (tabFlashcard && !tabFlashcard.classList.contains('hidden')) {
+          contentEl = tabFlashcard;
+        }
+        text = contentEl ? contentEl.innerText : '';
+      }
+
+      if (!text || text.trim().length < 3) {
+        showToast('Tidak ada teks yang dapat dibaca.', 'warning');
+        return;
+      }
+
+      _activeTtsBtn      = btn;
+      _activeTtsTargetId = uniqueId;
+
+      // Reset tampilan semua tombol suara lainnya
+      document.querySelectorAll('.voice-icon').forEach(ic => ic.textContent = 'volume_up');
+      document.querySelectorAll('.voice-label').forEach(lb => lb.textContent = 'Baca Suara');
+      document.querySelectorAll('[onclick^="toggleVoiceSpeech"]').forEach(b => {
+        b.classList.remove('bg-purple-600', 'text-white', 'border-purple-600', 'shadow-md');
+        b.classList.add('bg-purple-50', 'text-purple-700');
+      });
+
+      // Jalankan pembacaan dengan aksen Indonesia alami
+      const ok = XavetraTTS.speakText(text, {
+        mode: 'natural', // Prioritaskan suara asli Indonesia
+        rate: _currentTtsRate,
+        onStart: (totalChunks, mode) => {
+          _setTtsBtnActive(btn);
+          const accentTitle = mode === 'natural' ? '🇮🇩 Aksen Indonesia Alami' : '💻 Suara Browser';
+          showToast(`🔊 Membacakan (${accentTitle})...`, 'info');
+          _showFloatingAudioPlayer(totalChunks, mode);
+        },
+        onProgress: (current, total, currentChunk) => {
+          _updateFloatingPlayerProgress(current, total, currentChunk);
+        },
+        onEnd: () => {
+          _resetTtsBtn(btn);
+          _activeTtsBtn      = null;
+          _activeTtsTargetId = null;
+          _hideFloatingAudioPlayer();
+        },
+        onError: (err) => {
+          _resetTtsBtn(btn);
+          _activeTtsBtn      = null;
+          _activeTtsTargetId = null;
+          _hideFloatingAudioPlayer();
+          showToast('⚠️ ' + err, 'warning');
+        }
+      });
+
+      if (!ok) {
+        _resetTtsBtn(btn);
+        _activeTtsBtn      = null;
+        _activeTtsTargetId = null;
+      }
+    }
+
+    // ── Floating Audio Player Widget Helper ──────────────────────────────────
+    function _showFloatingAudioPlayer(totalChunks, mode) {
+      const player = document.getElementById('ai-floating-player');
+      if (!player) return;
+
+      const badge = document.getElementById('player-progress-badge');
+      const snippet = document.getElementById('player-snippet-text');
+      const accent = document.getElementById('player-accent-badge');
+      const pauseIcon = document.getElementById('player-pause-icon');
+
+      if (badge) badge.textContent = `1 / ${totalChunks}`;
+      if (snippet) snippet.textContent = 'Membacakan kalimat...';
+      if (accent) accent.textContent = mode === 'natural' ? '🇮🇩 Aksen Indonesia Asli' : '💻 Suara Sistem';
+      if (pauseIcon) pauseIcon.textContent = 'pause';
+
+      player.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+    }
+
+    function _updateFloatingPlayerProgress(current, total, currentChunk) {
+      const badge = document.getElementById('player-progress-badge');
+      const snippet = document.getElementById('player-snippet-text');
+      if (badge) badge.textContent = `${current} / ${total}`;
+      if (snippet && currentChunk) {
+        snippet.textContent = currentChunk.length > 40 ? currentChunk.substring(0, 40) + '...' : currentChunk;
+      }
+    }
+
+    function _hideFloatingAudioPlayer() {
+      const player = document.getElementById('ai-floating-player');
+      if (player) {
+        player.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function togglePlayerPause() {
+      if (!window.XavetraTTS || !XavetraTTS.isPlaying()) return;
+      const pauseIcon = document.getElementById('player-pause-icon');
+      if (XavetraTTS.isPaused()) {
+        XavetraTTS.resume();
+        if (pauseIcon) pauseIcon.textContent = 'pause';
+        showToast('▶️ Melanjutkan membaca...', 'info');
+      } else {
+        XavetraTTS.pause();
+        if (pauseIcon) pauseIcon.textContent = 'play_arrow';
+        showToast('⏸️ Membaca dijeda.', 'info');
+      }
+    }
+
+    function cyclePlayerRate() {
+      if (!window.XavetraTTS) return;
+      const rates = [1.0, 1.25, 0.85];
+      const curIdx = rates.indexOf(_currentTtsRate);
+      _currentTtsRate = rates[(curIdx + 1) % rates.length];
+      XavetraTTS.setRate(_currentTtsRate);
+
+      const speedBtn = document.getElementById('player-speed-btn');
+      if (speedBtn) speedBtn.textContent = _currentTtsRate + 'x';
+      showToast(`Kecepatan baca diubah ke ${_currentTtsRate}x`, 'info');
+    }
+
+    function stopPlayer() {
+      if (window.XavetraTTS) {
+        XavetraTTS.stop();
+      }
+      _resetTtsBtn(_activeTtsBtn);
+      _activeTtsBtn      = null;
+      _activeTtsTargetId = null;
+      _hideFloatingAudioPlayer();
+      showToast('⏹️ Pembacaan dihentikan.', 'info');
+    }
+
+    function copyMessageText(targetId) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      const text = el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Teks penjelasan berhasil disalin!', 'success');
+      }).catch(() => {
+        showToast('Gagal menyalin teks.', 'alert');
+      });
+    }
+
+    function saveAiToNotes(targetId, promptTitle) {
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      const content = el.innerText;
+
+      try {
+        const rawNotes = localStorage.getItem('xavetra_student_notes');
+        const notes = rawNotes ? JSON.parse(rawNotes) : [];
+        
+        const newNote = {
+          id: 'note_' + Date.now(),
+          title: 'Tanya AI: ' + (promptTitle.length > 40 ? promptTitle.substring(0, 40) + '...' : promptTitle),
+          content: content,
+          date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+          tag: 'AI Tutor'
+        };
+
+        notes.unshift(newNote);
+        localStorage.setItem('xavetra_student_notes', JSON.stringify(notes));
+
+        // Update badge
+        const badge = document.getElementById('sidebar-notes-badge');
+        if (badge) badge.textContent = `${notes.length} Notes`;
+
+        showToast('Berhasil disimpan ke Catatan Belajar!', 'success');
+      } catch (e) {
+        showToast('Gagal menyimpan catatan.', 'alert');
+      }
+    }
+
+    function clearChatHistory() {
+      if (confirm('Bersihkan riwayat percakapan saat ini?')) {
+        chatConversationHistory = [];
+        if (window.XavetraTTS) {
+          XavetraTTS.stop();
+        }
+        _resetTtsBtn(_activeTtsBtn);
+        _activeTtsBtn      = null;
+        _activeTtsTargetId = null;
+        _hideFloatingAudioPlayer();
+        const container = document.getElementById('chat-messages');
+        container.innerHTML = `
+          <div class="flex items-start gap-3.5 max-w-3xl">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
+              <span class="material-symbols-outlined text-[20px]">smart_toy</span>
+            </div>
+            <div class="space-y-2 flex-1">
+              <div class="p-5 rounded-3xl rounded-tl-sm bg-white border border-slate-200/90 shadow-card space-y-2">
+                <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  Percakapan telah direset. Silakan tanyakan konsep materi Informatika yang ingin kamu pelajari!
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+        showToast('Percakapan dibersihkan.', 'info');
+      }
+    }
+  </script>
+</body>
+</html>

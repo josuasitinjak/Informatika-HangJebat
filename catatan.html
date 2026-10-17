@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catatan Belajar — XAVETRA SMAN 1 Batam</title>
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Buku catatan belajar siswa Informatika Fase F Kelas XI SMAN 1 Batam. Simpan ringkasan materi, rumus operator, dan analisis hukum siber.">
+  
+  <!-- Immediate Auth Guard -->
+  <script>
+    (function() {
+      const user = localStorage.getItem('xavetra_user');
+      if (!user) {
+        window.location.replace('login.html?redirect=catatan.html');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1F6BFF',
+            'primary-dark': '#0E4CD1',
+            'primary-subtle': '#EEF4FF',
+            navy: '#0B1528',
+            canvas: '#F8FAFC',
+            surface: '#FFFFFF',
+            accent: '#F59E0B',
+            'text-main': '#0F172A',
+            'text-muted': '#64748B',
+            'border-light': '#E2E8F0',
+            'border-focus': '#BFDBFE'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(11, 21, 40, 0.04), 0 2px 6px -1px rgba(11, 21, 40, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(11, 21, 40, 0.08), 0 4px 12px -2px rgba(31, 107, 255, 0.06)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+  <!-- ========================================================================= -->
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col justify-between transition-transform duration-300 -translate-x-full lg:translate-x-0 select-none">
+    <div class="p-6 space-y-7 overflow-y-auto">
+      
+      <!-- Brand -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div>
+            <span class="text-lg font-black text-navy tracking-tight">Informatika</span>
+            <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Menus -->
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+          Menu Pembelajaran
+        </div>
+
+        <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+            <span>Modul Materi</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary">4 Bab</span>
+        </a>
+
+        <!-- Catatan Belajar (Active) -->
+        <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-glow transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px]">edit_note</span>
+            <span>Catatan Belajar</span>
+          </span>
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        </a>
+
+        <!-- Tanya AI (Chatting AI) -->
+        <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-purple-500 group-hover:scale-110 transition">smart_toy</span>
+            <span>Tanya AI</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+        </a>
+
+        <!-- Komunitas (Media Sosial Siswa) -->
+        <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+            <span>Komunitas</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT                                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-xl">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-bold text-navy">Buku Catatan Pintar Siswa (Smart Notes)</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- User Profile Dropdown Button -->
+        <div class="relative">
+          <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition focus:outline-none cursor-pointer">
+            <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+              XS
+            </div>
+            <div class="text-left hidden sm:block">
+              <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[130px]">
+                Siswa Xavetra
+              </div>
+              <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[130px]">
+                Siswa XI HJ 5
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
+          </button>
+
+          <!-- Dropdown Popover Menu -->
+          <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+            <div class="px-4 py-2 border-b border-slate-100 flex items-center gap-3">
+              <div id="dropdown-user-avatar" class="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                XS
+              </div>
+              <div class="min-w-0">
+                <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Siswa Xavetra</div>
+                <div id="dropdown-user-role" class="text-[10px] text-text-muted truncate">XI HJ 5 • SMAN 1 Batam</div>
+                <div class="text-[9px] text-emerald-600 font-bold flex items-center gap-1 mt-0.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Akun Siswa Aktif
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2 border-t border-slate-100">
+              <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
+                <span class="material-symbols-outlined text-[18px]">logout</span>
+                <span>Keluar Akun (Logout)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <main class="flex-grow p-4 sm:p-8 space-y-8 max-w-5xl mx-auto w-full">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+              Buku Catatan Belajar
+            </h1>
+            <span id="total-notes-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+              0 Catatan Tersimpan
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">
+            Tulis, kumpulkan, dan kelola ringkasan penting dari materi Informatika Fase F. Catatan tersimpan secara aman di peramban Anda.
+          </p>
+        </div>
+
+        <button onclick="exportNotesTxt()" class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-navy text-xs font-bold transition flex items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined text-[17px] text-primary">download</span>
+          <span>Ekspor Catatan (.txt)</span>
+        </button>
+      </div>
+
+      <!-- CREATE NEW NOTE BOX -->
+      <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-primary-subtle text-primary flex items-center justify-center font-bold">
+              <span class="material-symbols-outlined text-[19px]">edit</span>
+            </span>
+            <h2 class="text-sm font-extrabold text-navy">Tulis Catatan Baru</h2>
+          </div>
+
+          <!-- Quick Templates -->
+          <div class="flex items-center flex-wrap gap-1.5 text-xs">
+            <span class="text-text-muted text-[11px] hidden sm:inline">Template:</span>
+            <button onclick="applyTemplate('operator')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-blue-50 text-primary text-[10px] font-bold transition">
+              + Rumus Operator
+            </button>
+            <button onclick="applyTemplate('triangulasi')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-emerald-50 text-emerald-600 text-[10px] font-bold transition">
+              + Triangulasi Sumber
+            </button>
+            <button onclick="applyTemplate('ite')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-purple-50 text-purple-600 text-[10px] font-bold transition">
+              + Pasal UU ITE
+            </button>
+            <a href="tanya-ai.html" class="px-2.5 py-1 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 text-[10px] font-bold transition flex items-center gap-1">
+              <span class="material-symbols-outlined text-[13px]">smart_toy</span>
+              <span>Tanya AI</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 pt-1">
+          <div class="sm:col-span-4">
+            <label for="note-chapter-select" class="text-[11px] font-bold text-slate-500 block mb-1">Bab Pembelajaran:</label>
+            <select id="note-chapter-select" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-navy focus:outline-none focus:border-primary">
+              <option value="Bab 01: Mesin Pencari & Web">Bab 01: Mesin Pencari &amp; Web</option>
+              <option value="Bab 02: Strategi Riset & Operator">Bab 02: Strategi Riset &amp; Operator</option>
+              <option value="Bab 03: Hukum Digital UU ITE & PDP">Bab 03: Hukum Digital UU ITE &amp; PDP</option>
+              <option value="Bab 04: Hak Cipta & Netiket">Bab 04: Hak Cipta &amp; Netiket</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-8">
+            <label for="note-title-input" class="text-[11px] font-bold text-slate-500 block mb-1">Judul Catatan:</label>
+            <input 
+              type="text" 
+              id="note-title-input"
+              placeholder="Contoh: Perbedaan Crawling vs Indexing di Mesin Pencari"
+              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-medium text-navy focus:outline-none focus:border-primary"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label for="note-body-input" class="text-[11px] font-bold text-slate-500 block mb-1">Rangkuman / Catatan Pribadi:</label>
+          <textarea 
+            id="note-body-input"
+            rows="4"
+            placeholder="Tuliskan pemahamanmu, contoh query, atau pasal hukum yang perlu kamu hafalkan..."
+            class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs font-medium text-navy focus:outline-none focus:border-primary leading-relaxed resize-none"
+          ></textarea>
+        </div>
+
+        <div class="flex items-center justify-end">
+          <button onclick="createNewNote()" class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[17px]">bookmark_add</span>
+            <span>Simpan Catatan</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTER & SAVED NOTES LIST -->
+      <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-base font-extrabold text-navy">
+              Daftar Catatan Tersimpan
+            </h2>
+            <p class="text-xs text-text-muted">Pilih bab untuk menyaring kumpulan catatan belajar Anda.</p>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <label for="chapter-filter-select" class="text-xs font-semibold text-text-muted flex items-center gap-1.5 shrink-0">
+              <span class="material-symbols-outlined text-[17px] text-primary">filter_list</span>
+              <span>Filter Bab:</span>
+            </label>
+            <select 
+              id="chapter-filter-select" 
+              onchange="filterNotes(this.value)" 
+              class="bg-white border border-slate-200/90 rounded-xl px-3.5 py-2 text-xs font-bold text-navy focus:outline-none focus:border-primary shadow-sm cursor-pointer"
+            >
+              <option value="all">Semua Bab Pembelajaran</option>
+              <option value="Bab 01">Bab 01: Mesin Pencari &amp; Web</option>
+              <option value="Bab 02">Bab 02: Strategi Riset &amp; Operator</option>
+              <option value="Bab 03">Bab 03: Hukum Digital UU ITE &amp; PDP</option>
+              <option value="Bab 04">Bab 04: Hak Cipta &amp; Netiket</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Notes Cards List Container -->
+        <div id="notes-list-container" class="space-y-3.5">
+          <!-- Dynamically populated or empty state -->
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white border-t border-slate-200/80 text-center text-xs text-text-muted px-4">
+      <p>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI • SMA Negeri 1 Batam</p>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" id="toast-indicator"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    let activeFilter = 'all';
+
+    function toggleUserDropdown(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = document.getElementById('user-dropdown-menu');
+      const btn = document.getElementById('user-menu-btn');
+      if (menu && !menu.classList.contains('hidden')) {
+        if (!menu.contains(e.target) && !btn?.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getAuthUser();
+      if (!user) {
+        window.location.replace('login.html?redirect=catatan.html');
+        return;
+      }
+
+      const studentName = user.name || 'Siswa Xavetra';
+      const studentRole = user.role || 'Siswa XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'XS';
+
+      const displayNameEl = document.getElementById('student-display-name');
+      const displayRoleEl = document.getElementById('student-display-role');
+      const topAvatarEl = document.getElementById('top-user-avatar');
+
+      const dropAvatarEl = document.getElementById('dropdown-user-avatar');
+      const dropNameEl = document.getElementById('dropdown-user-name');
+      const dropRoleEl = document.getElementById('dropdown-user-role');
+
+      if (displayNameEl) displayNameEl.textContent = studentName;
+      if (displayRoleEl) displayRoleEl.textContent = studentRole;
+      if (topAvatarEl) topAvatarEl.textContent = initials;
+
+      if (dropAvatarEl) dropAvatarEl.textContent = initials;
+      if (dropNameEl) dropNameEl.textContent = studentName;
+      if (dropRoleEl) dropRoleEl.textContent = `${studentRole} • SMAN 1 Batam`;
+
+      // Update quiz badge
+      const savedScore = localStorage.getItem('xavetra_quiz_score');
+      if (savedScore !== null) {
+        const quizBadge = document.getElementById('sidebar-quiz-badge');
+        if (quizBadge) {
+          quizBadge.textContent = `${savedScore} Poin`;
+          quizBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600';
+        }
+      }
+
+      // Populate chapters in dropdown dynamically
+      try {
+        const rawChaps = localStorage.getItem('xavetra_custom_chapters');
+        const customChapters = rawChaps ? JSON.parse(rawChaps) : [];
+        const chSelect = document.getElementById('note-chapter-select');
+        const flSelect = document.getElementById('chapter-filter-select');
+        if (customChapters.length > 0) {
+          if (chSelect) {
+            chSelect.innerHTML = customChapters.map(c => `<option value="${c.title}">${c.title}</option>`).join('');
+          }
+          if (flSelect) {
+            flSelect.innerHTML = `<option value="all">Semua Bab Pembelajaran</option>` + customChapters.map(c => `<option value="${c.title}">${c.title}</option>`).join('');
+          }
+        } else {
+          if (chSelect) {
+            chSelect.innerHTML = `<option value="Catatan Umum">Catatan Umum Pembelajaran</option>`;
+          }
+          if (flSelect) {
+            flSelect.innerHTML = `<option value="all">Semua Bab</option><option value="Catatan Umum">Catatan Umum</option>`;
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      renderNotes();
+    });
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+
+    function getSavedNotes() {
+      try {
+        const raw = localStorage.getItem('xavetra_student_notes');
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderNotes() {
+      const notes = getSavedNotes();
+      const container = document.getElementById('notes-list-container');
+      const totalBadge = document.getElementById('total-notes-badge');
+
+      totalBadge.textContent = `${notes.length} Catatan Tersimpan`;
+
+      let filtered = notes;
+      if (activeFilter !== 'all') {
+        filtered = notes.filter(n => n.chapter.includes(activeFilter));
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white p-8 rounded-3xl border border-slate-200/80 text-center space-y-3">
+            <div class="w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 mx-auto flex items-center justify-center">
+              <span class="material-symbols-outlined text-[26px]">note_alt</span>
+            </div>
+            <h3 class="text-sm font-bold text-navy">Belum Ada Catatan ${activeFilter !== 'all' ? 'untuk ' + activeFilter : ''}</h3>
+            <p class="text-xs text-text-muted max-w-sm mx-auto">
+              Gunakan form di atas untuk mencatat rangkuman materi penting atau gunakan tombol template cepat.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(note => `
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-2.5">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <span class="text-[10px] font-bold text-primary bg-primary-subtle px-2 py-0.5 rounded-full border border-border-focus">
+                ${note.chapter}
+              </span>
+              <h3 class="text-sm font-bold text-navy mt-1.5">${note.title}</h3>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <span class="text-[10px] text-slate-400">${note.date}</span>
+              <button onclick="deleteNote('${note.id}')" title="Hapus catatan" class="p-1 text-slate-400 hover:text-red-500 rounded-lg transition">
+                <span class="material-symbols-outlined text-[16px]">delete</span>
+              </button>
+            </div>
+          </div>
+          <p class="text-xs text-slate-700 leading-relaxed whitespace-pre-line font-medium bg-slate-50 p-3 rounded-xl border border-slate-100">
+            ${note.body}
+          </p>
+        </div>
+      `).join('');
+    }
+
+    function createNewNote() {
+      const chapter = document.getElementById('note-chapter-select').value;
+      const title = document.getElementById('note-title-input').value.trim();
+      const body = document.getElementById('note-body-input').value.trim();
+
+      if (!title || !body) {
+        showToast('⚠️ Mohon isi judul dan rangkuman catatan Anda!', 'alert');
+        return;
+      }
+
+      const newNote = {
+        id: 'note_' + Date.now(),
+        chapter: chapter,
+        title: title,
+        body: body,
+        date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+      };
+
+      const notes = getSavedNotes();
+      notes.unshift(newNote);
+      localStorage.setItem('xavetra_student_notes', JSON.stringify(notes));
+
+      document.getElementById('note-title-input').value = '';
+      document.getElementById('note-body-input').value = '';
+
+      renderNotes();
+      showToast('🎉 Catatan baru berhasil disimpan!');
+    }
+
+    function deleteNote(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus catatan ini?')) {
+        let notes = getSavedNotes();
+        notes = notes.filter(n => n.id !== id);
+        localStorage.setItem('xavetra_student_notes', JSON.stringify(notes));
+        renderNotes();
+        showToast('Catatan telah dihapus.', 'warning');
+      }
+    }
+
+    function filterNotes(f) {
+      activeFilter = f || 'all';
+      const select = document.getElementById('chapter-filter-select');
+      if (select && select.value !== activeFilter) {
+        select.value = activeFilter;
+      }
+      renderNotes();
+    }
+
+    function applyTemplate(type) {
+      if (type === 'operator') {
+        document.getElementById('note-chapter-select').value = 'Bab 02: Strategi Riset & Operator';
+        document.getElementById('note-title-input').value = 'Rumus Sintaks Operator Riset Cerdas';
+        document.getElementById('note-body-input').value = `1. site:domain -> membatasi domain resmi (contoh: site:kemdikbud.go.id)\n2. filetype:ekstensi -> menyaring format dokumen (contoh: filetype:pdf)\n3. "frasa persis" -> mencari kata dalam urutan tepat\n4. -kata -> mengecualikan kata yang tidak diinginkan (contoh: -iklan)\n\nContoh penggabungan:\nsite:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan`;
+      } else if (type === 'triangulasi') {
+        document.getElementById('note-chapter-select').value = 'Bab 02: Strategi Riset & Operator';
+        document.getElementById('note-title-input').value = 'Pedoman Triangulasi 3 Sumber Independen';
+        document.getElementById('note-body-input').value = `Untuk memastikan suatu isu adalah fakta:\n1. Sumber 1: Lembaga resmi pemerintah / otoritas terkait (.go.id / .ac.id)\n2. Sumber 2: Media berita nasional terdaftar resmi di Dewan Pers\n3. Sumber 3: Jurnal akademik / rujukan pakar independen\n\nJika 3 sumber tidak konsisten, jangan langsung disebarkan!`;
+      } else if (type === 'ite') {
+        document.getElementById('note-chapter-select').value = 'Bab 03: Hukum Digital UU ITE & PDP';
+        document.getElementById('note-title-input').value = 'Ringkasan Pasal Krusial UU ITE & UU PDP';
+        document.getElementById('note-body-input').value = `- Pasal 27: Konten asusila, judi online, dan pemerasan.\n- Pasal 28: Penyebaran berita bohong (hoaks) & ujaran SARA.\n- Pasal 30: Illegal access / hacking tanpa hak.\n- Pasal 32: Merusak / mengubah data elektronik milik orang lain.\n- UU PDP 27/2022: Perlindungan data pribadi (KTP, no. telepon, privasi siswa).`;
+      }
+      showToast('Template catatan berhasil diterapkan!');
+    }
+
+    function exportNotesTxt() {
+      const notes = getSavedNotes();
+      if (notes.length === 0) {
+        showToast('⚠️ Belum ada catatan yang tersimpan untuk diekspor.', 'alert');
+        return;
+      }
+
+      let content = `CATATAN BELAJAR INFORMATIKA FASE F - SMAN 1 BATAM\n`;
+      content += `Nama Siswa: ${document.getElementById('student-display-name').textContent}\n`;
+      content += `Tanggal Ekspor: ${new Date().toLocaleDateString('id-ID')}\n`;
+      content += `====================================================\n\n`;
+
+      notes.forEach((n, idx) => {
+        content += `[${idx + 1}] ${n.title.toUpperCase()}\n`;
+        content += `Bab: ${n.chapter} | Tanggal: ${n.date}\n`;
+        content += `Rangkuman:\n${n.body}\n`;
+        content += `----------------------------------------------------\n\n`;
+      });
+
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Catatan_Informatika_${Date.now()}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('📄 Berkas catatan (.txt) berhasil diunduh!');
+    }
+  </script>
+</body>
+</html>

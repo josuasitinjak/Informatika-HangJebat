@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masuk — XAVETRA | Platform Pembelajaran Informatika SMAN 1 Batam</title>
+  
+  <!-- Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["'Plus Jakarta Sans'", "'Inter'", "sans-serif"],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#1F6BFF',
+              dark: '#0047B8',
+              subtle: '#EBF2FF',
+            },
+            navy: '#0F1B33',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom UI & Design Utilities -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-white min-h-screen h-full text-slate-800 font-sans selection:bg-primary selection:text-white antialiased overflow-x-hidden">
+
+  <!-- FULL SCREEN 2-COLUMN LAYOUT (FIT IN VIEWPORT, NO VERTICAL SCROLL ON DESKTOP) -->
+  <div class="min-h-screen lg:h-screen w-full grid grid-cols-1 lg:grid-cols-12 overflow-y-auto lg:overflow-hidden">
+    
+    <!-- ========================================================================= -->
+    <!-- LEFT PANEL: Blue Mesh Gradient Showcase                                   -->
+    <!-- ========================================================================= -->
+    <section class="lg:col-span-6 xl:col-span-6 relative mesh-gradient-bg p-6 sm:p-8 lg:p-10 flex flex-col justify-between overflow-hidden text-white min-h-[460px] lg:h-screen">
+      <!-- Decorative Atmospheric Glow Blobs -->
+      <div class="orb-glow w-72 h-72 bg-cyan-300 top-[-10%] right-[-10%]"></div>
+      <div class="orb-glow w-80 h-80 bg-blue-800 bottom-[-10%] left-[-10%]"></div>
+      <div class="orb-glow w-60 h-60 bg-indigo-500 top-[40%] right-[10%] opacity-40"></div>
+
+      <!-- Top Row: Attached Navigation Button (No Developer/Class Badge) -->
+      <header class="relative z-10 flex items-center justify-between">
+        <a href="index.html" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          <span>Kembali ke Beranda</span>
+        </a>
+      </header>
+
+      <!-- Middle Content Area -->
+      <div class="relative z-10 my-auto py-6 lg:py-4 max-w-lg">
+        <!-- Badge Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-medium shadow-sm mb-3">
+          <span>Selamat Datang Siswa</span>
+          <span class="text-sm leading-none">🚀</span>
+        </div>
+
+        <!-- Headline & Subtitle -->
+        <h1 class="text-2xl sm:text-3xl lg:text-[38px] font-extrabold text-white tracking-tight leading-[1.18] mb-2.5">
+          Lanjutkan Perjalanan Belajarmu
+        </h1>
+        <p class="text-blue-100/90 text-xs sm:text-sm font-normal max-w-md leading-relaxed">
+          Masuk ke akunmu untuk mengakses modul kurikulum, latihan riset mesin pencari, kuis literasi digital, serta studi kasus hukum siber.
+        </p>
+      </div>
+
+      <!-- Bottom Feature Cards Navigation (Compact & Sleek) -->
+      <footer class="relative z-10 pt-2">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 w-full">
+          
+          <!-- Card 1 -->
+          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
+            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
+              <span class="material-symbols-outlined text-[16px]">menu_book</span>
+            </div>
+            <div class="text-xs font-bold text-white/95 leading-snug">
+              Modul Kurikulum Fase F
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
+            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
+              <span class="material-symbols-outlined text-[16px]">manage_search</span>
+            </div>
+            <div class="text-xs font-bold text-white/95 leading-snug">
+              Simulator Riset &amp; Operator
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
+            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
+              <span class="material-symbols-outlined text-[16px]">gavel</span>
+            </div>
+            <div class="text-xs font-bold text-white/95 leading-snug">
+              Hukum Siber &amp; UU ITE
+            </div>
+          </div>
+
+        </div>
+      </footer>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- RIGHT PANEL: Clean Form Container (Fitted to Height)                       -->
+    <!-- ========================================================================= -->
+    <section class="lg:col-span-6 xl:col-span-6 bg-white p-6 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center relative lg:h-screen overflow-hidden">
+      
+      <div class="max-w-md w-full mx-auto">
+        <!-- Form Header -->
+        <div class="mb-4">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Masuk ke Akun
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">
+            Silakan masukkan nama atau username dan kata sandi Anda.
+          </p>
+        </div>
+
+
+        <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+          
+          <!-- Field 1: Username / Nama Lengkap -->
+          <div>
+            <label for="username-input" class="block text-xs font-semibold text-slate-800 mb-1">
+              Nama Lengkap atau Username
+            </label>
+            <div class="relative">
+              <input 
+                type="text" 
+                id="username-input" 
+                name="username"
+                value=""
+                placeholder="Nama lengkap atau username"
+                class="w-full form-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
+                required
+                autofocus
+              >
+            </div>
+          </div>
+
+          <!-- Field 2: Password -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="password-input" class="block text-xs font-semibold text-slate-800">
+                Kata Sandi
+              </label>
+              <a href="javascript:void(0)" onclick="alert('Petunjuk pemulihan kata sandi telah dikirim ke wali kelas / admin sekolah.')" class="text-xs text-primary hover:underline font-semibold">
+                Lupa kata sandi?
+              </a>
+            </div>
+            <div class="relative">
+              <input 
+                type="password" 
+                id="password-input" 
+                name="password"
+                value=""
+                placeholder="Kata sandi"
+                class="w-full form-input rounded-xl pl-3.5 pr-10 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
+                required
+              >
+              <!-- Toggle Visibility Button -->
+              <button 
+                type="button" 
+                onclick="togglePasswordVisibility('password-input', 'eye-icon')" 
+                id="toggle-password-btn"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition"
+                title="Tampilkan / Sembunyikan kata sandi"
+              >
+                <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div class="flex items-center pt-0.5">
+            <input 
+              id="remember-me" 
+              name="remember" 
+              type="checkbox" 
+              checked
+              class="h-3.5 w-3.5 rounded border-slate-300 text-primary focus:ring-primary cursor-pointer"
+            >
+            <label for="remember-me" class="ml-2 block text-xs text-slate-600 cursor-pointer select-none">
+              Ingat sesi login saya di perangkat ini
+            </label>
+          </div>
+
+          <!-- Primary Submit Button: Masuk -->
+          <button 
+            type="submit" 
+            id="login-submit-btn"
+            class="w-full bg-primary hover:bg-primary-dark active:scale-[0.99] text-white font-bold py-3 px-4 rounded-xl shadow-md shadow-primary/25 transition duration-150 text-xs sm:text-sm flex items-center justify-center gap-2 mt-2"
+          >
+            <span id="login-btn-text">Masuk Sekarang</span>
+            <span id="login-btn-icon" class="material-symbols-outlined text-[17px]">arrow_forward</span>
+          </button>
+
+          <!-- Register redirect -->
+          <div class="text-center pt-1.5">
+            <span class="text-xs text-slate-500">Belum memiliki akun? </span>
+            <a href="register.html" class="text-xs font-bold text-primary hover:underline">
+              Daftar akun siswa
+            </a>
+          </div>
+
+          <!-- Disclaimer / Legal notice -->
+          <footer class="pt-4 border-t border-slate-100 mt-4">
+            <p class="text-[11px] text-slate-400 text-center leading-relaxed">
+              Platform Informatika Fase F Kelas XI • SMA Negeri 1 Batam.
+            </p>
+          </footer>
+
+        </form>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function fillAdminCredentials() {
+      document.getElementById('username-input').value = 'admin';
+      document.getElementById('password-input').value = 'admin123';
+      showToast('Kredensial admin telah diisi! Silakan klik Masuk.');
+    }
+
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      const identifier = document.getElementById('username-input').value.trim();
+      const password = document.getElementById('password-input').value;
+
+      if (!identifier || !password) {
+        showToast('⚠️ Mohon isi username dan kata sandi Anda.', 'alert');
+        return;
+      }
+
+      const submitBtn = document.getElementById('login-submit-btn');
+      const btnText = document.getElementById('login-btn-text');
+      const btnIcon = document.getElementById('login-btn-icon');
+
+      // Set state loading
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-75', 'cursor-wait');
+      }
+      if (btnText) btnText.textContent = 'Memverifikasi...';
+      if (btnIcon) {
+        btnIcon.className = 'material-symbols-outlined text-[17px] animate-spin';
+        btnIcon.textContent = 'progress_activity';
+      }
+
+      function restoreBtn() {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-75', 'cursor-wait');
+        }
+        if (btnText) btnText.textContent = 'Masuk Sekarang';
+        if (btnIcon) {
+          btnIcon.className = 'material-symbols-outlined text-[17px]';
+          btnIcon.textContent = 'arrow_forward';
+        }
+      }
+
+      try {
+        // 1. Akun khusus Admin lokal (selalu aktif agar tidak pernah terkunci)
+        if (identifier.toLowerCase() === 'admin' && password === 'admin123') {
+          const adminUser = {
+            name: 'Administrator Informatika',
+            username: 'admin',
+            role: 'Pengajar & Admin',
+            school: 'SMAN 1 Batam',
+            loginTime: new Date().toISOString()
+          };
+          saveAuthUser(adminUser);
+          showToast('🎉 Berhasil masuk sebagai Administrator!');
+          setTimeout(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            window.location.href = urlParams.get('redirect') || 'dashboard.html';
+          }, 500);
+          return;
+        }
+
+        // 2. Hubungi Google Sheets API jika dikonfigurasi
+        const res = await loginViaGoogleSheets(identifier, password);
+
+        if (res.success) {
+          let userToSave = res.user;
+
+          // Jika URL Google Sheets belum diatur (mode lokal demonstrasi)
+          if (res.isLocal) {
+            userToSave = {
+              name: identifier,
+              username: identifier.toLowerCase().replace(/\s+/g, '_'),
+              role: 'Siswa XI HJ 5',
+              school: 'SMAN 1 Batam',
+              loginTime: new Date().toISOString()
+            };
+          }
+
+          saveAuthUser(userToSave);
+          showToast(`🎉 Berhasil masuk sebagai ${userToSave.name}!`);
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirect = urlParams.get('redirect') || 'dashboard.html';
+          setTimeout(() => {
+            window.location.href = redirect;
+          }, 600);
+        } else {
+          showToast(`⚠️ ${res.message || 'Username atau kata sandi tidak cocok.'}`, 'alert');
+          restoreBtn();
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        showToast('⚠️ Terjadi kendala saat verifikasi. Silakan coba lagi.', 'alert');
+        restoreBtn();
+      }
+    }
+  </script>
+</body>
+</html>

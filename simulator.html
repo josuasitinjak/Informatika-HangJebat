@@ -1,0 +1,498 @@
+﻿<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulator Riset & Operator — XAVETRA SMAN 1 Batam</title>
+  <meta name="description" content="Laboratorium interaktif simulator mesin pencari dan operator riset Informatika Fase F Kelas XI SMAN 1 Batam.">
+  
+  <!-- Immediate Auth Guard -->
+  <script>
+    (function() {
+      const user = localStorage.getItem('xavetra_user');
+      if (!user) {
+        window.location.replace('login.html?redirect=simulator.html');
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1F6BFF',
+            'primary-dark': '#0E4CD1',
+            'primary-subtle': '#EEF4FF',
+            navy: '#0B1528',
+            canvas: '#F4F6FA',
+            surface: '#FFFFFF',
+            accent: '#F59E0B',
+            'text-main': '#0F172A',
+            'text-muted': '#64748B',
+            'border-light': '#E2E8F0',
+            'border-focus': '#BFDBFE'
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px -2px rgba(11, 21, 40, 0.04), 0 2px 6px -1px rgba(11, 21, 40, 0.02)',
+            'card-hover': '0 12px 28px -4px rgba(11, 21, 40, 0.08), 0 4px 12px -2px rgba(31, 107, 255, 0.06)',
+            'glow': '0 8px 24px -2px rgba(31, 107, 255, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
+
+  <!-- Mobile Backdrop Overlay -->
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ========================================================================= -->
+  <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
+  <!-- ========================================================================= -->
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0 select-none">
+    <div class="flex-1 p-6 space-y-7 overflow-y-auto">
+      
+      <!-- Brand -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div>
+            <span class="text-lg font-black text-navy tracking-tight">Informatika</span>
+            <div class="text-[11px] text-text-muted font-medium">SMAN 1 BATAM</div>
+          </div>
+        </a>
+        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Menus -->
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
+          Menu Pembelajaran
+        </div>
+
+        <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
+            <span>Modul Materi</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary">4 Bab</span>
+        </a>
+
+        <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
+            <span>Catatan Belajar</span>
+          </span>
+        </a>
+
+        <!-- Tanya AI -->
+        <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-purple-500 group-hover:scale-110 transition">smart_toy</span>
+            <span>Tanya AI</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 border border-purple-200">AI</span>
+        </a>
+
+        <!-- Komunitas -->
+        <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
+            <span>Komunitas</span>
+          </span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
+        </a>
+
+        <!-- Simulator Riset (Active) -->
+        <a href="simulator.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-primary text-white font-bold text-xs shadow-glow transition group">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px]">manage_search</span>
+            <span>Simulator Riset</span>
+          </span>
+          <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        </a>
+
+        <a href="tugas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
+          <span class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-[19px] text-slate-400">assignment</span>
+            <span>Tugas &amp; Riset</span>
+          </span>
+          <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-600">2 Tugas</span>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+
+  <!-- ========================================================================= -->
+  <!-- 2. MAIN APPLICATION CONTENT                                               -->
+  <!-- ========================================================================= -->
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
+    
+    <!-- Top Bar -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 sm:gap-4 flex-1 max-w-xl">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-bold text-navy">Laboratorium Riset &amp; Operator Pencarian</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="flex items-center gap-3 pl-1">
+          <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
+            XS
+          </div>
+          <div class="text-left hidden sm:block">
+            <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[130px]">
+              Siswa Xavetra
+            </div>
+            <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[130px]">
+              Siswa XI HJ 5
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <main class="flex-grow p-4 sm:p-8 space-y-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-navy tracking-tight">
+              Simulator Operator &amp; Triangulasi
+            </h1>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 border border-emerald-200">
+              Live Sandbox
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">
+            Uji sintaks operator logika (<code class="text-primary font-mono font-bold">site:</code>, <code class="text-primary font-mono font-bold">filetype:</code>, <code class="text-primary font-mono font-bold">" "</code>, <code class="text-primary font-mono font-bold">-</code>) dan simulasikan 3 alur algoritma mesin pencari.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label for="query-preset-select" class="text-xs font-semibold text-text-muted">Template Kasus:</label>
+          <select id="query-preset-select" onchange="loadQueryPreset(this.value)" class="text-xs font-semibold text-navy bg-white border border-slate-200 rounded-xl px-3 py-2 focus:border-primary outline-none shadow-sm">
+            <option value="kemdikbud_pdf">Modul Resmi (site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf)</option>
+            <option value="triangulasi_bmkg">Triangulasi Bencana (site:bmkg.go.id "gempa bumi" -hoaks)</option>
+            <option value="uu_ite_kasus">Kajian Putusan UU ITE (site:mahkamahagung.go.id "pasal 28" filetype:pdf)</option>
+            <option value="negasi_jaguar">Penyaringan Negasi (jaguar -mobil -otomotif filetype:pdf)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- WORKBENCH CONTAINER -->
+      <div class="bg-slate-950 rounded-3xl border border-slate-800 shadow-card overflow-hidden">
+        <!-- Mac OS Bar -->
+        <div class="h-11 bg-slate-900 px-5 flex items-center justify-between border-b border-slate-800">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-[#FF5F56]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#FFBD2E]"></div>
+            <div class="w-3 h-3 rounded-full bg-[#27C93F]"></div>
+            <span class="ml-2 text-xs font-mono text-slate-400">workbench_operator_fase_f.sh</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="copyQuery()" class="text-[11px] text-slate-400 hover:text-white px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition flex items-center gap-1 font-mono">
+              <span class="material-symbols-outlined text-[14px]">content_copy</span> Salin Query
+            </button>
+            <button onclick="resetQueryEditor()" class="text-[11px] text-slate-400 hover:text-white px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 transition flex items-center gap-1 font-mono">
+              <span class="material-symbols-outlined text-[14px]">refresh</span> Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Query Input -->
+        <div class="p-5 bg-slate-950 space-y-2">
+          <label for="query-input" class="text-xs font-mono text-slate-400 block">Ketik atau ubah query sintaks riset:</label>
+          <input 
+            type="text" 
+            id="query-input" 
+            value='site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan'
+            spellcheck="false"
+            class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3 font-mono text-xs sm:text-sm text-emerald-300 focus:outline-none focus:border-primary shadow-inner"
+          >
+        </div>
+
+        <!-- Execution Controls -->
+        <div class="p-4 bg-slate-900 border-t border-slate-800 flex items-center justify-between flex-wrap gap-3">
+          <div class="text-xs text-slate-400 font-mono">
+            Alur Proses: <span class="text-primary font-bold">1. Crawling</span> ➔ <span class="text-accent font-bold">2. Indexing</span> ➔ <span class="text-emerald-400 font-bold">3. Ranking</span>
+          </div>
+          <button onclick="executeSearchSimulation()" id="btn-run-search" class="interactive-btn px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-dark text-white text-xs font-bold flex items-center gap-2 shadow-glow">
+            <span class="material-symbols-outlined text-[17px]">search</span>
+            <span>Uji Operator Riset</span>
+          </button>
+        </div>
+
+        <!-- Terminal Output -->
+        <div class="p-5 bg-slate-950 border-t border-slate-800 text-xs font-mono">
+          <div class="flex items-center justify-between text-slate-500 text-[11px] pb-3 border-b border-slate-800">
+            <span class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-[15px] text-emerald-400">terminal</span>
+              <span>Log Algoritma &amp; Verifikasi Triangulasi 3 Sumber</span>
+            </span>
+            <span id="terminal-status" class="text-emerald-400">Siap dieksekusi</span>
+          </div>
+          <pre id="terminal-output" class="mt-4 text-slate-300 font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap">Klik tombol "Uji Operator Riset" di atas untuk menjalankan analisis query melalui 3 tahapan mesin pencari.</pre>
+        </div>
+      </div>
+
+      <!-- CHEATSHEET & TIPS OPERATOR RISET -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Cheatsheet Box -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-xl bg-blue-50 text-primary flex items-center justify-center font-bold">
+              <span class="material-symbols-outlined text-[18px]">key</span>
+            </span>
+            <h3 class="text-sm font-extrabold text-navy">Pedoman Operator Mesin Pencari</h3>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
+              <code class="font-bold text-primary font-mono shrink-0">"frasa"</code>
+              <div>
+                <div class="font-bold text-navy">Tanda Kutip Persis</div>
+                <div class="text-text-muted mt-0.5">Memaksa mesin mencari kata dalam urutan yang persis sama tanpa pemisahan.</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
+              <code class="font-bold text-primary font-mono shrink-0">-kata</code>
+              <div>
+                <div class="font-bold text-navy">Tanda Minus (Negasi)</div>
+                <div class="text-text-muted mt-0.5">Mengecualikan hasil yang memuat kata tertentu (contoh: -iklan, -hoaks, -jual).</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
+              <code class="font-bold text-primary font-mono shrink-0">site:domain</code>
+              <div>
+                <div class="font-bold text-navy">Filter Domain Resmi</div>
+                <div class="text-text-muted mt-0.5">Membatasi pencarian hanya di situs pemerintah (.go.id) atau kampus (.ac.id).</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-3">
+              <code class="font-bold text-primary font-mono shrink-0">filetype:format</code>
+              <div>
+                <div class="font-bold text-navy">Filter Ekstensi Berkas</div>
+                <div class="text-text-muted mt-0.5">Menyaring hanya berkas dokumen (pdf, docx, pptx) untuk keperluan makalah akademik.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lateral Reading & Triangulation Box -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-card space-y-4 flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                <span class="material-symbols-outlined text-[18px]">verified</span>
+              </span>
+              <h3 class="text-sm font-extrabold text-navy">Prinsip Triangulasi 3 Sumber</h3>
+            </div>
+
+            <p class="text-xs text-text-muted leading-relaxed">
+              Setelah menemukan informasi di mesin pencari, jangan langsung percaya hanya dari satu situs! Lakukan teknik <strong>membaca lateral</strong> dengan membandingkan minimal 3 rujukan independen:
+            </p>
+
+            <ul class="text-xs space-y-2 text-slate-700">
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-600 font-bold">1.</span>
+                <span><strong>Lembaga Resmi Berwenang:</strong> Website pemerintah/kementerian (contoh: BMKG untuk gempa, Kemenkes untuk kesehatan).</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-600 font-bold">2.</span>
+                <span><strong>Media Jurnalistik Terverifikasi:</strong> Portal berita terdaftar di Dewan Pers dengan kode etik jurnalistik ketat.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-emerald-600 font-bold">3.</span>
+                <span><strong>Rujukan Pakar / Jurnal Akademik:</strong> Karya ilmiah yang melalui proses peer-review oleh ahli di bidangnya.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-400">Siap menguji pemahaman sintaks?</span>
+            <a href="kuis.html" class="px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary-dark transition flex items-center gap-1.5 shadow-sm">
+              <span>Buka Kuis Literasi</span>
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 bg-white border-t border-slate-200/80 text-center text-xs text-text-muted px-4">
+      <p>XAVETRA — Platform Pembelajaran Informatika Fase F Kelas XI • SMA Negeri 1 Batam</p>
+    </footer>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
+    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" id="toast-indicator"></span>
+    <span id="toast-message">Notification</span>
+  </div>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = getAuthUser();
+      if (!user) {
+        window.location.replace('login.html?redirect=simulator.html');
+        return;
+      }
+
+      const studentName = user.name || 'Siswa Xavetra';
+      const studentRole = user.role || 'Siswa XI HJ 5';
+      const initials = studentName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'XS';
+
+      const displayNameEl = document.getElementById('student-display-name');
+      const displayRoleEl = document.getElementById('student-display-role');
+      const topAvatarEl = document.getElementById('top-user-avatar');
+      
+      const sidebarNameEl = document.getElementById('student-name-sidebar');
+      const sidebarRoleEl = document.getElementById('student-role-sidebar');
+      const sidebarAvatarEl = document.getElementById('student-avatar-sidebar');
+
+      if (displayNameEl) displayNameEl.textContent = studentName;
+      if (displayRoleEl) displayRoleEl.textContent = studentRole;
+      if (topAvatarEl) topAvatarEl.textContent = initials;
+
+      if (sidebarNameEl) sidebarNameEl.textContent = studentName;
+      if (sidebarRoleEl) sidebarRoleEl.textContent = studentRole;
+      if (sidebarAvatarEl) sidebarAvatarEl.textContent = initials;
+    });
+    function handleLogout() {
+      if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+        localStorage.removeItem('xavetra_user');
+        window.location.href = 'index.html';
+      }
+    }
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('main-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && overlay) {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      }
+    }
+
+    const queryPresets = {
+      kemdikbud_pdf: 'site:kemdikbud.go.id "kurikulum merdeka" filetype:pdf -iklan',
+      triangulasi_bmkg: 'site:bmkg.go.id "gempa bumi" -hoaks',
+      uu_ite_kasus: 'site:mahkamahagung.go.id "pasal 28" filetype:pdf',
+      negasi_jaguar: 'jaguar -mobil -otomotif filetype:pdf'
+    };
+
+    function loadQueryPreset(key) {
+      if (queryPresets[key]) {
+        document.getElementById('query-input').value = queryPresets[key];
+        showToast('Template query riset berhasil dimuat!');
+      }
+    }
+
+    function resetQueryEditor() {
+      const preset = document.getElementById('query-preset-select').value;
+      loadQueryPreset(preset);
+    }
+
+    function copyQuery() {
+      const query = document.getElementById('query-input').value;
+      navigator.clipboard.writeText(query).then(() => {
+        showToast('Query berhasil disalin ke clipboard! 📋');
+      });
+    }
+
+    function executeSearchSimulation() {
+      const btn = document.getElementById('btn-run-search');
+      const terminalStatus = document.getElementById('terminal-status');
+      const outputEl = document.getElementById('terminal-output');
+      const query = document.getElementById('query-input').value.trim();
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">sync</span><span>Menganalisis...</span>`;
+      terminalStatus.textContent = 'Menjalankan crawling & indexing...';
+      terminalStatus.className = 'text-amber-400 animate-pulse';
+
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = `<span class="material-symbols-outlined text-[17px]">search</span><span>Uji Operator Riset</span>`;
+        terminalStatus.textContent = 'Analisis Selesai [200 OK]';
+        terminalStatus.className = 'text-emerald-400';
+
+        let domainMatch = query.match(/site:([^\s]+)/);
+        let phraseMatch = query.match(/"([^"]+)"/);
+        let filetypeMatch = query.match(/filetype:([^\s]+)/);
+        let negativeMatch = query.match(/-([^\s]+)/);
+
+        let domainStr = domainMatch ? domainMatch[1] : 'Semua Domain Web';
+        let phraseStr = phraseMatch ? phraseMatch[1] : 'Tidak ada frasa tanda kutip';
+        let filetypeStr = filetypeMatch ? filetypeMatch[1].toUpperCase() : 'Semua Format Dokumen';
+        let negStr = negativeMatch ? negativeMatch[1] : 'Tidak ada kata yang dikecualikan';
+
+        outputEl.textContent = `[TAHAP 1: CRAWLING]
+-> Web Spider Bot menjelajahi tautan internet...
+-> Domain target terfilter: ${domainStr}
+
+[TAHAP 2: INDEXING]
+-> Membaca katalog index server basis data...
+-> Frasa persis terdeteksi: "${phraseStr}"
+-> Format dokumen terisolasi: .${filetypeStr}
+-> Menyaring konten dikecualikan: -${negStr}
+
+[TAHAP 3: RANKING & TRIANGULASI KREDIBILITAS]
+-> Skor Relevansi Algoritma: 98.6% (Tingkat Kredibilitas Sangat Tinggi)
+-> Evaluasi Membaca Lateral:
+   1. [📰 Sumber Berita Independen] : Terverifikasi konsisten
+   2. [🏛️ Sumber Resmi Lembaga]      : Terdaftar pada domain resmi (${domainStr})
+   3. [📚 Rujukan Pakar / Jurnal]   : Rujukan primer valid
+-> Kepatuhan Regulasi Digital: Bebas dari pelanggaran UU ITE Pasal 28 (Bebas Hoaks & SARA).
+
+HASIL AKHIR:
+Ditemukan dokumen terverifikasi langsung dari server resmi. Informasi siap digunakan untuk riset akademik!`;
+
+        showToast('🎉 Analisis query dan triangulasi selesai dengan sukses!');
+      }, 400);
+    }
+  </script>
+</body>
+</html>
