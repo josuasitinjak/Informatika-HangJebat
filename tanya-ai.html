@@ -1,54 +1,23 @@
 <!DOCTYPE html>
 <html lang="id" class="h-full bg-[#F8FAFC]">
 <head>
+  <script>if (!localStorage.getItem('xavetra_user')) location.replace('login.html?redirect=tanya-ai.html');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tanya AI Tutor — XAVETRA SMAN 1 Batam</title>
+  <title>Tanya AI — Informatika SMAN 1 Batam</title>
   <meta name="referrer" content="no-referrer">
   
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Material Symbols Outlined -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              DEFAULT: '#0052CC',
-              dark: '#0747A6',
-              light: '#2684FF',
-              subtle: '#DEEBFF'
-            },
-            navy: '#091E42',
-            surface: '#FFFFFF',
-            background: '#F8FAFC',
-            accent: '#FFAB00',
-            'text-main': '#172B4D',
-            'text-muted': '#6B778C',
-            'border-subtle': '#DFE1E6',
-            'border-focus': '#B3D4FF'
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          },
-          boxShadow: {
-            'card': '0 1px 3px 0 rgba(9, 30, 66, 0.08), 0 2px 4px 0 rgba(9, 30, 66, 0.05)',
-            'card-hover': '0 8px 24px -4px rgba(9, 30, 66, 0.12), 0 2px 6px -1px rgba(9, 30, 66, 0.06)',
-            'glow': '0 0 20px -3px rgba(0, 82, 204, 0.25)'
-          }
-        }
-      }
-    }
-  </script>
+
 
   <style>
     /* ── AI Chat Visual Elements ──────────────────────────────── */
@@ -106,349 +75,106 @@
       animation: step-pop 0.35s ease-out forwards;
     }
   </style>
+  <script src="assets/js/tw-config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/hj.css">
 </head>
-<body class="h-full flex flex-col font-sans text-text-main bg-background antialiased selection:bg-purple-100 selection:text-purple-700">
+<body class="bg-canvas text-text-main font-sans antialiased flex">
+  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 z-40 hidden lg:hidden backdrop-blur-sm"></div>
+  <aside id="main-sidebar" class="fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0"></aside>
 
-  <!-- Mobile Sidebar Overlay -->
-  <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"></div>
+  <div class="flex-1 min-w-0 lg:ml-72 flex flex-col">
+    <header class="hj-topbar sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Buka menu"><span class="material-symbols-outlined">menu</span></button>
+        <div id="hdr-mascot" class="shrink-0 hidden sm:block"></div>
+        <div class="min-w-0">
+          <div class="text-sm font-black text-navy leading-none">Tanya Xavi</div>
+          <div class="text-[10px] font-bold text-emerald-600 flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Tutor AI Informatika</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <select id="chat-chapter-filter" onchange="filterContext(this.value)" aria-label="Fokus bab" class="max-w-[150px] sm:max-w-none bg-slate-100/80 border-2 border-transparent rounded-2xl px-3 py-2 text-xs font-bold text-navy focus:outline-none focus:border-primary">
+          <option value="all">🎯 Semua bab</option>
+          <option value="1">Bab 1 • Mesin Pencari</option>
+          <option value="2">Bab 2 • Strategi Riset</option>
+          <option value="3">Bab 3 • Hukum Digital</option>
+          <option value="4">Bab 4 • Hak Cipta & Netiket</option>
+        </select>
+        <button onclick="clearChatHistory()" class="p-2 rounded-xl text-slate-500 hover:text-red-500 hover:bg-red-50" title="Bersihkan percakapan" aria-label="Bersihkan percakapan"><span class="material-symbols-outlined text-[20px]">delete_sweep</span></button>
+      </div>
+    </header>
 
-  <div class="flex flex-1 min-h-screen">
-    
-    <!-- ========================================================================= -->
-    <!-- 1. LEFT SIDEBAR NAVIGATION                                                -->
-    <!-- ========================================================================= -->
-    <aside id="main-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200/80 flex flex-col transition-transform duration-200 ease-in-out -translate-x-full lg:translate-x-0">
-      
-      <!-- Brand Logo -->
-      <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100">
-        <a href="dashboard.html" class="flex items-center gap-3 group">
-          <div>
-            <div class="font-extrabold text-base tracking-tight text-navy">Informatika</div>
-            <div class="text-[10px] font-semibold tracking-wider text-primary uppercase">SMAN 1 Batam</div>
+    <main data-m-page class="flex flex-col overflow-hidden chat-main">
+      <div id="chat-messages" class="flex-1 overflow-y-auto px-3 sm:px-8 py-6 space-y-6 thin-scroll">
+        <div class="flex items-start gap-3 max-w-3xl anim-bounce-in">
+          <div class="shrink-0 w-11 h-11 flex items-center justify-center" data-bot-avatar></div>
+          <div class="space-y-3 flex-1 min-w-0">
+            <div class="p-5 rounded-[24px] rounded-tl-md bg-white border-2 border-slate-200">
+              <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
+                <span class="font-black text-navy text-sm">Xavi 👋</span>
+                <button type="button" onclick="toggleVoiceSpeech('welcome-bot-msg', this)" class="px-2.5 py-1 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-700 text-[11px] font-bold flex items-center gap-1 border border-violet-200" title="Dengarkan suara">
+                  <span class="material-symbols-outlined text-[15px] voice-icon">volume_up</span><span class="voice-label">Dengar</span>
+                </button>
+              </div>
+              <div id="welcome-bot-msg-tab-full" class="space-y-3 pt-3">
+                <p class="text-sm text-slate-700 leading-relaxed">Halo! Aku <strong>Xavi</strong>, tutor AI untuk Informatika kelas XI. Tanya apa saja soal mesin pencari, operator riset, UU ITE & UU PDP, hak cipta, atau netiket — aku jelaskan dengan bahasa yang gampang.</p>
+                <div class="grid sm:grid-cols-3 gap-2 text-xs">
+                  <div class="p-3 rounded-2xl bg-primary-subtle text-primary font-bold flex items-center gap-2"><span class="material-symbols-outlined icon-fill text-[18px]">menu_book</span>Penjelasan rapi</div>
+                  <div class="p-3 rounded-2xl bg-amber-50 text-amber-700 font-bold flex items-center gap-2"><span class="material-symbols-outlined icon-fill text-[18px]">bolt</span>Poin inti</div>
+                  <div class="p-3 rounded-2xl bg-emerald-50 text-emerald-700 font-bold flex items-center gap-2"><span class="material-symbols-outlined icon-fill text-[18px]">quiz</span>Mini kuis</div>
+                </div>
+                <p class="text-[11px] text-text-muted">AI bisa keliru — cek ulang fakta penting ke modul atau sumber resmi ya.</p>
+              </div>
+            </div>
+            <div id="quick-chips" class="flex flex-wrap gap-2 stagger">
+              <button onclick="askPrompt('Jelaskan bagaimana proses Crawling, Indexing, dan Ranking pada Google bekerja secara terstruktur.')" class="token-chip px-3.5 py-2 rounded-2xl bg-white border-2 border-slate-200 hover:border-primary text-xs font-bold text-navy">🕷️ Cara kerja crawling & indexing?</button>
+              <button onclick="askPrompt('Berikan contoh nyata penggunaan operator site: dan filetype: untuk riset akademik terpercaya.')" class="token-chip px-3.5 py-2 rounded-2xl bg-white border-2 border-slate-200 hover:border-primary text-xs font-bold text-navy">🔎 Contoh site: & filetype:</button>
+              <button onclick="askPrompt('Jelaskan pasal kunci UU ITE dan sanksi terkait penyebaran hoaks (Pasal 28) serta perlindungan data pribadi.')" class="token-chip px-3.5 py-2 rounded-2xl bg-white border-2 border-slate-200 hover:border-primary text-xs font-bold text-navy">⚖️ Sanksi hoaks Pasal 28</button>
+              <button onclick="askPrompt('Apa itu lisensi Creative Commons (CC-BY, CC-NC) dan bagaimana cara mengutip gambar legal untuk tugas sekolah?')" class="token-chip px-3.5 py-2 rounded-2xl bg-white border-2 border-slate-200 hover:border-primary text-xs font-bold text-navy">🎨 Pakai gambar Creative Commons</button>
+            </div>
           </div>
-        </a>
-        <button onclick="toggleSidebar()" class="lg:hidden text-slate-400 hover:text-navy p-1">
-          <span class="material-symbols-outlined text-[20px]">close</span>
-        </button>
+        </div>
       </div>
 
-      <!-- Navigation Menus -->
-      <div class="flex-1 overflow-y-auto px-4 py-6 space-y-6">
-        <div class="space-y-1.5">
-          <div class="text-[10px] font-extrabold text-slate-400 tracking-wider uppercase px-3 mb-2">
-            Menu Pembelajaran
-          </div>
-
-          <a href="dashboard.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
-            <span class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[19px] text-slate-400">dashboard</span>
-              <span>Dashboard</span>
-            </span>
-          </a>
-
-          <a href="modul.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
-            <span class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[19px] text-slate-400">auto_stories</span>
-              <span>Modul Materi</span>
-            </span>
-          </a>
-
-          <a href="catatan.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition">
-            <span class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[19px] text-slate-400">edit_note</span>
-              <span>Catatan Belajar</span>
-            </span>
-            <span id="sidebar-notes-badge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">Notes</span>
-          </a>
-
-          <!-- Tanya AI (Active) -->
-          <a href="tanya-ai.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-purple-600 text-white font-bold text-xs shadow-glow transition group">
-            <span class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[19px]">smart_toy</span>
-              <span>Tanya AI Guru</span>
-            </span>
-            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-          </a>
-
-          <!-- Komunitas -->
-          <a href="komunitas.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-slate-600 hover:text-navy hover:bg-slate-100/80 font-semibold text-xs transition group">
-            <span class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[19px] text-blue-500 group-hover:scale-110 transition">forum</span>
-              <span>Komunitas</span>
-            </span>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-primary border border-blue-200">Feed</span>
-          </a>
-        </div>
-
-        <!-- AI Engine Status Card in Sidebar -->
-        <div class="p-4 rounded-2xl bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 border border-purple-200 space-y-2.5 shadow-xs">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-extrabold text-navy flex items-center gap-1.5">
-              <span class="material-symbols-outlined text-[17px] text-purple-600">neurology</span>
-              AI Interaktif Aktif
-            </span>
-            <span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              Online
-            </span>
-          </div>
-          <p class="text-[11px] text-slate-600 leading-tight">
-            Didukung model AI cerdas dengan fitur <strong>Mini Kuis</strong>, <strong>Flashcard</strong>, &amp; <strong>Suara AI</strong>.
-          </p>
-        </div>
-
+      <div class="px-3 sm:px-8 pb-3 pt-2">
+        <form onsubmit="handleSendMessage(event)" class="max-w-3xl mx-auto flex items-center gap-2 bg-white border-2 border-slate-200 rounded-[22px] pl-4 pr-1.5 py-1.5 focus-within:border-primary focus-within:ring-4 focus-within:ring-primary/10 transition shadow-card">
+          <input type="text" id="chat-user-input" maxlength="1500" placeholder="Tanya apa saja tentang Informatika…" class="flex-1 min-w-0 bg-transparent py-2 text-sm text-navy focus:outline-none" autocomplete="off" required>
+          <button type="submit" id="btn-send-chat" class="w-11 h-11 rounded-2xl bg-brand-gradient text-white flex items-center justify-center shrink-0 border-b-4 border-black/20 active:translate-y-0.5 active:border-b-2 transition" aria-label="Kirim"><span class="material-symbols-outlined icon-fill">send</span></button>
+        </form>
       </div>
-    </aside>
-
-    <!-- ========================================================================= -->
-    <!-- 2. MAIN APPLICATION CONTENT                                               -->
-    <!-- ========================================================================= -->
-    <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
-      
-      <!-- Top Bar -->
-      <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
-        <div class="flex items-center gap-3 sm:gap-4 flex-1">
-          <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
-            <span class="material-symbols-outlined text-[24px]">menu</span>
-          </button>
-          
-          <div class="flex items-center gap-2">
-            <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shadow-md">
-              <span class="material-symbols-outlined text-[19px]">smart_toy</span>
-            </div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-xs sm:text-sm font-extrabold text-navy">AI Tutor</span>
-                <span class="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 items-center gap-1">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span>Interactive Engine</span>
-                </span>
-              </div>
-              <span class="text-[10px] text-slate-500 font-semibold hidden sm:inline">Guru & Asisten Interaktif Informatika Fase F</span>
-            </div>
-          </div>
-
-          <!-- Focus Chapter Selector in Header -->
-          <div class="hidden md:block ml-2 sm:ml-4">
-            <select id="chat-chapter-filter" onchange="filterContext(this.value)" class="bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold text-navy focus:outline-none focus:border-purple-500 cursor-pointer shadow-xs">
-              <option value="all">🎯 Fokus: Semua Bab (Umum)</option>
-              <option value="1">Bab 01: Mesin Pencari &amp; Arsitektur</option>
-              <option value="2">Bab 02: Operator Riset &amp; Triangulasi</option>
-              <option value="3">Bab 03: UU ITE &amp; Pelindungan Data</option>
-              <option value="4">Bab 04: Hak Cipta &amp; Netiket Digital</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Reset Chat Button -->
-          <button onclick="clearChatHistory()" class="px-3 py-1.5 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 border border-slate-200 text-xs font-bold transition flex items-center gap-1" title="Bersihkan Percakapan">
-            <span class="material-symbols-outlined text-[17px]">delete_sweep</span>
-            <span class="hidden sm:inline">Reset Chat</span>
-          </button>
-
-          <!-- User Profile Dropdown Button -->
-          <div class="relative">
-            <button id="user-menu-btn" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 p-1 rounded-xl hover:bg-slate-100 transition focus:outline-none cursor-pointer">
-              <div id="top-user-avatar" class="w-8 h-8 rounded-xl bg-gradient-to-tr from-primary to-blue-400 text-white flex items-center justify-center font-bold text-[10px] shadow-sm">
-                XS
-              </div>
-              <div class="text-left hidden sm:block">
-                <div id="student-display-name" class="text-xs font-extrabold text-navy truncate max-w-[120px]">
-                  Siswa Xavetra
-                </div>
-                <div id="student-display-role" class="text-[10px] font-semibold text-text-muted truncate max-w-[120px]">
-                  Siswa XI HJ 5
-                </div>
-              </div>
-              <span class="material-symbols-outlined text-[16px] text-slate-400">expand_more</span>
-            </button>
-
-            <!-- Dropdown Popover Menu -->
-            <div id="user-dropdown-menu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-3xl shadow-xl border border-slate-200/90 py-3 z-50">
-              <div class="px-4 py-2 border-b border-slate-100 flex items-center gap-3">
-                <div id="dropdown-user-avatar" class="w-10 h-10 rounded-2xl bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                  XS
-                </div>
-                <div class="min-w-0">
-                  <div id="dropdown-user-name" class="text-xs font-extrabold text-navy truncate">Siswa Xavetra</div>
-                  <div id="dropdown-user-role" class="text-[10px] text-text-muted truncate">XI HJ 5 • SMAN 1 Batam</div>
-                </div>
-              </div>
-
-              <div class="p-2 space-y-1">
-                <a href="dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-                  <span class="material-symbols-outlined text-[18px] text-primary">dashboard</span>
-                  <span>Dashboard Belajar</span>
-                </a>
-                <a href="modul.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-                  <span class="material-symbols-outlined text-[18px] text-blue-600">auto_stories</span>
-                  <span>Modul Materi</span>
-                </a>
-                <a href="catatan.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-                  <span class="material-symbols-outlined text-[18px] text-emerald-600">edit_note</span>
-                  <span>Buku Catatan Saya</span>
-                </a>
-                <a href="tanya-ai.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-purple-700 bg-purple-50 transition">
-                  <span class="material-symbols-outlined text-[18px] text-purple-600">smart_toy</span>
-                  <span>Tanya AI Guru</span>
-                </a>
-                <a href="komunitas.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition">
-                  <span class="material-symbols-outlined text-[18px] text-blue-500">forum</span>
-                  <span>Komunitas Siswa</span>
-                </a>
-              </div>
-
-              <div class="p-2 border-t border-slate-100">
-                <button onclick="handleLogout()" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition">
-                  <span class="material-symbols-outlined text-[18px]">logout</span>
-                  <span>Keluar Akun (Logout)</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <!-- Chat Main Interface -->
-      <main class="flex-1 flex flex-col overflow-hidden" style="height: calc(100vh - 4rem);">
-
-        <!-- Chat Messages Area (scrollable) -->
-        <div id="chat-messages" class="flex-1 overflow-y-auto px-4 sm:px-8 py-6 space-y-6 bg-[#F8FAFC]">
-
-          <!-- Bot Welcome Interactive Card -->
-          <div class="flex items-start gap-3.5 max-w-3xl">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
-              <span class="material-symbols-outlined text-[20px]">smart_toy</span>
-            </div>
-            <div class="space-y-2 flex-1">
-              <div class="p-5 rounded-3xl rounded-tl-sm bg-white border border-slate-200/90 shadow-card space-y-3">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                  <div class="flex items-center gap-2">
-                    <span class="font-extrabold text-navy text-sm">XAVETRA AI Tutor</span>
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Mode Interaktif</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <button type="button" onclick="toggleVoiceSpeech('welcome-bot-msg', this)" class="px-2.5 py-1 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-700 text-[11px] font-bold transition flex items-center gap-1 shadow-xs border border-purple-200/60" title="Dengarkan Suara AI (Aksen Indonesia)">
-                      <span class="material-symbols-outlined text-[15px] voice-icon">volume_up</span>
-                      <span class="voice-label">Baca Suara</span>
-                    </button>
-                    <span class="text-[10px] text-slate-400 font-medium">Baru saja</span>
-                  </div>
-                </div>
-                <div id="welcome-bot-msg-tab-full" class="space-y-3">
-                  <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                    Halo! Saya adalah <strong>Asisten Belajar Interaktif</strong> untuk mata pelajaran Informatika Kelas XI. Saya siap membantu kamu memahami konsep mesin pencari, rumus operator riset, pasal hukum UU ITE &amp; PDP, serta etika digital dengan format yang rapi dan mudah dipahami.
-                  </p>
-                  <div class="p-3 rounded-2xl bg-purple-50/70 border border-purple-200/80 flex items-center gap-2.5 text-xs text-purple-900 font-medium">
-                    <span class="material-symbols-outlined text-[19px] text-purple-600">auto_awesome</span>
-                    <span>Setiap jawaban dilengkapi <strong>Penjelasan Rapi</strong>, <strong>Flashcard Poin Kunci</strong>, dan <strong>Mini Kuis</strong> untuk menguji pemahamanmu!</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Suggested Prompt Chips -->
-              <div id="quick-chips" class="flex flex-wrap gap-2 pt-1">
-                <button onclick="askPrompt('Jelaskan bagaimana proses Crawling, Indexing, dan Ranking pada Google bekerja secara terstruktur.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
-                  <span>🔍 Cara kerja Spider Bot &amp; Indexing?</span>
-                </button>
-                <button onclick="askPrompt('Berikan contoh nyata penggunaan operator site: dan filetype: untuk riset akademik terpercaya.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
-                  <span>⚡ Contoh operator site: &amp; filetype:?</span>
-                </button>
-                <button onclick="askPrompt('Jelaskan pasal kunci UU ITE dan sanksi terkait penyebaran hoaks (Pasal 28) serta perlindungan data pribadi.')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
-                  <span>⚖️ Sanksi UU ITE Pasal 28 (Hoaks)?</span>
-                </button>
-                <button onclick="askPrompt('Apa itu lisensi Creative Commons (CC-BY, CC-NC) dan bagaimana cara mengutip gambar legal untuk tugas sekolah?')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 border border-slate-200 shadow-xs text-xs font-semibold text-slate-700 transition flex items-center gap-1.5">
-                  <span>🎨 Cara legal pakai gambar Creative Commons?</span>
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Chat Input Bar -->
-        <div class="bg-white border-t border-slate-200/80 px-4 sm:px-8 py-3.5 shadow-sm">
-          <form onsubmit="handleSendMessage(event)" class="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-2xl px-4 py-2.5 focus-within:border-purple-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-purple-100 transition shadow-xs">
-            <input 
-              type="text" 
-              id="chat-user-input"
-              placeholder="Tanyakan topik Informatika, cara riset, pasal hukum, atau bantuan materi..."
-              class="flex-1 bg-transparent py-1 text-xs sm:text-sm text-navy placeholder-slate-400 focus:outline-none"
-              autocomplete="off"
-              required
-            >
-            <button type="submit" id="btn-send-chat" class="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md shrink-0">
-              <span>Kirim</span>
-              <span class="material-symbols-outlined text-[16px]">send</span>
-            </button>
-          </form>
-          <div class="flex items-center justify-between mt-2 px-1 text-[10px] text-slate-400 font-medium">
-            <span>Jawaban AI terstruktur secara otomatis tanpa tanda format mentah.</span>
-            <span class="flex items-center gap-1 text-purple-600 font-bold">
-              <span class="material-symbols-outlined text-[13px]">bolt</span>
-              <span>LPU Cloud Fast Engine</span>
-            </span>
-          </div>
-        </div>
-
-      </main>
-
-    </div>
+    </main>
   </div>
 
-  <!-- Floating AI Audio Player Bar (Aksen Indonesia) -->
-  <div id="ai-floating-player" class="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none max-w-md w-[92%] sm:w-auto">
-    <div class="bg-navy/95 backdrop-blur-md text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 border border-purple-500/40">
-      
-      <!-- Voice Wave & Progress -->
+  <!-- Pemutar suara AI -->
+  <div id="ai-floating-player" class="fixed bottom-28 lg:bottom-6 left-1/2 -translate-x-1/2 z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none max-w-md w-[92%] sm:w-auto">
+    <div class="bg-[#0B1530] text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 border border-violet-500/40">
       <div class="flex items-center gap-2.5 min-w-0">
-        <div class="w-8 h-8 rounded-xl bg-purple-600 flex items-center justify-center text-white shrink-0 shadow-sm relative">
-          <span class="material-symbols-outlined text-[17px] animate-pulse">volume_up</span>
-        </div>
+        <div class="w-8 h-8 rounded-xl bg-violet-600 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[17px] animate-pulse">graphic_eq</span></div>
         <div class="min-w-0">
           <div class="flex items-center gap-1.5">
-            <span id="player-accent-badge" class="text-[10px] font-extrabold text-purple-300 tracking-wide">🇮🇩 Aksen Indonesia Asli</span>
-            <span id="player-progress-badge" class="px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-purple-500/30 text-purple-200 border border-purple-400/30">1 / 1</span>
+            <span id="player-accent-badge" class="text-[10px] font-extrabold text-violet-300">🇮🇩 Suara Indonesia</span>
+            <span id="player-progress-badge" class="px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-violet-500/30 text-violet-200">1 / 1</span>
           </div>
-          <p id="player-snippet-text" class="text-[11px] text-slate-300 truncate max-w-[160px] sm:max-w-[220px]">
-            Membacakan kalimat...
-          </p>
+          <p id="player-snippet-text" class="text-[11px] text-slate-300 truncate max-w-[160px] sm:max-w-[220px]">Membacakan…</p>
         </div>
       </div>
-
-      <!-- Controls: Speed, Pause/Resume, Stop -->
       <div class="flex items-center gap-1.5 shrink-0 pointer-events-auto">
-        <!-- Speed button -->
-        <button type="button" onclick="cyclePlayerRate()" id="player-speed-btn" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-purple-300 text-[10px] font-extrabold transition border border-slate-700" title="Kecepatan Bicara">
-          1.0x
-        </button>
-
-        <!-- Pause / Resume button -->
-        <button type="button" onclick="togglePlayerPause()" id="player-pause-btn" class="w-7 h-7 rounded-lg bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center transition shadow-sm" title="Jeda / Lanjut">
-          <span class="material-symbols-outlined text-[16px]" id="player-pause-icon">pause</span>
-        </button>
-
-        <!-- Stop button -->
-        <button type="button" onclick="stopPlayer()" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-red-500/80 hover:text-white text-slate-300 flex items-center justify-center transition border border-slate-700" title="Berhenti">
-          <span class="material-symbols-outlined text-[16px]">stop</span>
-        </button>
+        <button type="button" onclick="cyclePlayerRate()" id="player-speed-btn" class="px-2 py-1 rounded-lg bg-white/10 text-violet-200 text-[10px] font-extrabold" title="Kecepatan">1.0x</button>
+        <button type="button" onclick="togglePlayerPause()" id="player-pause-btn" class="w-7 h-7 rounded-lg bg-violet-600 text-white flex items-center justify-center" title="Jeda / lanjut"><span class="material-symbols-outlined text-[16px]" id="player-pause-icon">pause</span></button>
+        <button type="button" onclick="stopPlayer()" class="w-7 h-7 rounded-lg bg-white/10 hover:bg-red-500/80 text-slate-200 flex items-center justify-center" title="Berhenti"><span class="material-symbols-outlined text-[16px]">stop</span></button>
       </div>
-
-    </div>
-  </div>
-
-  <!-- Global Toast Notification -->
-  <div id="global-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="bg-navy text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700/50">
-      <span id="toast-indicator" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span id="global-toast-text" class="text-xs font-semibold">Notifikasi</span>
     </div>
   </div>
 
   <!-- Load Core Scripts -->
+
   <script src="assets/js/gemini.js"></script>
   <script src="assets/js/auth.js"></script>
+  <!-- Motion (dulu Framer Motion): global window.Motion -->
+  <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/motion-ui.js"></script>
   <script src="assets/js/main.js"></script>
 
   <script>
@@ -456,9 +182,10 @@
     let currentSpeakingUtterance = null;
 
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.X) { const hm = document.getElementById('hdr-mascot'); if (hm) hm.innerHTML = X.mascot('happy', 40); document.querySelectorAll('[data-bot-avatar]').forEach((el) => (el.innerHTML = X.mascot('happy', 44))); }
       // Sync user profile
-      const studentName = localStorage.getItem('xavetra_student_name') || 'Siswa Xavetra';
-      const studentRole = localStorage.getItem('xavetra_student_role') || 'XI HJ 5';
+      const studentName = ((window.X && X.getUser()) || {}).name || 'Siswa';
+      const studentRole = ((window.X && X.getUser()) || {}).kelas || 'XI HJ 5';
       const initials = studentName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
 
       const nameEl = document.getElementById('student-display-name');
@@ -556,7 +283,7 @@
       _hideFloatingAudioPlayer();
 
       // Get user initials
-      const studentName = localStorage.getItem('xavetra_student_name') || 'Siswa Xavetra';
+      const studentName = ((window.X && X.getUser()) || {}).name || 'Siswa';
       const initials = studentName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
 
       // 1. Append User Message
@@ -588,14 +315,12 @@
       typing.id = 'ai-typing';
       typing.className = 'flex items-center gap-3.5 pl-1';
       typing.innerHTML = `
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 shadow-md">
-          <span class="material-symbols-outlined text-[20px]">smart_toy</span>
-        </div>
+        <div class="w-11 h-11 shrink-0 flex items-center justify-center">${window.X ? X.mascot('think', 44) : ''}</div>
         <div class="px-4 py-3 rounded-2xl rounded-tl-sm bg-white border border-slate-200 shadow-card flex items-center gap-2.5 text-xs text-purple-700 font-semibold">
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:0ms"></span>
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:150ms"></span>
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:300ms"></span>
-          <span class="ml-1 text-[11px] text-slate-600">Menyusun penjelasan interaktif...</span>
+          <span class="ml-1 text-[11px] text-slate-600">Xavi sedang berpikir…</span>
         </div>
       `;
       container.appendChild(typing);
@@ -619,14 +344,15 @@
         const formattedHtml = GeminiAI.formatMarkdown(result.text);
         const keyPoints = GeminiAI.extractKeyPoints(result.text);
         const quizData = GeminiAI.generateInteractiveQuiz(text, result.text);
+        window._aiMeta = window._aiMeta || {};
+        window._aiMeta[uniqueId] = { quiz: quizData, prompt: text };
+        if (window.X) { const n = (parseInt(localStorage.getItem('xavetra_ai_asked') || '0', 10) + 1); localStorage.setItem('xavetra_ai_asked', String(n)); if (n === 1 || n % 5 === 0) X.addXP(5, 'Bertanya ke Tanya AI'); }
 
         // Render Interactive Rich AI Bubble
         const botMsg = document.createElement('div');
         botMsg.className = 'flex items-start gap-3.5 max-w-3xl';
         botMsg.innerHTML = `
-          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
-            <span class="material-symbols-outlined text-[20px]">smart_toy</span>
-          </div>
+          <div class="w-11 h-11 shrink-0 flex items-center justify-center">${window.X ? X.mascot('happy', 44) : ''}</div>
           <div class="space-y-2.5 flex-1 min-w-0">
             
             <!-- Main Content Container -->
@@ -688,7 +414,7 @@
                 <p class="text-xs sm:text-sm font-bold text-slate-800">${quizData.question}</p>
                 <div class="space-y-2 pt-1" id="${uniqueId}-quiz-options">
                   ${quizData.options.map((opt, i) => `
-                    <button type="button" onclick="handleQuizAnswer('${uniqueId}', ${opt.correct}, '${GeminiAI.escapeHtml(opt.explanation)}', this)" class="w-full text-left p-3 rounded-2xl bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-xs text-slate-700 font-medium transition flex items-center justify-between group shadow-xs">
+                    <button type="button" onclick="handleQuizAnswer('${uniqueId}', ${i}, this)" class="w-full text-left p-3 rounded-2xl bg-white hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-xs text-slate-700 font-medium transition flex items-center justify-between group shadow-xs">
                       <span>${opt.text}</span>
                       <span class="material-symbols-outlined text-[16px] text-slate-400 group-hover:text-purple-600">arrow_forward</span>
                     </button>
@@ -704,14 +430,14 @@
               <div class="flex items-center justify-between text-[11px] text-slate-400 font-medium">
                 <span class="flex items-center gap-1.5">
                   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  <span class="text-emerald-700 font-bold">XAVETRA AI (Terverifikasi)</span>
+                  <span class="text-emerald-700 font-bold">${result.isFallback ? 'Mode offline (jawaban ringkas bawaan)' : 'XAVETRA AI • ' + GeminiAI.escapeHtml(result.model || '')}</span>
                 </span>
                 <div class="flex items-center gap-3">
                   <button type="button" onclick="copyMessageText('${uniqueId}-tab-full')" class="hover:text-purple-700 transition flex items-center gap-1">
                     <span class="material-symbols-outlined text-[14px]">content_copy</span>
                     <span>Salin Teks</span>
                   </button>
-                  <button type="button" onclick="saveAiToNotes('${uniqueId}-tab-full', '${GeminiAI.escapeHtml(text)}')" class="hover:text-emerald-700 transition flex items-center gap-1 text-slate-600 font-bold">
+                  <button type="button" onclick="saveAiToNotes('${uniqueId}')" class="hover:text-emerald-700 transition flex items-center gap-1 text-slate-600 font-bold">
                     <span class="material-symbols-outlined text-[14px] text-emerald-600">bookmark_add</span>
                     <span>Simpan ke Catatan</span>
                   </button>
@@ -781,7 +507,13 @@
     }
 
     // Mini Quiz Interactive Answer Handler
-    function handleQuizAnswer(uniqueId, isCorrect, explanation, btn) {
+    function handleQuizAnswer(uniqueId, optIdx, btn) {
+      const meta = (window._aiMeta || {})[uniqueId];
+      if (!meta) return;
+      const opt = meta.quiz.options[optIdx] || {};
+      const isCorrect = !!opt.correct;
+      const explanation = GeminiAI.escapeHtml(opt.explanation || '');
+      if (window.X) { isCorrect ? X.sfx.correct() : X.sfx.wrong(); }
       const feedback = document.getElementById(`${uniqueId}-quiz-feedback`);
       const optionsContainer = document.getElementById(`${uniqueId}-quiz-options`);
 
@@ -1015,33 +747,25 @@
       });
     }
 
-    function saveAiToNotes(targetId, promptTitle) {
-      const el = document.getElementById(targetId);
+    function saveAiToNotes(uniqueId) {
+      const el = document.getElementById(`${uniqueId}-tab-full`);
+      const meta = (window._aiMeta || {})[uniqueId] || {};
       if (!el) return;
-      const content = el.innerText;
-
+      const promptTitle = String(meta.prompt || 'Penjelasan AI');
       try {
-        const rawNotes = localStorage.getItem('xavetra_student_notes');
-        const notes = rawNotes ? JSON.parse(rawNotes) : [];
-        
-        const newNote = {
+        const notes = JSON.parse(localStorage.getItem('xavetra_student_notes') || '[]');
+        notes.unshift({
           id: 'note_' + Date.now(),
-          title: 'Tanya AI: ' + (promptTitle.length > 40 ? promptTitle.substring(0, 40) + '...' : promptTitle),
-          content: content,
-          date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
-          tag: 'AI Tutor'
-        };
-
-        notes.unshift(newNote);
+          chapter: 'Tanya AI',
+          title: 'Tanya AI: ' + (promptTitle.length > 60 ? promptTitle.substring(0, 60) + '…' : promptTitle),
+          body: el.innerText.trim().substring(0, 6000),
+          date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+        });
         localStorage.setItem('xavetra_student_notes', JSON.stringify(notes));
-
-        // Update badge
-        const badge = document.getElementById('sidebar-notes-badge');
-        if (badge) badge.textContent = `${notes.length} Notes`;
-
+        if (window.X && notes.length >= 3) X.grantBadge('note_taker');
         showToast('Berhasil disimpan ke Catatan Belajar!', 'success');
       } catch (e) {
-        showToast('Gagal menyimpan catatan.', 'alert');
+        showToast('Gagal menyimpan catatan (penyimpanan penuh?).', 'alert');
       }
     }
 
@@ -1057,14 +781,12 @@
         _hideFloatingAudioPlayer();
         const container = document.getElementById('chat-messages');
         container.innerHTML = `
-          <div class="flex items-start gap-3.5 max-w-3xl">
-            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold shrink-0 mt-0.5 shadow-md">
-              <span class="material-symbols-outlined text-[20px]">smart_toy</span>
-            </div>
+          <div class="flex items-start gap-3 max-w-3xl anim-bounce-in">
+            <div class="w-11 h-11 shrink-0 flex items-center justify-center">${window.X ? X.mascot('happy', 44) : ''}</div>
             <div class="space-y-2 flex-1">
-              <div class="p-5 rounded-3xl rounded-tl-sm bg-white border border-slate-200/90 shadow-card space-y-2">
+              <div class="p-5 rounded-[24px] rounded-tl-md bg-white border-2 border-slate-200 space-y-2">
                 <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
-                  Percakapan telah direset. Silakan tanyakan konsep materi Informatika yang ingin kamu pelajari!
+                  Oke, kita mulai dari awal! Mau bahas apa hari ini? 😄
                 </p>
               </div>
             </div>

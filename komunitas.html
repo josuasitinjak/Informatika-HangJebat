@@ -3,43 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Komunitas Siswa — Informatika SMAN 1 Batam</title>
+  <title>Komunitas — Informatika SMAN 1 Batam</title>
   <meta name="description" content="Ruang komunitas dan media diskusi siswa Informatika SMAN 1 Batam. Berbagi catatan, tanya jawab, dan proyek bersama.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: { DEFAULT: '#0052CC', dark: '#0747A6', light: '#2684FF', subtle: '#DEEBFF' },
-            navy: '#091E42',
-            surface: '#FFFFFF',
-            background: '#F8FAFC',
-            accent: '#FFAB00',
-            'text-main': '#172B4D',
-            'text-muted': '#6B778C',
-            'border-subtle': '#DFE1E6',
-            'border-focus': '#B3D4FF'
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          },
-          boxShadow: {
-            'card': '0 1px 3px 0 rgba(9,30,66,.08), 0 2px 4px 0 rgba(9,30,66,.05)',
-            'card-hover': '0 8px 24px -4px rgba(9,30,66,.12), 0 2px 6px -1px rgba(9,30,66,.06)',
-            'glow': '0 0 20px -3px rgba(0,82,204,.25)'
-          }
-        }
-      }
-    }
-  </script>
+
   <style>
     .scrollbar-none { scrollbar-width: none; }
     .scrollbar-none::-webkit-scrollbar { display: none; }
@@ -48,6 +21,9 @@
     @keyframes slideUp { from { transform: translateY(8px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .post-card { animation: slideUp .22s ease both; }
   </style>
+  <script src="assets/js/tw-config.js"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/hj.css">
 </head>
 <body class="h-full flex flex-col font-sans text-text-main bg-background antialiased">
 
@@ -135,7 +111,7 @@
     <div class="flex-1 min-w-0 lg:ml-72 flex flex-col min-h-screen">
 
       <!-- Top Bar -->
-      <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <header class="hj-topbar sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
         <div class="flex items-center gap-3 flex-1 max-w-xl">
           <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 transition">
             <span class="material-symbols-outlined text-[22px]">menu</span>
@@ -195,19 +171,28 @@
       </header>
 
       <!-- Main Feed -->
-      <main class="flex-grow p-4 sm:p-6 max-w-2xl mx-auto w-full space-y-5">
-
-        <!-- Page Header -->
-        <div class="flex items-center justify-between">
-          <div>
-            <h1 class="text-xl font-extrabold text-navy tracking-tight">Komunitas & Media Diskusi</h1>
-            <p class="text-xs text-text-muted mt-0.5">Ruang kolaborasi pembelajaran Informatika • SMAN 1 Batam</p>
-          </div>
-          <div id="post-total-stat" class="text-[11px] font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 shrink-0">0 Postingan</div>
+      <main data-m-page class="flex-grow p-4 sm:p-6 max-w-2xl mx-auto w-full space-y-5">
+        <div class="flex items-start gap-3 p-4 rounded-3xl bg-amber-50 border-2 border-amber-200 text-xs text-amber-900">
+          <span class="material-symbols-outlined text-amber-500 icon-fill">info</span>
+          <div><b>Mode Ruang Diskusi Lokal.</b> Postingan & komentar saat ini tersimpan di perangkat/browser ini saja (belum tersinkron antar siswa). Untuk diskusi kelas bersama, gunakan grup kelas resmi — dan tetap jaga netiket ya! 🤝</div>
         </div>
 
+        <!-- Page Header -->
+        <section class="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-[#0EA5E9] via-[#1F6BFF] to-[#7C3AED] text-white p-5 sm:p-6">
+          <div class="absolute inset-0 grid-pattern opacity-20"></div>
+          <div class="relative flex items-center gap-4">
+            <div id="kom-mascot" class="shrink-0"></div>
+            <div class="flex-1 min-w-0">
+              <div class="text-[10px] font-black tracking-[0.18em] text-sky-100">RUANG DISKUSI</div>
+              <h1 class="text-xl sm:text-2xl font-black tracking-tight">Komunitas Informatika</h1>
+              <p class="text-xs text-blue-100 mt-0.5">Tanya, berbagi tips, dan saling bantu — dengan netiket yang keren.</p>
+            </div>
+            <div id="post-total-stat" class="hidden sm:block text-[11px] font-black bg-white/15 px-3 py-1.5 rounded-xl shrink-0">0 Postingan</div>
+          </div>
+        </section>
+
         <!-- Create Post Card -->
-        <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-card space-y-4">
+        <div class="bg-white p-5 rounded-[28px] border-2 border-slate-200 space-y-4">
           <div class="flex items-start gap-3">
             <div id="post-creator-avatar" class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-primary to-blue-500 text-white flex items-center justify-center font-bold text-xs shadow-sm shrink-0">--</div>
             <div class="flex-1 space-y-1">
@@ -261,7 +246,7 @@
                 <span>Topik</span>
               </button>
             </div>
-            <button onclick="publishPost()" id="publish-btn" class="px-5 py-2 rounded-xl bg-primary hover:bg-primary-dark active:scale-[0.98] text-white text-xs font-bold transition shadow-sm flex items-center justify-center gap-1.5">
+            <button onclick="publishPost()" id="publish-btn" class="px-5 py-2.5 rounded-2xl bg-primary text-white text-sm font-black border-b-4 border-primary-dark active:translate-y-0.5 active:border-b-2 transition flex items-center justify-center gap-1.5">
               <span>Bagikan</span>
               <span class="material-symbols-outlined text-[16px]">send</span>
             </button>
@@ -340,6 +325,10 @@
   </div>
 
   <script src="assets/js/auth.js"></script>
+  <!-- Motion (dulu Framer Motion): global window.Motion -->
+  <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/motion-ui.js"></script>
   <script>
     // =========================================================================
     // STATE
@@ -498,7 +487,11 @@
     }
 
     function saveStoredPosts(posts) {
-      localStorage.setItem('xavetra_community_posts', JSON.stringify(posts));
+      try {
+        localStorage.setItem('xavetra_community_posts', JSON.stringify(posts));
+      } catch (e) {
+        showToast('Penyimpanan perangkat penuh. Hapus beberapa postingan bergambar.', 'error');
+      }
     }
 
     // =========================================================================
@@ -641,11 +634,22 @@
     function handleImageSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
+      if (!/^image\/(png|jpe?g|webp|gif)$/.test(file.type)) { showToast('Format gambar harus PNG/JPG/WEBP/GIF.', 'alert'); e.target.value = ''; return; }
+      // Kompres agar penyimpanan perangkat tidak cepat penuh
       const reader = new FileReader();
       reader.onload = evt => {
-        attachedImageBase64 = evt.target.result;
-        document.getElementById('image-preview-img').src = attachedImageBase64;
-        document.getElementById('image-preview-box').classList.remove('hidden');
+        const img = new Image();
+        img.onload = () => {
+          const max = 900;
+          const k = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          attachedImageBase64 = c.toDataURL('image/jpeg', 0.72);
+          document.getElementById('image-preview-img').src = attachedImageBase64;
+          document.getElementById('image-preview-box').classList.remove('hidden');
+        };
+        img.src = evt.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -978,7 +982,7 @@
         const avatarColor = getAvatarColor(p.author);
 
         return `
-          <div class="post-card bg-white p-5 sm:p-6 rounded-3xl border border-slate-200/80 shadow-card hover:border-slate-300 hover:shadow-card-hover transition-all duration-200" id="${p.id}">
+          <div class="post-card bg-white p-5 sm:p-6 rounded-[28px] border-2 border-slate-200 hover:border-primary/40 transition-all duration-200" id="${p.id}" style="animation:staggerIn 450ms cubic-bezier(.22,1,.36,1) both">
 
             <!-- Post Header -->
             <div class="flex items-start justify-between gap-2 mb-3">
@@ -1102,6 +1106,21 @@
         `;
       }).join('');
     }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => { const m = document.getElementById('kom-mascot'); if (m && window.X) m.innerHTML = X.mascot('happy', 64); });
+    // Efek "pop" + suara saat menyukai postingan
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest('[id^="like-btn-"]');
+      if (!b || !window.X) return;
+      setTimeout(() => {
+        const btn = document.getElementById(b.id);
+        const ic = btn && btn.querySelector('.material-symbols-outlined');
+        if (ic) { ic.classList.remove('anim-pop'); void ic.offsetWidth; ic.classList.add('anim-pop'); }
+        if (btn && btn.className.includes('text-red-500')) X.sfx.pop();
+      }, 0);
+    }, true);
   </script>
 </body>
 </html>

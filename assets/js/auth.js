@@ -9,7 +9,7 @@ const AUTH_STORAGE_KEY = 'xavetra_user';
 // Endpoint Resolver Database Google Apps Script (Di-encode agar aman dari automated web crawlers)
 function getGoogleSheetEndpoint() {
   const customUrl = localStorage.getItem('xavetra_auth_url');
-  if (customUrl && customUrl.trim().startsWith('https://script.google.com')) {
+  if (customUrl && /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(customUrl.trim())) {
     return customUrl.trim();
   }
   try {
@@ -36,12 +36,11 @@ async function loginViaGoogleSheets(username, password) {
   }
 
   try {
-    const url = `${endpoint}?action=login&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
+    // POST text/plain: kata sandi tidak tercatat di URL/riwayat & tanpa preflight CORS
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'login', username, password })
     });
 
     if (!response.ok) {
@@ -73,12 +72,10 @@ async function registerViaGoogleSheets(username, name, password, kelas) {
   }
 
   try {
-    const url = `${endpoint}?action=register&username=${encodeURIComponent(username)}&name=${encodeURIComponent(name)}&password=${encodeURIComponent(password)}&kelas=${encodeURIComponent(kelas || 'XI HJ 5')}`;
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'register', username, name, password, kelas: kelas || 'XI HJ 5' })
     });
 
     if (!response.ok) {
@@ -137,7 +134,23 @@ function isAuthenticated() {
 }
 
 /**
- * Sinkronisasi status autentikasi pada Navbar
+ * Escape HTML sederhana (dipakai sebelum menyisipkan data pengguna ke DOM)
+ */
+function authEscape(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+}
+
+/**
+ * Redirect aman: hanya halaman .html lokal yang diizinkan
+ */
+function safeAuthRedirect(target, fallback) {
+  const fb = fallback || 'dashboard.html';
+  if (!target || typeof target !== 'string') return fb;
+  return /^[a-z0-9_-]+\.html(\?[a-z0-9_=&%.-]*)?$/i.test(target.trim()) ? target.trim() : fb;
+}
+
+/**
+ * Sinkronisasi status autentikasi pada Navbar (landing page)
  */
 function syncNavbarAuth() {
   const user = getAuthUser();
@@ -145,30 +158,18 @@ function syncNavbarAuth() {
   if (!container) return;
 
   if (user) {
-    // Pengguna sudah login: tampilkan badge profil dan tombol keluar
-    const initials = user.name 
-      ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() 
-      : 'X5';
-
+    const name = String(user.name || 'Siswa');
+    const initials = name.split(/\s+/).map((n) => n[0] || '').join('').substring(0, 2).toUpperCase() || 'XI';
     container.innerHTML = `
-      <div class="flex items-center gap-2 pl-3 pr-2 py-1 rounded-full bg-primary-subtle text-primary border border-border-focus text-xs font-semibold">
-        <span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">${initials}</span>
-        <span class="max-w-[120px] truncate" title="${user.name}">${user.name.split(' ')[0]}</span>
-        <button onclick="handleLogout()" title="Keluar Akun" class="ml-1 text-slate-400 hover:text-red-500 transition flex items-center">
-          <span class="material-symbols-outlined text-[16px]">logout</span>
-        </button>
-      </div>
-      <a href="dashboard.html" class="interactive-btn inline-flex items-center justify-center px-4 py-2 rounded-full text-xs sm:text-sm font-semibold text-white bg-primary hover:bg-primary-dark shadow-glow">
-        Dashboard Siswa
-      </a>
-    `;
+      <a href="dashboard.html" class="inline-flex items-center gap-2 pl-1.5 pr-4 py-1.5 rounded-2xl bg-white border-2 border-slate-200 text-xs font-extrabold text-navy hover:border-primary transition">
+        <span class="w-7 h-7 rounded-xl bg-brand-gradient text-white flex items-center justify-center text-[10px] font-black">${authEscape(initials)}</span>
+        <span class="max-w-[110px] truncate">${authEscape(name.split(/\s+/)[0])}</span>
+        <span class="material-symbols-outlined text-[16px] text-primary">arrow_forward</span>
+      </a>`;
   } else {
-    // Pengguna belum login: tampilkan 1 tombol utama Mulai Belajar yang lebih lebar
     container.innerHTML = `
-      <a class="interactive-btn inline-flex items-center justify-center px-7 py-2.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary-dark shadow-glow tracking-wide" href="login.html">
-        Mulai Belajar
-      </a>
-    `;
+      <a class="hidden sm:inline-flex items-center px-4 py-2.5 rounded-2xl text-sm font-bold text-navy hover:bg-white/70 transition" href="register.html">Daftar</a>
+      <a class="inline-flex items-center px-5 py-2.5 rounded-2xl text-sm font-black text-white bg-primary border-b-4 border-primary-dark active:translate-y-0.5 active:border-b-2 transition" href="login.html">Masuk</a>`;
   }
 }
 
@@ -183,20 +184,11 @@ function handleLogout() {
 }
 
 /**
- * Handler aksi terproteksi (Buka Materi, Kuis, Lanjutkan Belajar)
- * Jika belum login, diarahkan ke login.html dengan target dashboard.html
+ * Handler aksi terproteksi: arahkan ke dashboard atau login
  */
-function handleProtectedAction(targetAnchor, featureName) {
-  const user = getAuthUser();
-  
-  if (!user) {
-    window.location.href = `login.html?redirect=dashboard.html`;
-    return false;
-  }
-
-  // Pengguna sudah login: arahkan langsung ke dashboard pembelajaran
-  window.location.href = 'dashboard.html';
-  return true;
+function handleProtectedAction() {
+  window.location.href = getAuthUser() ? 'dashboard.html' : 'login.html?redirect=dashboard.html';
+  return !!getAuthUser();
 }
 
 /**

@@ -169,7 +169,7 @@ Panduan Wajib:
 
     // Code blocks (```lang ... ```)
     const codeBlocks = [];
-    text = text.replace(/```([a-zA-Z0-9_-]*)\n?([\\s\\S]*?)```/g, (match, lang, code) => {
+    text = text.replace(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)```/g, (match, lang, code) => {
       const idx = codeBlocks.length;
       const cleanLang = lang.trim() || 'code';
       const cleanCode = escapeHtml(code.trim());
@@ -198,6 +198,9 @@ Panduan Wajib:
       inlineCodes.push(`<code class="px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 font-mono text-[12px] font-bold border border-purple-200">${escapeHtml(code)}</code>`);
       return `___IC_${idx}___`;
     });
+
+    // Amankan sisa teks dari HTML mentah (mencegah XSS / tampilan rusak dari jawaban AI)
+    text = escapeHtml(text);
 
     // Markdown tables
     const tables = [];

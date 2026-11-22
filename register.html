@@ -1,400 +1,149 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Akun Siswa — XAVETRA | Platform Pembelajaran Informatika SMAN 1 Batam</title>
-  
-  <!-- Fonts: Plus Jakarta Sans & Inter -->
+  <title>Daftar — Informatika SMAN 1 Batam</title>
+  <meta name="description" content="Buat akun siswa untuk platform belajar Informatika SMAN 1 Batam.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Material Symbols Outlined -->
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CSS CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["'Plus Jakarta Sans'", "'Inter'", "sans-serif"],
-          },
-          colors: {
-            primary: {
-              DEFAULT: '#1F6BFF',
-              dark: '#0047B8',
-              subtle: '#EBF2FF',
-            },
-            navy: '#0F1B33',
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Custom UI & Design Utilities -->
+  <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/hj.css">
 </head>
-
-<body class="bg-white min-h-screen h-full text-slate-800 font-sans selection:bg-primary selection:text-white antialiased overflow-x-hidden">
-
-  <!-- FULL SCREEN 2-COLUMN LAYOUT (FIT IN VIEWPORT, NO VERTICAL SCROLL ON DESKTOP) -->
-  <div class="min-h-screen lg:h-screen w-full grid grid-cols-1 lg:grid-cols-12 overflow-y-auto lg:overflow-hidden">
-    
-    <!-- ========================================================================= -->
-    <!-- LEFT PANEL: Blue Mesh Gradient Showcase (Desktop Only)                    -->
-    <!-- ========================================================================= -->
-    <section class="hidden lg:flex lg:col-span-6 xl:col-span-6 relative mesh-gradient-bg p-6 sm:p-8 lg:p-10 flex-col justify-between overflow-hidden text-white min-h-[460px] lg:h-screen">
-      <!-- Decorative Atmospheric Glow Blobs -->
-      <div class="orb-glow w-72 h-72 bg-cyan-300 top-[-10%] right-[-10%]"></div>
-      <div class="orb-glow w-80 h-80 bg-blue-800 bottom-[-10%] left-[-10%]"></div>
-      <div class="orb-glow w-60 h-60 bg-indigo-500 top-[40%] right-[10%] opacity-40"></div>
-
-      <!-- Top Row: Attached Navigation Button (No Developer/Class Badge) -->
-      <header class="relative z-10 flex items-center justify-between">
-        <a href="index.html" class="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/20 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition shadow-sm">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-          </svg>
-          <span>Kembali ke Beranda</span>
-        </a>
-      </header>
-
-      <!-- Middle Content Area -->
-      <div class="relative z-10 my-auto py-6 lg:py-4 max-w-lg">
-        <!-- Badge Pill -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-medium shadow-sm mb-3">
-          <span>Bergabung Bersama Kami</span>
-          <span class="text-sm leading-none">🤩</span>
-        </div>
-
-        <!-- Headline & Subtitle -->
-        <h1 class="text-2xl sm:text-3xl lg:text-[38px] font-extrabold text-white tracking-tight leading-[1.18] mb-2.5">
-          Mulai Perjalanan Belajarmu
-        </h1>
-        <p class="text-blue-100/90 text-xs sm:text-sm font-normal max-w-md leading-relaxed">
-          Daftarkan akunmu dalam beberapa detik untuk membuka seluruh materi kurikulum merdeka, modul mesin pencari, dan evaluasi hukum digital.
-        </p>
+<body class="font-sans antialiased">
+  <div class="hj-auth">
+    <section class="hj-auth__visual hj-glow-bg">
+      <div class="hj-star" aria-hidden="true"></div>
+      <a href="index.html" class="relative inline-flex items-center gap-2 text-sm font-medium text-white/70 hover:text-white w-fit"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>Beranda</a>
+      <div class="relative">
+        <div id="side-mascot" class="hidden" aria-hidden="true"></div>
+        <h1 class="hj-display text-5xl xl:text-7xl">Mulai dari<br><span class="hj-dim">Level 1.</span></h1>
+        <p class="text-white/60 mt-5 max-w-md text-[15px] leading-relaxed">Sekitar 25 menit untuk paham cara kerja mesin pencari di Bab 1.</p>
       </div>
-
-      <!-- Bottom Feature Cards Navigation (Consistent with Login) -->
-      <footer class="relative z-10 pt-2">
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 w-full">
-          
-          <!-- Card 1 -->
-          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
-            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
-              <span class="material-symbols-outlined text-[16px]">menu_book</span>
-            </div>
-            <div class="text-xs font-bold text-white/95 leading-snug">
-              Modul Kurikulum Fase F
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
-            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
-              <span class="material-symbols-outlined text-[16px]">manage_search</span>
-            </div>
-            <div class="text-xs font-bold text-white/95 leading-snug">
-              Simulator Riset &amp; Operator
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="glass-card rounded-xl p-3 sm:p-3.5 text-left transition-all duration-300 flex flex-col justify-between min-h-[96px]">
-            <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center font-bold text-xs border border-white/25 mb-2">
-              <span class="material-symbols-outlined text-[16px]">gavel</span>
-            </div>
-            <div class="text-xs font-bold text-white/95 leading-snug">
-              Hukum Siber &amp; UU ITE
-            </div>
-          </div>
-
-        </div>
-      </footer>
+      <ol class="relative grid gap-3 text-[14px]">
+        <li class="flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-[#fff] text-[#0A0E1C] flex items-center justify-center font-mono text-xs font-semibold">01</span>Buat akun</li>
+        <li class="flex items-center gap-3 text-white/70"><span class="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center font-mono text-xs">02</span>Pilih target belajar harian</li>
+        <li class="flex items-center gap-3 text-white/70"><span class="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center font-mono text-xs">03</span>Selesaikan Bab 1 &amp; raih lencana pertama</li>
+      </ol>
     </section>
 
-    <!-- ========================================================================= -->
-    <!-- RIGHT PANEL: Clean Form Container (Instant on Mobile, Fitted on Desktop)  -->
-    <!-- ========================================================================= -->
-    <section class="lg:col-span-6 xl:col-span-6 bg-white p-5 sm:p-10 lg:p-12 xl:p-16 flex flex-col justify-center relative min-h-screen lg:h-screen py-8 sm:py-10">
-      
-      <div class="max-w-md w-full mx-auto">
-        <!-- Mobile Header (Visible on Mobile only) -->
-        <div class="lg:hidden flex items-center justify-between pb-5 mb-5 border-b border-slate-100">
-          <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-primary transition py-1.5 px-3.5 rounded-full bg-slate-100">
-            <span class="material-symbols-outlined text-[16px]">arrow_back</span>
-            <span>Beranda</span>
-          </a>
-          <div class="text-right">
-            <span class="text-sm font-black text-navy block leading-tight">Informatika</span>
-            <span class="text-[10px] text-text-muted font-semibold block">SMAN 1 BATAM</span>
+    <section class="hj-auth__form">
+      <div class="w-full max-w-md" data-m-page>
+        <div class="lg:hidden flex items-center justify-between mb-10">
+          <a href="index.html" class="inline-flex items-center gap-1 text-sm font-medium text-white/70"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>Beranda</a>
+          <div class="text-right"><div class="text-[17px] font-semibold leading-none text-white">Informatika</div><div class="text-[10px] font-semibold text-white/50 tracking-[0.2em] mt-1">SMAN 1 BATAM</div></div>
+        </div>
+        <div class="flex items-end justify-between gap-4">
+          <div>
+            <div class="hj-eyebrow">Daftar</div>
+            <h2 class="hj-display text-4xl sm:text-5xl mt-3 text-white">Buat akun <span class="hj-dim">siswa.</span></h2>
+            <p class="text-[14px] text-white/55 mt-3">Gratis, khusus untuk belajar Informatika.</p>
           </div>
+          <div id="form-mascot" class="shrink-0" aria-hidden="true"></div>
         </div>
 
-        <!-- Form Header (Without 'Registrasi Cepat' pill) -->
-        <div class="mb-4 sm:mb-5">
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Daftar Akun Baru
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-500 mt-1">
-            Lengkapi data diri untuk mendapatkan akses penuh materi pembelajaran.
-          </p>
-        </div>
-
-        <form id="register-form" onsubmit="handleRegisterSubmit(event)" class="space-y-3.5">
-          
-          <!-- Field 1: Nama Lengkap -->
-          <div>
-            <label for="fullname-input" class="block text-xs font-semibold text-slate-800 mb-1">
-              Nama Lengkap Siswa
-            </label>
-            <div class="relative">
-              <input 
-                type="text" 
-                id="fullname-input" 
-                name="fullname"
-                value=""
-                placeholder="Nama lengkap siswa"
-                class="w-full form-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
-                required
-                autofocus
-              >
-            </div>
+        <form id="register-form" onsubmit="handleRegisterSubmit(event)" class="mt-10 space-y-6" novalidate>
+          <label class="hj-field"><span>Nama lengkap</span>
+            <span class="hj-field__box"><input id="fullname-input" required maxlength="60" autocomplete="name" placeholder="mis. Budi Santoso"></span></label>
+          <div class="grid grid-cols-[1fr_auto] gap-5">
+            <label class="hj-field"><span>Username</span>
+              <span class="hj-field__box"><input id="reg-username-input" required maxlength="30" autocomplete="username" placeholder="budi_santoso"></span></label>
+            <label class="hj-field"><span>Kelas</span>
+              <span class="hj-field__box"><select id="class-select" class="pr-2"></select></span></label>
           </div>
-
-          <!-- Field 1B: NIS / Username -->
-          <div>
-            <label for="reg-username-input" class="block text-xs font-semibold text-slate-800 mb-1">
-              NIS atau Username Siswa
-            </label>
-            <div class="relative">
-              <input 
-                type="text" 
-                id="reg-username-input" 
-                name="username"
-                value=""
-                placeholder="Contoh: nis12345 atau nama_kamu"
-                class="w-full form-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
-                required
-              >
-            </div>
-          </div>
-
-          <!-- Field 2: Kelas (XI HJ 1 - XI HJ 12 & Lainnya) -->
-          <div>
-            <label for="class-select" class="block text-xs font-semibold text-slate-800 mb-1">
-              Kelas
-            </label>
-            <div class="relative">
-              <select 
-                id="class-select" 
-                name="class"
-                class="w-full form-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 font-medium cursor-pointer"
-                required
-              >
-                <option value="XI HJ 1">XI HJ 1</option>
-                <option value="XI HJ 2">XI HJ 2</option>
-                <option value="XI HJ 3">XI HJ 3</option>
-                <option value="XI HJ 4">XI HJ 4</option>
-                <option value="XI HJ 5" selected>XI HJ 5</option>
-                <option value="XI HJ 6">XI HJ 6</option>
-                <option value="XI HJ 7">XI HJ 7</option>
-                <option value="XI HJ 8">XI HJ 8</option>
-                <option value="XI HJ 9">XI HJ 9</option>
-                <option value="XI HJ 10">XI HJ 10</option>
-                <option value="XI HJ 11">XI HJ 11</option>
-                <option value="XI HJ 12">XI HJ 12</option>
-                <option value="Lainnya">Lainnya</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Field 3: Kata Sandi -->
-          <div>
-            <label for="password-input" class="block text-xs font-semibold text-slate-800 mb-1">
-              Kata Sandi
-            </label>
-            <div class="relative">
-              <input 
-                type="password" 
-                id="password-input" 
-                name="password"
-                value=""
-                placeholder="Kata sandi"
-                class="w-full form-input rounded-xl pl-3.5 pr-10 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
-                required
-                minlength="6"
-              >
-              <!-- Toggle Visibility Button -->
-              <button 
-                type="button" 
-                onclick="togglePasswordVisibility('password-input', 'eye-icon-1')" 
-                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition"
-                title="Tampilkan / Sembunyikan kata sandi"
-              >
-                <svg id="eye-icon-1" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Field 4: Konfirmasi Kata Sandi -->
-          <div>
-            <label for="confirm-password-input" class="block text-xs font-semibold text-slate-800 mb-1">
-              Konfirmasi Kata Sandi
-            </label>
-            <div class="relative">
-              <input 
-                type="password" 
-                id="confirm-password-input" 
-                name="confirm_password"
-                value=""
-                placeholder="Konfirmasi kata sandi"
-                class="w-full form-input rounded-xl pl-3.5 pr-10 py-2.5 text-xs sm:text-sm text-slate-800 placeholder:text-slate-400 font-medium"
-                required
-                minlength="6"
-              >
-              <!-- Toggle Visibility Button -->
-              <button 
-                type="button" 
-                onclick="togglePasswordVisibility('confirm-password-input', 'eye-icon-2')" 
-                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 transition"
-                title="Tampilkan / Sembunyikan konfirmasi kata sandi"
-              >
-                <svg id="eye-icon-2" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          <!-- Primary Submit Button: Daftar -->
-          <button 
-            type="submit" 
-            id="register-submit-btn"
-            class="w-full bg-primary hover:bg-primary-dark active:scale-[0.99] text-white font-bold py-3 px-4 rounded-xl shadow-md shadow-primary/25 transition duration-150 text-xs sm:text-sm flex items-center justify-center gap-2 mt-2"
-          >
-            <span id="reg-btn-text">Daftar Sekarang</span>
-            <span id="reg-btn-icon" class="material-symbols-outlined text-[17px]">how_to_reg</span>
+          <p id="username-hint" class="text-[12px] text-white/45 -mt-3">3–30 karakter: huruf, angka, titik, atau garis bawah.</p>
+          <label class="hj-field"><span>Kata sandi</span>
+            <span class="hj-field__box"><input id="password-input" type="password" required autocomplete="new-password" placeholder="Minimal 6 karakter"></span></label>
+          <div class="flex gap-1.5 -mt-3" id="strength" aria-hidden="true"></div>
+          <label class="hj-field"><span>Ulangi kata sandi</span>
+            <span class="hj-field__box"><input id="confirm-password-input" type="password" required autocomplete="new-password" placeholder="Ketik ulang"></span></label>
+          <div id="form-error" role="alert" class="hidden p-3 rounded-2xl bg-red-50 border border-red-200 text-sm font-semibold text-red-700"></div>
+          <button type="submit" id="register-submit-btn" class="hj-btn hj-btn--lg w-full disabled:opacity-70">
+            <span id="reg-btn-text">Daftar sekarang</span><span id="reg-btn-icon" class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
           </button>
-
-          <!-- Log in redirect -->
-          <div class="text-center pt-1.5">
-            <span class="text-xs text-slate-500">Sudah memiliki akun? </span>
-            <a href="login.html" class="text-xs font-bold text-primary hover:underline">
-              Masuk ke akun
-            </a>
-          </div>
-
-          <!-- Disclaimer / Legal notice -->
-          <footer class="pt-3 border-t border-slate-100 mt-3">
-            <p class="text-[11px] text-slate-400 text-center leading-relaxed">
-              Platform Pembelajaran Informatika Fase F • SMAN 1 Batam.
-            </p>
-          </footer>
-
         </form>
+        <p class="text-center text-sm text-white/55 mt-8">Sudah punya akun? <a href="login.html" class="hj-link text-white">Masuk</a></p>
       </div>
-
     </section>
-
   </div>
 
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-2xl shadow-xl border border-slate-800 flex items-center gap-3">
-    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-    <span id="toast-message">Notification</span>
-  </div>
-
-  <!-- Modular Scripts -->
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/main.js"></script>
+  <!-- Motion (dulu Framer Motion): global window.Motion -->
+  <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
+  <script src="assets/js/core.js"></script>
+  <script src="assets/js/motion-ui.js"></script>
   <script>
+    const fm = document.getElementById('form-mascot');
+    const setMood = (m) => { fm.innerHTML = X.mascot(m, 64); };
+    setMood('happy');
+    document.getElementById('side-mascot').innerHTML = X.mascot('happy', 110);
+    const kelas = Array.from({ length: 12 }, (_, i) => `XI HJ ${i + 1}`).concat(['Lainnya']);
+    document.getElementById('class-select').innerHTML = kelas.map((k) => `<option value="${k}" ${k === 'XI HJ 5' ? 'selected' : ''}>${k}</option>`).join('');
+    const pass = document.getElementById('password-input');
+    const bars = document.getElementById('strength');
+    bars.innerHTML = [0, 1, 2, 3].map(() => '<span class="h-1.5 flex-1 rounded-full bg-slate-200 transition-all duration-300"></span>').join('');
+    pass.addEventListener('input', () => {
+      const v = pass.value;
+      const score = [v.length >= 6, v.length >= 10, /[A-Z]/.test(v) && /[a-z]/.test(v), /\d/.test(v) && /[^A-Za-z0-9]/.test(v)].filter(Boolean).length;
+      const colors = ['bg-red-400', 'bg-amber-400', 'bg-sky-400', 'bg-emerald-500'];
+      bars.querySelectorAll('span').forEach((s, i) => { s.className = `h-1.5 flex-1 rounded-full transition-all duration-300 ${i < score ? colors[score - 1] : 'bg-white/10'}`; });
+    });
+    pass.addEventListener('focus', () => setMood('think'));
+    pass.addEventListener('blur', () => setMood('happy'));
+    const uname = document.getElementById('reg-username-input');
+    uname.addEventListener('input', () => {
+      const ok = !uname.value || /^[a-zA-Z0-9_.]{3,30}$/.test(uname.value);
+      const hint = document.getElementById('username-hint');
+      hint.className = `text-[12px] -mt-3 ${ok ? 'text-white/45' : 'text-red-300'}`;
+    });
+
+    function showError(msg) {
+      const el = document.getElementById('form-error');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      el.classList.remove('anim-shake'); void el.offsetWidth; el.classList.add('anim-shake');
+      setMood('sad');
+      X.sfx.wrong();
+    }
+
     async function handleRegisterSubmit(event) {
       event.preventDefault();
-
       const fullname = document.getElementById('fullname-input').value.trim();
-      const usernameInput = document.getElementById('reg-username-input').value.trim();
+      const username = uname.value.trim();
       const studentClass = document.getElementById('class-select').value;
-      const password = document.getElementById('password-input').value;
-      const confirmPassword = document.getElementById('confirm-password-input').value;
-
-      if (!fullname || !usernameInput || !password) {
-        showToast("⚠️ Mohon lengkapi semua data formulir.", "alert");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        showToast("⚠️ Kata sandi dan konfirmasi kata sandi tidak cocok!", "alert");
-        return;
-      }
-
-      if (password.length < 6) {
-        showToast("⚠️ Kata sandi minimal 6 karakter demi keamanan.", "alert");
-        return;
-      }
-
-      const submitBtn = document.getElementById('register-submit-btn');
-      const btnText = document.getElementById('reg-btn-text');
-      const btnIcon = document.getElementById('reg-btn-icon');
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.classList.add('opacity-75', 'cursor-wait');
-      }
-      if (btnText) btnText.textContent = 'Mendaftarkan akun...';
-      if (btnIcon) {
-        btnIcon.className = 'material-symbols-outlined text-[17px] animate-spin';
-        btnIcon.textContent = 'progress_activity';
-      }
-
-      function restoreBtn() {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('opacity-75', 'cursor-wait');
-        }
-        if (btnText) btnText.textContent = 'Daftar Sekarang';
-        if (btnIcon) {
-          btnIcon.className = 'material-symbols-outlined text-[17px]';
-          btnIcon.textContent = 'how_to_reg';
-        }
-      }
-
+      const password = pass.value;
+      const confirm = document.getElementById('confirm-password-input').value;
+      document.getElementById('form-error').classList.add('hidden');
+      if (!fullname || !username || !password) return showError('Lengkapi semua data dulu ya.');
+      if (!/^[a-zA-Z0-9_.]{3,30}$/.test(username)) return showError('Username 3–30 karakter: huruf, angka, titik, atau garis bawah (tanpa spasi).');
+      if (password.length < 6) return showError('Kata sandi minimal 6 karakter.');
+      if (password !== confirm) return showError('Konfirmasi kata sandi belum sama.');
+      const btn = document.getElementById('register-submit-btn');
+      const txt = document.getElementById('reg-btn-text');
+      const ic = document.getElementById('reg-btn-icon');
+      btn.disabled = true; txt.textContent = 'Mendaftarkan…'; ic.textContent = 'progress_activity'; ic.classList.add('animate-spin');
+      const restore = () => { btn.disabled = false; txt.textContent = 'Daftar sekarang'; ic.textContent = 'arrow_forward'; ic.classList.remove('animate-spin'); };
       try {
-        const res = await registerViaGoogleSheets(usernameInput, fullname, password, studentClass);
-
-        if (res.success) {
-          let userToSave = res.user;
-          if (res.isLocal) {
-            userToSave = {
-              name: fullname,
-              username: usernameInput.toLowerCase().replace(/\s+/g, '_'),
-              role: `Siswa ${studentClass}`,
-              school: 'SMAN 1 Batam',
-              loginTime: new Date().toISOString()
-            };
-          }
-
-          saveAuthUser(userToSave);
-          showToast(`🎉 Pendaftaran berhasil! Selamat datang, ${fullname}.`);
-
-          setTimeout(() => {
-            window.location.href = "dashboard.html";
-          }, 800);
-        } else {
-          showToast(`⚠️ ${res.message || 'Gagal mendaftar. Silakan coba username lain.'}`, 'alert');
-          restoreBtn();
-        }
+        const res = await registerViaGoogleSheets(username, fullname, password, studentClass);
+        if (!res.success) { restore(); return showError(res.message || 'Gagal mendaftar. Coba username lain.'); }
+        let user = res.user;
+        if (res.isLocal) user = { name: fullname, username: username.toLowerCase(), role: 'Siswa', kelas: studentClass, school: 'SMAN 1 Batam', loginTime: new Date().toISOString() };
+        saveAuthUser(user);
+        setMood('happy');
+        X.sfx.win();
+        X.confetti({ count: 160 });
+        txt.textContent = `Selamat datang, ${X.firstName(fullname)}!`;
+        ic.textContent = 'celebration'; ic.classList.remove('animate-spin');
+        setTimeout(() => { location.href = 'dashboard.html'; }, 1100);
       } catch (err) {
         console.error('Register error:', err);
-        showToast('⚠️ Terjadi kendala saat pendaftaran.', 'alert');
-        restoreBtn();
+        restore();
+        showError('Terjadi kendala saat pendaftaran. Coba lagi.');
       }
     }
   </script>

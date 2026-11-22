@@ -5,58 +5,6 @@
  */
 
 /**
- * Membuka Modal Pembelajaran Interaktif
- */
-function openLearningModal(moduleName, targetAnchor) {
-  const user = typeof getAuthUser === 'function' ? getAuthUser() : null;
-  if (!user) return;
-
-  const modal = document.getElementById('learning-modal');
-  const title = document.getElementById('modal-module-title');
-  const desc = document.getElementById('modal-module-desc');
-  const studentName = document.getElementById('modal-student-name');
-  const studentAvatar = document.getElementById('modal-student-avatar');
-
-  if (!modal) return;
-
-  if (title) title.textContent = moduleName;
-  if (studentName) studentName.textContent = user.name || 'Siswa XI HJ 5';
-  
-  if (studentAvatar) {
-    const initials = user.name 
-      ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() 
-      : 'X5';
-    studentAvatar.textContent = initials;
-  }
-
-  if (desc) {
-    if (moduleName.includes('Bab 01') || moduleName.includes('Mesin Pencari')) {
-      desc.textContent = "Pembelajaran Mesin Pencari & Cara Kerja: Crawling oleh robot crawler/spider, Indexing di server basis data raksasa, dan Ranking pengurutan relevansi algoritma.";
-    } else if (moduleName.includes('Bab 02') || moduleName.includes('Strategi Riset')) {
-      desc.textContent = "Pembelajaran Strategi Riset & Triangulasi: Penguasaan operator pencarian cerdas (\" \", -, site:, filetype:), teknik membaca lateral, serta verifikasi 3 sumber independen.";
-    } else if (moduleName.includes('Bab 03') || moduleName.includes('Hukum Digital')) {
-      desc.textContent = "Pembelajaran Hukum Digital Indonesia: Kajian pasal krusial UU ITE (Pasal 27, 28 hoaks/SARA, 30 hacking, 45 sanksi) dan UU Pelindungan Data Pribadi No. 27/2022.";
-    } else if (moduleName.includes('Bab 04') || moduleName.includes('Hak Cipta')) {
-      desc.textContent = "Pembelajaran Hak Cipta & Netiket: Regulasi UU Hak Cipta No. 28/2014, lisensi konten, pencegahan plagiarisme karya, etika kesantunan digital (netiket), dan studi kasus.";
-    } else {
-      desc.textContent = `Materi pembelajaran ${moduleName} Kurikulum Merdeka Informatika Fase F SMAN 1 Batam.`;
-    }
-  }
-
-  modal.classList.remove('hidden');
-}
-
-/**
- * Menutup Modal Pembelajaran Interaktif
- */
-function closeLearningModal() {
-  const modal = document.getElementById('learning-modal');
-  if (modal) {
-    modal.classList.add('hidden');
-  }
-}
-
-/**
  * Utilitas Notifikasi Toast Global
  */
 let toastTimeout;
