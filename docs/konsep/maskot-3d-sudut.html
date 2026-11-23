@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Evaluasi Maskot 3D — Multi Sudut</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/hj.css">
+<style>
+  body { margin: 0; background: #7CC6F7; font-family: 'Urbanist', sans-serif; color: #0B2E59; }
+  h1 { margin: 18px 24px 4px; font-size: 22px; }
+  p { margin: 0 24px 10px; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 10px 24px 24px; }
+  .cell { background: rgba(255,255,255,.18); border-radius: 16px; padding: 6px 6px 10px; text-align: center; }
+  .cell .bot { width: 100%; }
+  .cell b { display: inline-block; margin-top: 4px; background: #E8F4FF; border-radius: 999px; padding: 4px 14px; font-size: 13px; }
+  .hj-robot { width: 100% !important; }
+</style>
+</head>
+<body>
+<h1>Evaluasi Maskot 3D Jebat — multi sudut</h1>
+<p>Halaman uji internal: bandingkan dengan Character Model Sheet (latar biru sama). Baris terakhir: ekspresi & pose.</p>
+<div class="grid" id="grid"></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+<script src="../../assets/js/robot-svg.js"></script>
+<script src="../../assets/js/robot.js"></script>
+<script>
+  const VIEWS = [
+    ['Front View', 0, 0, 'happy'], ['Side View (Left)', 90, 0, 'happy'], ['Back View', 180, 0, 'happy'], ['Side View (Right)', -90, 0, 'happy'],
+    ['Top View', 0, 90, 'happy'], ['Bottom View', 0, -90, 'happy'], ['3/4 Front', 35, 8, 'happy'], ['3/4 Back', 145, 8, 'happy'], ['3/4 Side', 65, 5, 'happy'],
+    ['Wink', 0, 0, 'wink'], ['Surprised', 0, 0, 'wow'], ['Sad', 0, 0, 'sad'], ['Excited (pose)', 0, 0, 'excited'], ['Thinking (pose)', 0, 0, 'think'], ['Tutup mata', 0, 0, 'shy'],
+  ];
+  // Satu robot (satu konteks WebGL) dirender bergiliran → gambar
+  const grid = document.getElementById('grid');
+  const hostEl = document.createElement('div');
+  hostEl.style.cssText = 'position:fixed;left:-2000px;top:0;width:520px';
+  document.body.appendChild(hostEl);
+  const bot = HJRobot.mount(hostEl, { size: 520, mood: 'happy', view: [0, 0], preserve: true });
+  const cv = hostEl.querySelector('canvas');
+  VIEWS.forEach(([label, yaw, pitch, mood]) => {
+    bot.setMood(mood); bot.setView(yaw, pitch);
+    const c = document.createElement('div'); c.className = 'cell';
+    c.innerHTML = '<img alt="" style="width:100%;display:block"><b>' + label + '</b>';
+    c.querySelector('img').src = cv.toDataURL('image/png');
+    grid.appendChild(c);
+  });
+</script>
+</body>
+</html>

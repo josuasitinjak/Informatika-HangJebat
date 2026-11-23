@@ -357,7 +357,7 @@
           <div class="text-xs font-black tracking-wider text-fuchsia-300">INVERTED INDEX</div>
           <div class="mt-3 grid grid-cols-1 gap-1 text-[12px] font-mono max-h-[200px] overflow-y-auto thin-scroll" data-index><div class="text-white/40">Belum ada kata terindeks…</div></div>
           <div class="mt-3 flex gap-2">
-            <input data-q placeholder="cari kata, mis: gempa" class="flex-1 min-w-0 bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm placeholder-white/40 focus:outline-none focus:border-sky-300" />
+            <input data-q placeholder="Cari kata kunci" class="flex-1 min-w-0 bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm placeholder-white/40 focus:outline-none focus:border-sky-300" />
             <button type="button" data-go class="${BTN} bg-sky-400 text-navy border-sky-600">Cari</button>
           </div>
           <div class="mt-2 text-xs text-sky-200 min-h-[18px]" data-hint>Indeks semua dokumen dulu, lalu cari.</div>
@@ -933,7 +933,34 @@
     play();
   }
 
-  const WIDGETS = { pipeline, crawler, indexer, ranking, operatorPlayground, triangulation, hoaxSwipe, dataSorter, caseMatch, ccBuilder, netiquetteChat };
+  function excelLab(el, opts) {
+    const rows = [
+      { month: 'Jan', area: 'Utara', product: 'Buku', units: 18, price: 12000 },
+      { month: 'Jan', area: 'Selatan', product: 'Pena', units: 25, price: 4000 },
+      { month: 'Feb', area: 'Utara', product: 'Buku', units: 22, price: 12000 },
+      { month: 'Feb', area: 'Selatan', product: 'Pena', units: 20, price: 4000 },
+      { month: 'Mar', area: 'Utara', product: 'Pena', units: 16, price: 4000 },
+      { month: 'Mar', area: 'Selatan', product: 'Buku', units: 19, price: 12000 },
+    ];
+    let area = 'Semua';
+    function render() {
+      const shown = area === 'Semua' ? rows : rows.filter((r) => r.area === area);
+      const total = shown.reduce((n, r) => n + r.units * r.price, 0);
+      const avg = shown.length ? Math.round(shown.reduce((n, r) => n + r.units, 0) / shown.length) : 0;
+      el.innerHTML = `<div class="rounded-2xl border border-slate-200 bg-white p-4">
+        <div class="flex flex-wrap items-center justify-between gap-2"><div class="flex gap-2" role="group" aria-label="Filter wilayah">${['Semua','Utara','Selatan'].map((a) => `<button type="button" data-area="${a}" aria-pressed="${area === a}" class="px-3 py-1.5 rounded-full text-xs font-bold ${area === a ? 'bg-primary text-white' : 'bg-slate-100 text-slate-700'}">${a}</button>`).join('')}</div>
+        <span class="text-xs text-slate-500">${shown.length} baris</span></div>
+        <div class="grid grid-cols-2 gap-2 mt-3"><div class="rounded-xl bg-blue-50 p-3"><span class="block text-[10px] text-slate-500">Total penjualan</span><b class="text-sm text-navy">Rp${total.toLocaleString('id-ID')}</b></div><div class="rounded-xl bg-emerald-50 p-3"><span class="block text-[10px] text-slate-500">Rata-rata unit/baris</span><b class="text-sm text-navy">${avg}</b></div></div>
+        <div class="overflow-x-auto mt-3"><table class="w-full text-xs text-left"><thead><tr class="text-slate-500"><th class="p-2">Bulan</th><th class="p-2">Wilayah</th><th class="p-2">Produk</th><th class="p-2 text-right">Unit</th><th class="p-2 text-right">Penjualan</th></tr></thead><tbody>${shown.map((r) => `<tr class="border-t border-slate-100"><td class="p-2">${r.month}</td><td class="p-2">${r.area}</td><td class="p-2">${r.product}</td><td class="p-2 text-right">${r.units}</td><td class="p-2 text-right">Rp${(r.units * r.price).toLocaleString('id-ID')}</td></tr>`).join('')}</tbody></table></div>
+        <p class="mt-2 text-[11px] text-slate-500">Coba bandingkan hasil filter wilayah dengan ringkasan keseluruhan.</p>
+        <button type="button" data-done class="${BTN_PRIMARY} mt-3">Saya paham ringkasannya</button></div>`;
+      el.querySelectorAll('[data-area]').forEach((b) => b.addEventListener('click', () => { area = b.dataset.area; sfx().click(); render(); }));
+      el.querySelector('[data-done]').addEventListener('click', () => { sfx().win(); if (opts && opts.onDone) opts.onDone(); });
+    }
+    render();
+  }
+
+  const WIDGETS = { pipeline, crawler, indexer, ranking, operatorPlayground, triangulation, hoaxSwipe, dataSorter, caseMatch, ccBuilder, netiquetteChat, excelLab };
 
   window.XLessons = {
     DOCS, parseQuery, search, resultCard, flip, shuffle, BTN, BTN_PRIMARY, BTN_GHOST,

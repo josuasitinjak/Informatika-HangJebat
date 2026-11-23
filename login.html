@@ -13,15 +13,19 @@
   <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="font-sans antialiased">
   <div class="hj-auth">
     <section class="hj-auth__visual hj-glow-bg">
       <div class="hj-star" aria-hidden="true"></div>
       <a href="index.html" class="relative inline-flex items-center gap-2 text-sm font-medium text-white/70 hover:text-white w-fit"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>Beranda</a>
+      <div class="relative flex-1 flex items-center justify-center py-8">
+        <div id="side-mascot" title="Klik aku!"></div>
+      </div>
       <div class="relative">
-        <div id="side-mascot" class="hidden" aria-hidden="true"></div>
-        <h1 class="hj-display text-5xl xl:text-7xl">Lanjutkan<br><span class="hj-dim">momentum belajarmu</span></h1>
+        <h1 class="hj-display text-5xl xl:text-6xl">Lanjutkan<br><span class="hj-dim">momentum belajarmu</span></h1>
         <p class="text-white/60 mt-5 max-w-md text-[15px] leading-relaxed">Modul interaktif, Kuis Arena, simulator riset, dan Tanya AI — semua progresmu tersimpan di akunmu.</p>
       </div>
       <div class="relative flex flex-wrap gap-2">
@@ -41,20 +45,20 @@
             <h2 class="hj-display text-4xl sm:text-5xl mt-3 text-white">Selamat datang <span class="hj-dim">kembali.</span></h2>
             <p class="text-[14px] text-white/55 mt-3">Pakai username atau nama lengkap yang terdaftar.</p>
           </div>
-          <div id="form-mascot" class="shrink-0" aria-hidden="true"></div>
+          <div id="form-mascot" class="shrink-0 lg:hidden" title="Klik aku!"></div>
         </div>
 
         <form id="login-form" onsubmit="handleLoginSubmit(event)" class="mt-10 space-y-7" novalidate>
           <label class="hj-field">
             <span>Username atau nama lengkap</span>
             <span class="hj-field__box">
-              <input id="username-input" name="username" autocomplete="username" required placeholder="mis. budi_santoso">
+              <input id="username-input" name="username" autocomplete="username" required placeholder="Masukkan username atau nama lengkap">
               <span class="material-symbols-outlined" aria-hidden="true">person</span>
             </span>
           </label>
           <div class="hj-field">
             <span class="!flex items-center justify-between"><label for="password-input">Kata sandi</label>
-              <button type="button" onclick="showToast('Hubungi guru Informatika / wali kelas untuk mengatur ulang kata sandi.', 'info')" class="normal-case tracking-normal text-[12px] font-medium text-[#AFBDFF] hover:text-white">Lupa kata sandi?</button>
+              <button type="button" onclick="showToast('Hubungi guru Informatika untuk mengatur ulang kata sandi.', 'info')" class="normal-case tracking-normal text-[12px] font-medium text-[#AFBDFF] hover:text-white">Lupa kata sandi?</button>
             </span>
             <span class="hj-field__box">
               <input id="password-input" name="password" type="password" autocomplete="current-password" required placeholder="••••••••">
@@ -77,20 +81,33 @@
   <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
+  <script src="assets/js/robot-svg.js"></script>
+  <script src="assets/js/robot.js"></script>
   <script>
-    const fm = document.getElementById('form-mascot');
-    const setMood = (m) => { fm.innerHTML = X.mascot(m, 64); };
-    setMood('happy');
-    document.getElementById('side-mascot').innerHTML = X.mascot('wow', 110);
+    // Maskot robot "Jebat": mengikuti kursor, menutup mata saat kata sandi diketik
+    const bot = HJRobot.group([
+      HJRobot.mount(document.getElementById('side-mascot'), { size: 300, bubble: true, controls: true, mood: 'happy', lines: ['Halo, aku Jebat!', 'Lupa sandi? Tanya guru ya.', 'Streak-mu nunggu, lho.', 'Klik aku lagi, seru kan?'] }),
+      HJRobot.mount(document.getElementById('form-mascot'), { size: 76, mood: 'happy' }),
+    ]);
+    const setMood = (m) => {
+      bot.setMood(m);
+      if (m === 'sad') { bot.shake(); bot.say('Hmm, ada yang belum pas. Cek lagi ya.'); }
+      if (m === 'shy') bot.say('Tenang, aku nggak ngintip.', 1800);
+    };
     const pass = document.getElementById('password-input');
+    const userInput = document.getElementById('username-input');
+    userInput.addEventListener('focus', () => { setMood('idle'); bot.lookAt(userInput); });
+    userInput.addEventListener('blur', () => bot.lookAt(null));
     // Maskot "menutup mata" (bingung) saat kata sandi diketik — detail kecil yang bikin hidup
-    pass.addEventListener('focus', () => setMood('think'));
-    pass.addEventListener('blur', () => setMood('happy'));
+    pass.addEventListener('focus', () => setMood('shy'));
+    pass.addEventListener('blur', () => setMood('idle'));
     document.getElementById('toggle-pass').addEventListener('click', (e) => {
       const show = pass.type === 'password';
       pass.type = show ? 'text' : 'password';
       e.currentTarget.querySelector('span').textContent = show ? 'visibility_off' : 'visibility';
-      setMood(show ? 'wow' : 'think');
+      setMood(show ? 'peek' : 'shy');
     });
     if (X.getUser()) {
       const r = safeAuthRedirect(new URLSearchParams(location.search).get('redirect'), 'dashboard.html');
@@ -127,12 +144,15 @@
         if (res.isLocal) user = { name: identifier, username: identifier.toLowerCase().replace(/\s+/g, '_'), role: 'Siswa', kelas: 'XI HJ 5', school: 'SMAN 1 Batam', loginTime: new Date().toISOString() };
         saveAuthUser(user);
         setMood('happy');
-        X.sfx.win();
-        X.confetti({ count: 90, originY: 0.4 });
+        bot.celebrate();
+        bot.say('Yeay! Selamat datang.');
         txt.textContent = `Halo, ${X.firstName(user.name)}!`;
         ic.textContent = 'check';
         ic.classList.remove('animate-spin');
-        setTimeout(() => { location.href = safeAuthRedirect(new URLSearchParams(location.search).get('redirect'), 'dashboard.html'); }, 900);
+        const dest = safeAuthRedirect(new URLSearchParams(location.search).get('redirect'), 'dashboard.html');
+        await new Promise((r) => setTimeout(r, 450)); // beri waktu maskot merayakan
+        await X.authSuccess({ from: btn, eyebrow: 'Berhasil masuk', name: X.firstName(user.name), note: dest === 'dashboard.html' ? 'Menyiapkan dashboard-mu…' : 'Melanjutkan ke halaman tujuan…' });
+        location.href = dest;
       } catch (err) {
         console.error('Login error:', err);
         restore();
@@ -142,3 +162,4 @@
   </script>
 </body>
 </html>
+

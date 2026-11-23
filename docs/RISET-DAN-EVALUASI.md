@@ -25,7 +25,7 @@ Tanggal: 12 November 2026. Dokumen ini jadi pegangan untuk putaran perombakan be
 ## 2. Evaluasi jujur kondisi saat ini
 
 ### Sudah baik
-Kurikulum 4 bab + 11 widget, Kuis Arena (4 tipe soal, combo, nyawa, timer), simulator dengan 8 misi, XP/level/streak/lencana, dashboard, rekap nilai guru (butuh Apps Script v2), bug & celah keamanan utama sudah ditutup.
+Kurikulum 3 topik inti + aktivitas interaktif, Kuis Arena (4 tipe soal, combo, nyawa, timer), simulator dengan 8 misi, XP/level/streak/lencana, dashboard kelas, pengumpulan tugas, dan glosarium dengan kartu belajar. PWA tersedia saat situs dijalankan lewat localhost/HTTPS; fitur bersama guru memerlukan Apps Script v3.
 
 ### Masih kurang (prioritas)
 | # | Masalah | Dampak |
@@ -37,21 +37,21 @@ Kurikulum 4 bab + 11 widget, Kuis Arena (4 tipe soal, combo, nyawa, timer), simu
 | ✅ v2 | ~~Ulangi soal salah~~ → mode "Ulangi Kesalahan" di Kuis Arena | — |
 | P1 | Kuis: **papan peringkat kelas** & petunjuk bertahap | Motivasi sosial |
 | ✅ v2 | ~~Dark mode~~ → tombol Gelap/Terang di sidebar, ikut tema sistem | — |
-| P2 | Belum **PWA** (bisa di-install di HP, ikon, offline) | Tidak terasa seperti aplikasi |
+| ✅ v3 | ~~PWA~~ → manifest, ikon aplikasi, pemasangan, dan cache materi untuk localhost/HTTPS | Akses ulang saat koneksi terputus |
 | ✅ v2 | ~~Transisi halaman~~ → View Transitions API + scrollytelling GSAP di beranda | — |
 | P2 | Maskot hanya SVG statis + CSS; belum ada **ekspresi/animasi beruntun** (mis. Lottie/rive) | "Wow factor" terbatas |
 | P2 | Komunitas masih **lokal per perangkat**; Tanya AI memakai **API key di klien** | Fungsi & keamanan |
 | P3 | Tailwind via CDN (peringatan di konsol, lebih lambat) | Performa |
 | P3 | Belum ada **uji otomatis** (Playwright) & audit aksesibilitas (axe) | Regresi tidak terdeteksi |
-| P3 | Konten: 40 soal (10/bab), belum ada video, glosarium, atau sertifikat tuntas | Kedalaman materi |
+| P3 | Glosarium interaktif sudah tersedia; sertifikat tuntas bab belum tersedia | Kedalaman materi |
 
 ## 3. Rencana implementasi putaran berikutnya
 1. **Design system v2** (skill `frontend-design` + `Design:design-system`): token warna/tipografi, dark mode, komponen tombol/kartu/input seragam.
 2. **Rombak halaman lama** (Catatan, Tugas, Tanya AI, Komunitas, Login, Register) memakai shell & komponen baru.
 3. **Pengalaman app di HP**: bottom navigation, onboarding 3 langkah dengan maskot, View Transitions.
-4. **Kuis v2** (skill Education Skills Library): mode "Ulangi yang Salah", petunjuk bertahap, liga/peringkat kelas (via Apps Script), sertifikat tuntas bab (bisa diunduh).
+4. **Kuis lanjutan**: mode Ulangi Kesalahan sudah tersedia; petunjuk bertahap, liga kelas, dan sertifikat tuntas masih menjadi backlog.
 5. **Motion v2** (VectorLab `motion`/`transitions`/`reduced-motion`): animasi maskot lebih ekspresif, celebration screen, skeleton loader.
-6. **PWA**: `manifest.json`, service worker, ikon, mode offline untuk materi.
+6. ✅ **PWA**: manifest web, service worker, ikon, pemasangan, dan cache materi (aktif pada localhost/HTTPS; `file://` tetap didukung tanpa service worker).
 7. **Keamanan**: proxy Groq lewat Apps Script (key di Script Properties), komunitas tersinkron via Apps Script.
 8. **QA**: tes Playwright untuk alur login → modul → kuis; audit axe; cek mobile 375px.
 
@@ -80,3 +80,4 @@ node -e "const fs=require('fs');for(const f of fs.readdirSync('.').filter(f=>f.e
 - [Education App Design Trends 2026 — Gapsy Studio](https://gapsystudio.com/blog/education-app-design)
 - [9 Gamification Trends Shaping Engagement in 2026 — Scavify](https://www.scavify.com/gamification/9-gamification-trends-shaping-engagement-in-2026)
 - [Top Education App Design Trends — Lollypop](https://lollypop.design/blog/2025/august/top-education-app-design-trends-2025/?p=19532)
+

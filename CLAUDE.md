@@ -7,19 +7,20 @@ Media belajar Informatika Fase F (Kurikulum Merdeka) untuk siswa & guru. Situs s
 - Juga harus tetap jalan bila dibuka lewat `file://`.
 
 ## Arsitektur
-- `assets/js/core.js` — fondasi semua halaman: `window.X` (escape HTML, redirect aman, progres per akun: XP/level/streak/lencana, efek suara Web Audio, confetti, toast, scroll-reveal, maskot SVG "Xavi", sidebar terpadu, jembatan cloud Apps Script). Sidebar setiap halaman dirender ulang dari `NAV` di file ini — tambah menu di sana, bukan di HTML.
-- `assets/js/content.js` — `window.XContent`: 4 bab bawaan (langkah `read` / `widget` / `check`) + bank soal `QUIZ` (tipe `mc`, `tf`, `order`, `build`).
-- `assets/js/lessons.js` — `window.XLessons`: 11 widget interaktif (`mount(nama, el, {onDone})`), dataset mesin pencari mini `DOCS`, `parseQuery`/`search` operator pencarian.
+- `assets/js/core.js` — fondasi semua halaman: `window.X` (escape HTML, redirect aman, progres per akun: XP/level/streak/lencana, efek suara Web Audio, confetti, toast, scroll-reveal, maskot "Jebat" (2D di sini, 3D di `robot.js`), sidebar terpadu, jembatan cloud Apps Script). Sidebar setiap halaman dirender ulang dari `NAV` di file ini — tambah menu di sana, bukan di HTML.
+- `assets/js/content.js` — `window.XContent`: 3 bab bawaan (langkah `read` / `widget` / `check`) + bank soal `QUIZ` (tipe `mc`, `tf`, `order`, `build`).
+- `assets/js/lessons.js` — `window.XLessons`: 12 widget interaktif (`mount(nama, el, {onDone})`), dataset mesin pencari mini `DOCS`, `parseQuery`/`search` operator pencarian.
 - `assets/js/auth.js` — login/register ke Google Apps Script (POST `text/plain`), sesi di `localStorage['xavetra_user']`.
 - `assets/js/gemini.js` — Tanya AI (Groq) + parser markdown visual (`formatMarkdown` meng-escape HTML).
 - `assets/js/tw-config.js` — token Tailwind bersama (dimuat setelah CDN Tailwind) + penentu tema & kelas `hj-motion`.
-- `assets/js/landing.js` + `assets/css/landing.css` — beranda (latar Gradient ASCII dari `gradient-ascii.js`, kartu 3D, konverter bilangan, kartu bab bertumpuk, drawer).
+- `assets/js/landing.js` + `assets/css/landing.css` — beranda (latar Gradient ASCII dari `gradient-ascii.js`, kartu 3D, konverter bilangan, Peta Materi bertumpuk dengan video demo dari `demo-videos.js`, drawer).
 - `assets/css/hj.css` + `assets/js/motion-ui.js` — design system & sistem animasi bersama.
 - `assets/css/style.css` — sistem animasi (reveal, pop, shake, confetti, maskot, marquee) + `prefers-reduced-motion`.
-- `google_sheets_auth_script.example.gs` — Apps Script v2 (token sesi, hash kata sandi, `saveScore`, `listScores`, `listChapters`, `saveChapters`). Versi deploy pribadi `google_sheets_auth_script.gs` di-gitignore.
+- `google_sheets_auth_script.example.gs` — Apps Script v3 (akun, nilai, materi, profil, peringkat anonim, tugas, agenda). Versi deploy pribadi `google_sheets_auth_script.gs` di-gitignore.
+- `assets/js/animated-list.js` + `assets/css/animated-list.css` — daftar interaktif aksesibel; `assets/js/classroom.js` — peringkat, agenda, profil, tugas.
 
 ## Kunci localStorage
-`xavetra_user`, `xavetra_progress_v2::<username>`, `xavetra_student_notes` (`{id, chapter, chapterId?, title, body, date}`), `xavetra_custom_chapters`, `xavetra_community_posts`, `xavetra_sound`, `xavetra_focus_sessions`.
+`xavetra_user`, `xavetra_progress_v2::<username>`, `xavetra_student_notes` (`{id, chapter, chapterId?, title, body, date}`), `xavetra_custom_chapters`, `xavetra_sound`, `xavetra_focus_sessions`.
 
 ## Aturan wajib
 - Selalu escape data pengguna/AI sebelum `innerHTML` (`X.esc`). Jangan taruh teks bebas di atribut `onclick`; pakai `data-*` atau map JS.
@@ -28,6 +29,7 @@ Media belajar Informatika Fase F (Kurikulum Merdeka) untuk siswa & guru. Situs s
 - Jangan menampilkan angka/statistik palsu; data harus nyata atau diberi label "contoh".
 - **Tanpa logo** di samping merek "Informatika / SMAN 1 BATAM" — teks saja.
 - Gaya "Momentum" (referensi GetLayers Stride, dipilih pemilik 22 Nov 2026): hitam pekat + cahaya biru listrik, Urbanist tipis, tombol pil (`.hj-btn`), panel kaca. Ikuti `docs/DESIGN-SYSTEM.md`; komponen di `assets/css/hj.css`. Maskot boleh tetap bereaksi, umpan balik instan + XP; hormati `prefers-reduced-motion`.
+- Efek suara (`X.sfx`) hanya aktif di `kuis.html`, `modul.html`, `simulator.html` (daftar `SOUND_PAGES` di `core.js`); halaman lain senyap, tanpa tombol suara.
 - Animasi pakai Motion (`motion@12.23.12` UMD) lewat `assets/js/motion-ui.js` (`data-m`, `data-m-stagger`, `data-m-count`, `data-m-page`). Halaman aplikasi bertema gelap bawaan (blok `html.dark` di `style.css`); beranda pakai `data-theme-fixed`.
 - Konten hukum (UU ITE No. 1/2024, UU PDP No. 27/2022, UU Hak Cipta No. 28/2014) harus akurat; cek ulang bila mengubah.
 

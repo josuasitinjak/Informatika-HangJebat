@@ -1,0 +1,13 @@
+Bulan,Wilayah,Produk,Unit,Harga_Satuan
+Januari,Utara,Buku,18,12000
+Januari,Selatan,Pena,25,4000
+Januari,Utara,Pena,14,4000
+Februari,Utara,Buku,22,12000
+Februari,Selatan,Pena,20,4000
+Februari,Selatan,Buku,15,12000
+Maret,Utara,Pena,16,4000
+Maret,Selatan,Buku,19,12000
+Maret,Utara,Buku,17,12000
+April,Selatan,Pena,27,4000
+April,Utara,Buku,24,12000
+April,Selatan,Buku,21,12000

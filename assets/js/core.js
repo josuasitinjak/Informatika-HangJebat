@@ -8,11 +8,13 @@
  *  - efek suara (Web Audio), confetti, toast, popup XP, level-up
  *  - animasi scroll-reveal, count-up, tilt
  *  - sidebar navigasi terpadu (satu sumber untuk semua halaman)
- *  - maskot "Xavi" (SVG animasi)
+ *  - maskot "Jebat" versi 2D (SVG animasi); versi 3D ada di robot.js
  *  - jembatan cloud (Google Apps Script v2, opsional)
  */
 (function () {
   'use strict';
+
+  let installPromptEvent = null;
 
   // ───────────────────────── Utilitas dasar ─────────────────────────
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
@@ -85,7 +87,7 @@
   const BADGES = {
     first_step: { name: 'Langkah Pertama', icon: '🚀', desc: 'Menyelesaikan langkah pelajaran pertama.' },
     bab_done: { name: 'Bab Tuntas', icon: '📘', desc: 'Menuntaskan satu bab penuh.' },
-    all_bab: { name: 'Tamat Kurikulum', icon: '🎓', desc: 'Menuntaskan keempat bab inti.' },
+    all_bab: { name: 'Tamat Kurikulum', icon: '🎓', desc: 'Menuntaskan tiga bab inti.' },
     perfect: { name: 'Nilai Sempurna', icon: '💯', desc: 'Meraih skor 100 pada kuis.' },
     combo5: { name: 'Combo x5', icon: '🔥', desc: 'Menjawab 5 soal benar berturut-turut.' },
     streak3: { name: 'Konsisten 3 Hari', icon: '📅', desc: 'Belajar 3 hari berturut-turut.' },
@@ -192,7 +194,8 @@
     if (fresh) grantBadge('first_step');
     if (justCompleted) {
       grantBadge('bab_done');
-      const all = ['bab1', 'bab2', 'bab3', 'bab4'].every((id) => (getProgress().lessons[id] || {}).completed);
+      const chapters = window.XContent && window.XContent.CHAPTERS;
+      const all = chapters ? chapters.every((c) => (getProgress().lessons[c.id] || {}).completed) : false;
       if (all) grantBadge('all_bab');
     }
     return { fresh, justCompleted };
@@ -219,8 +222,15 @@
 
   // ───────────────────────── Efek suara (Web Audio) ─────────────────────────
   let audioCtx = null;
+  // Efek suara hanya di Kuis & media interaktif (modul, simulator). Halaman lain senyap.
+  const SOUND_PAGES = ['kuis.html', 'modul.html', 'simulator.html'];
+  function soundAllowed() {
+    const pg = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    return SOUND_PAGES.includes(pg);
+  }
   function soundOn() {
-    return localStorage.getItem('xavetra_sound') !== 'off';
+    if (!soundAllowed()) return false;
+    try { return localStorage.getItem('xavetra_sound') !== 'off'; } catch (e) { return true; }
   }
   function ctx() {
     if (!audioCtx) {
@@ -432,36 +442,53 @@
     });
   }
 
-  // ───────────────────────── Maskot "Xavi" ─────────────────────────
+  // ───────────────────────── Maskot "Jebat" (versi 2D ringan) ─────────────────────────
+  // Desain sama dengan maskot 3D (assets/js/robot.js): kepala kapsul putih, layar wajah hitam
+  // bermata cyan, rompi navy + dasi merah, tangan bulat melayang, senyum LED di bawah.
   function mascot(mood, size) {
     const s = size || 96;
     const m = mood || 'idle';
-    const mouths = {
-      idle: '<path d="M40 63 Q50 69 60 63" stroke="#0F1B33" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
-      happy: '<path d="M37 60 Q50 74 63 60 Z" fill="#0F1B33"/><path d="M43 66 Q50 71 57 66" fill="#FF7A9A"/>',
-      sad: '<path d="M40 67 Q50 60 60 67" stroke="#0F1B33" stroke-width="3.2" fill="none" stroke-linecap="round"/>',
-      think: '<path d="M42 65 L58 63" stroke="#0F1B33" stroke-width="3.2" stroke-linecap="round"/>',
-      wow: '<ellipse cx="50" cy="65" rx="5" ry="6" fill="#0F1B33"/>',
+    const C = '#7AF5FF';
+    const st = `stroke="${C}" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round"`;
+    const arch = (x) => `<path d="M${x - 5} 34 V29.5 A5 5 0 0 1 ${x + 5} 29.5 V34" ${st}/>`;
+    const EYES = {
+      idle: `<g class="mascot-eye">${arch(40)}</g><g class="mascot-eye">${arch(60)}</g>`,
+      happy: `${arch(40)}${arch(60)}`,
+      sad: `<path d="M35.5 34.5 Q40 29 44.5 32" ${st}/><path d="M64.5 34.5 Q60 29 55.5 32" ${st}/>`,
+      think: `<path d="M40 26.5 A4.6 4.6 0 0 0 40 35.7 Z" fill="${C}"/><path d="M55.5 31 H64.5" ${st}/>`,
+      wow: `<g class="mascot-eye"><circle cx="40" cy="31" r="4.6" fill="${C}"/></g><g class="mascot-eye"><circle cx="60" cy="31" r="4.6" fill="${C}"/></g>`,
     };
-    const eyes = m === 'happy'
-      ? '<path d="M33 48 Q38 42 43 48" stroke="#0F1B33" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M57 48 Q62 42 67 48" stroke="#0F1B33" stroke-width="3.4" fill="none" stroke-linecap="round"/>'
-      : `<g class="mascot-eye"><ellipse cx="38" cy="47" rx="5.2" ry="${m === 'wow' ? 7 : 6}" fill="#0F1B33"/><circle cx="39.8" cy="44.8" r="1.8" fill="#fff"/></g>
-         <g class="mascot-eye"><ellipse cx="62" cy="47" rx="5.2" ry="${m === 'wow' ? 7 : 6}" fill="#0F1B33"/><circle cx="63.8" cy="44.8" r="1.8" fill="#fff"/></g>`;
-    const brows = m === 'sad'
-      ? '<path d="M31 38 L43 41" stroke="#0F1B33" stroke-width="2.6" stroke-linecap="round"/><path d="M69 38 L57 41" stroke="#0F1B33" stroke-width="2.6" stroke-linecap="round"/>'
-      : m === 'think' ? '<path d="M32 39 L44 37" stroke="#0F1B33" stroke-width="2.6" stroke-linecap="round"/>' : '';
-    const cheeks = m === 'happy' || m === 'idle' ? '<ellipse cx="29" cy="58" rx="4.5" ry="3" fill="#FF9EB5" opacity=".7"/><ellipse cx="71" cy="58" rx="4.5" ry="3" fill="#FF9EB5" opacity=".7"/>' : '';
-    const tear = m === 'sad' ? '<path d="M66 55 q3 6 0 8 q-3 -2 0 -8z" fill="#60A5FA"/>' : '';
-    const bubble = m === 'think' ? '<circle cx="86" cy="18" r="6" fill="#E0E7FF"/><circle cx="78" cy="30" r="3.5" fill="#E0E7FF"/>' : '';
+    const bubble = m === 'think' ? '<circle cx="90" cy="12" r="5" fill="#C9D3FF" opacity=".9"/><circle cx="84" cy="22" r="2.8" fill="#C9D3FF" opacity=".9"/>' : '';
+    const sweat = m === 'sad' ? '<path d="M83 22 q3 5 0 7 q-3 -2 0 -7z" fill="#7AF5FF" opacity=".85"/>' : '';
+    const hy = m === 'happy' || m === 'wow' ? 52 : 64; // tangan terangkat saat senang/kagum
     return `<svg viewBox="0 0 100 100" width="${s}" height="${s}" aria-hidden="true" class="${m === 'happy' ? 'mascot-happy' : 'mascot-bob'}" style="overflow:visible">
-      <defs><linearGradient id="xvg-${m}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5B8CFF"/><stop offset="1" stop-color="#7C3AED"/></linearGradient></defs>
-      ${bubble}
-      <g class="mascot-antenna"><line x1="50" y1="20" x2="50" y2="8" stroke="#7C3AED" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="7" r="4.5" fill="#FF7A2F"/></g>
-      <rect x="20" y="88" width="60" height="6" rx="3" fill="#0F1B33" opacity=".08"/>
-      <rect x="14" y="20" width="72" height="62" rx="24" fill="url(#xvg-${m})"/>
-      <rect x="21" y="29" width="58" height="45" rx="18" fill="#F0F5FF"/>
-      <rect x="8" y="44" width="8" height="16" rx="4" fill="#4F46E5"/><rect x="84" y="44" width="8" height="16" rx="4" fill="#4F46E5"/>
-      ${brows}${eyes}${cheeks}${mouths[m] || mouths.idle}${tear}
+      <defs>
+        <linearGradient id="jbt-w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#E6EAF2"/><stop offset="1" stop-color="#AEB6C8"/></linearGradient>
+        <linearGradient id="jbt-n" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3966"/><stop offset="1" stop-color="#172042"/></linearGradient>
+        <radialGradient id="jbt-s" cx=".5" cy=".35" r=".8"><stop offset="0" stop-color="#101830"/><stop offset="1" stop-color="#03050B"/></radialGradient>
+        <filter id="jbt-g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      ${bubble}${sweat}
+      <ellipse cx="50" cy="96" rx="22" ry="3" fill="#000" opacity=".22"/>
+      <!-- badan + rompi -->
+      <path d="M27 56 Q27 52 31 52 H69 Q73 52 73 56 V71 Q73 92 50 92 Q27 92 27 71 Z" fill="url(#jbt-w)"/>
+      <path d="M27 56 Q27 52 31 52 H69 Q73 52 73 56 V71 H27 Z" fill="url(#jbt-n)"/>
+      <path d="M44 52 H56 L50 66 Z" fill="#F7F8FC"/>
+      <path d="M43.5 52 H49.4 L46 57 Z M56.5 52 H50.6 L54 57 Z" fill="#fff" stroke="#C5CCDA" stroke-width=".6"/>
+      <path d="M48.6 52.6 H51.4 L52.6 63 L50 66 L47.4 63 Z" fill="#D9452C"/>
+      <path d="M48.3 56 L51.8 58 M48 59.5 L52.2 61.5" stroke="#F39A45" stroke-width=".9"/>
+      <path d="M27 71 H73" stroke="#172042" stroke-width="1.4"/>
+      <path d="M44 81 Q50 85.5 56 81" stroke="${C}" stroke-width="2.4" fill="none" stroke-linecap="round" filter="url(#jbt-g)"/>
+      <!-- leher -->
+      <rect x="37" y="46" width="26" height="7" rx="3" fill="#2A3042"/>
+      <!-- tangan melayang -->
+      <g><circle cx="13" cy="${hy}" r="8" fill="url(#jbt-w)"/><path d="M5.6 ${hy + 1.5} H20.4" stroke="${C}" stroke-width="1.8" stroke-linecap="round" filter="url(#jbt-g)"/></g>
+      <g><circle cx="87" cy="${hy}" r="8" fill="url(#jbt-w)"/><path d="M79.6 ${hy + 1.5} H94.4" stroke="${C}" stroke-width="1.8" stroke-linecap="round" filter="url(#jbt-g)"/></g>
+      <!-- kepala -->
+      <rect x="15" y="7" width="70" height="43" rx="19" fill="url(#jbt-w)"/>
+      <path d="M24 12 Q34 8.5 46 8.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".95"/>
+      <rect x="21" y="14" width="58" height="31" rx="11" fill="url(#jbt-s)" stroke="#2A3042" stroke-width="2"/>
+      <g filter="url(#jbt-g)">${EYES[m] || EYES.idle}</g>
     </svg>`;
   }
 
@@ -473,11 +500,11 @@
       { href: 'kuis.html', icon: 'sports_esports', label: 'Kuis Arena', tag: 'Seru' },
       { href: 'simulator.html', icon: 'travel_explore', label: 'Simulator Riset' },
       { href: 'tugas.html', icon: 'assignment', label: 'Tugas & Rubrik' },
+      { href: 'glosarium.html', icon: 'dictionary', label: 'Glosarium' },
     ] },
     { group: 'Alat Bantu', items: [
       { href: 'catatan.html', icon: 'edit_note', label: 'Catatan Belajar' },
       { href: 'tanya-ai.html', icon: 'smart_toy', label: 'Tanya AI' },
-      { href: 'komunitas.html', icon: 'forum', label: 'Komunitas' },
     ] },
   ];
 
@@ -489,6 +516,9 @@
   function renderShell() {
     const aside = document.getElementById('main-sidebar');
     if (!aside || aside.dataset.static === 'true') return;
+    if (!document.querySelector('.hj-app-glow')) {
+      document.body.insertAdjacentHTML('afterbegin', '<div class="hj-app-glow" aria-hidden="true"></div><div class="hj-app-glow hj-app-glow--b" aria-hidden="true"></div>');
+    }
     const user = getUser();
     const page = currentPage();
     const prog = getProgress();
@@ -529,10 +559,10 @@
           <div class="flex justify-between text-[10.5px] font-bold text-white/60 mb-1"><span class="font-mono">${prog.xp} XP</span><span>${lv.nextAt ? `${lv.toNext} XP lagi` : 'MAX'}</span></div>
           <div class="hj-progress hj-progress--dark !h-1.5"><span style="width:${lv.pct}%"></span></div>
         </div>`}
-        <div class="relative mt-3 grid grid-cols-[1fr_1fr_auto] gap-1.5">
-          <button type="button" data-x-sound class="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold transition" aria-label="Efek suara ${soundOn() ? 'aktif' : 'mati'}">
+        <div class="relative mt-3 grid ${soundAllowed() ? 'grid-cols-[1fr_1fr_auto]' : 'grid-cols-[1fr_auto]'} gap-1.5">
+          ${soundAllowed() ? `<button type="button" data-x-sound class="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold transition" aria-label="Efek suara ${soundOn() ? 'aktif' : 'mati'}">
             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">${soundOn() ? 'volume_up' : 'volume_off'}</span>${soundOn() ? 'Suara' : 'Senyap'}
-          </button>
+          </button>` : ''}
           <button type="button" data-x-theme class="flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-[11px] font-bold transition" aria-label="Ganti tema">
             <span class="material-symbols-outlined text-[16px]" aria-hidden="true">${isDark() ? 'light_mode' : 'dark_mode'}</span>${isDark() ? 'Terang' : 'Gelap'}
           </button>
@@ -555,6 +585,7 @@
           </button>
         </div>
         <nav class="flex-1 overflow-y-auto thin-scroll px-3 py-2 space-y-5" aria-label="Menu utama">${navHtml}</nav>
+        ${installPromptEvent ? '<div class="px-3 pb-2"><button type="button" data-x-install class="w-full flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-xs font-extrabold text-white hover:bg-white/10 transition"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">install_mobile</span>Pasang aplikasi</button></div>' : ''}
         <div class="p-3 shrink-0">${profile}</div>
       </div>`;
 
@@ -563,6 +594,15 @@
     aside.querySelector('[data-x-logout]')?.addEventListener('click', logout);
     aside.querySelector('[data-x-close-sidebar]')?.addEventListener('click', () => {
       if (typeof window.toggleSidebar === 'function') window.toggleSidebar();
+    });
+    aside.querySelector('[data-x-install]')?.addEventListener('click', async () => {
+      if (!installPromptEvent) return;
+      const promptEvent = installPromptEvent;
+      installPromptEvent = null;
+      await promptEvent.prompt();
+      const choice = await promptEvent.userChoice;
+      if (choice && choice.outcome === 'accepted') toast('Aplikasi siap dipasang di perangkat ini.', 'success');
+      refreshShell();
     });
   }
 
@@ -639,8 +679,8 @@
     const steps = [
       () => `<div class="flex justify-center">${mascot('happy', 120)}</div>
         <div class="text-[11px] font-black tracking-[0.2em] text-primary mt-3">KENALAN DULU YUK</div>
-        <h2 class="text-2xl font-black text-navy mt-1">Hai ${esc(firstName(user.name))}, aku Xavi! 👋</h2>
-        <p class="text-sm text-text-muted mt-2">Aku bakal nemenin kamu belajar Informatika: mesin pencari, riset anti-hoaks, hukum digital, dan etika internet. Santai, tiap langkahnya singkat kok.</p>`,
+        <h2 class="text-2xl font-black text-navy mt-1">Hai ${esc(firstName(user.name))}, aku Jebat! 👋</h2>
+        <p class="text-sm text-text-muted mt-2">Aku bakal nemenin kamu belajar tiga topik Informatika: mesin pencari, hukum dan perundang-undangan digital di Indonesia, serta analisis data dengan Excel dan Power BI. Santai, tiap langkahnya singkat kok.</p>`,
       () => `<div class="flex justify-center">${mascot('think', 96)}</div>
         <h2 class="text-xl font-black text-navy mt-3">Mau target belajar harian berapa?</h2>
         <p class="text-xs text-text-muted mt-1">Bisa diubah kapan saja. Konsisten lebih penting daripada banyak.</p>
@@ -739,6 +779,20 @@
   };
 
   // ───────────────────────── Init ─────────────────────────
+  function initPwa() {
+    if (location.protocol === 'file:') return;
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(() => {});
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      installPromptEvent = event;
+      refreshShell();
+    });
+    window.addEventListener('appinstalled', () => {
+      installPromptEvent = null;
+      refreshShell();
+      toast('Xavetra berhasil dipasang.', 'success');
+    });
+  }
   function init() {
     // Ganti showToast lama dengan toast animasi baru (kompatibel dengan pemanggilan lama)
     window.showToast = function (msg, type) {
@@ -746,6 +800,7 @@
     };
     renderShell();
     renderBottomNav();
+    initPwa();
     syncTopbarUser();
     initReveal();
     initTilt();
@@ -758,14 +813,70 @@
     });
   }
 
+
+  // ───────────────────────── Transisi sukses masuk/daftar (gaya "Momentum") ─────────────────────────
+  /**
+   * Cahaya biru memancar dari tombol, berkas sinar menyebar, cincin cahaya mengembang,
+   * lalu layar menggelap dengan sapaan & garis progres. Mengembalikan Promise saat selesai
+   * (panggil redirect setelahnya). opt: { from, eyebrow, name, note }
+   */
+  function authSuccess(opt) {
+    const o = opt || {};
+    const M = window.Motion;
+    const reduce = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const r = o.from && o.from.getBoundingClientRect ? o.from.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const RAYS = 30;
+    const ov = document.createElement('div');
+    ov.className = 'hj-success';
+    ov.setAttribute('role', 'status');
+    ov.setAttribute('aria-live', 'polite');
+    ov.style.setProperty('--x', `${x}px`);
+    ov.style.setProperty('--y', `${y}px`);
+    ov.innerHTML = `<div class="hj-success__glow"></div><div class="hj-success__ring"></div><div class="hj-success__ring"></div>
+      <div class="hj-success__rays">${Array.from({ length: RAYS }, () => `<i style="width:${55 + Math.random() * 50}vmax"></i>`).join('')}</div>
+      <div class="hj-success__veil"></div>
+      <div class="hj-success__msg">
+        <div class="hj-eyebrow">${esc(o.eyebrow || 'Berhasil')}</div>
+        <h2 class="hj-display">Selamat datang, <span class="hj-dim">${esc(o.name || 'Siswa')}.</span></h2>
+        <p>${esc(o.note || 'Menyiapkan dashboard-mu…')}</p>
+        <div class="hj-success__bar"><span></span></div>
+      </div>`;
+    document.body.appendChild(ov);
+    const q = (sel) => ov.querySelector(sel);
+    const qa = (sel) => Array.from(ov.querySelectorAll(sel));
+    if (!M || reduce) {
+      ov.classList.add('is-static');
+      return new Promise((res) => setTimeout(res, reduce ? 900 : 1200));
+    }
+    const ease = [0.22, 1, 0.36, 1];
+    M.animate(q('.hj-success__glow'), { scale: [0, 70], opacity: [1, 1, 0.9] }, { duration: 1.0, ease });
+    qa('.hj-success__ring').forEach((el, i) => M.animate(el, { scale: [0.2, 22], opacity: [0, 1, 0] }, { duration: 1.1, delay: i * 0.16, ease }));
+    const rays = qa('.hj-success__rays i');
+    rays.forEach((el, i) => {
+      const a = (360 / RAYS) * i + (Math.random() * 8 - 4);
+      M.animate(el, { rotate: [a, a], scaleX: [0, 1], opacity: [0, 1, 0] }, { duration: 0.85, delay: 0.04 + Math.random() * 0.16, ease: [0.16, 1, 0.3, 1] });
+    });
+    M.animate(q('.hj-success__veil'), { opacity: [0, 1] }, { duration: 0.5, delay: 0.38, ease: 'easeOut' });
+    M.animate(q('.hj-success__msg'), { opacity: [0, 1], y: [18, 0] }, { duration: 0.6, delay: 0.6, ease });
+    M.animate(q('.hj-success__bar span'), { scaleX: [0, 1] }, { duration: 1.0, delay: 0.75, ease: [0.65, 0, 0.35, 1] });
+    return new Promise((res) => setTimeout(res, 1850));
+  }
+
   window.X = {
     esc, safeRedirect, readJSON, writeJSON, getUser, isGuru, initials, firstName, todayKey,
     LEVELS, BADGES, getProgress, saveProgress, levelInfo, addXP, grantBadge, markLessonStep, recordQuiz,
     sfx, confetti, toast, floatXP, showLevelUp, initReveal, countUp, initTilt, mascot,
     renderShell, refreshShell, syncTopbarUser, logout, requireAuth, cloud,
-    isDark, toggleTheme, showOnboarding, dailyGoal,
+    isDark, toggleTheme, showOnboarding, dailyGoal, authSuccess,
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+
+
+
+
+

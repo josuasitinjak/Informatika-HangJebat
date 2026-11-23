@@ -1,0 +1,16 @@
+{
+  "id": "./index.html",
+  "name": "Informatika SMAN 1 Batam",
+  "short_name": "Informatika",
+  "description": "Teman belajar Informatika Fase F untuk XI HJ 5.",
+  "lang": "id-ID",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#0A0E1C",
+  "theme_color": "#0A0E1C",
+  "icons": [
+    { "src": "assets/images/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

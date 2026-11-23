@@ -78,6 +78,8 @@
   <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="bg-canvas text-text-main font-sans antialiased flex">
   <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 z-40 hidden lg:hidden backdrop-blur-sm"></div>
@@ -89,7 +91,7 @@
         <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Buka menu"><span class="material-symbols-outlined">menu</span></button>
         <div id="hdr-mascot" class="shrink-0 hidden sm:block"></div>
         <div class="min-w-0">
-          <div class="text-sm font-black text-navy leading-none">Tanya Xavi</div>
+          <div class="text-sm font-black text-navy leading-none">Tanya Jebat</div>
           <div class="text-[10px] font-bold text-emerald-600 flex items-center gap-1 mt-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Tutor AI Informatika</div>
         </div>
       </div>
@@ -97,9 +99,8 @@
         <select id="chat-chapter-filter" onchange="filterContext(this.value)" aria-label="Fokus bab" class="max-w-[150px] sm:max-w-none bg-slate-100/80 border-2 border-transparent rounded-2xl px-3 py-2 text-xs font-bold text-navy focus:outline-none focus:border-primary">
           <option value="all">🎯 Semua bab</option>
           <option value="1">Bab 1 • Mesin Pencari</option>
-          <option value="2">Bab 2 • Strategi Riset</option>
-          <option value="3">Bab 3 • Hukum Digital</option>
-          <option value="4">Bab 4 • Hak Cipta & Netiket</option>
+          <option value="2">Bab 2 • Hukum Digital</option>
+          <option value="3">Bab 3 • Analisis Data</option>
         </select>
         <button onclick="clearChatHistory()" class="p-2 rounded-xl text-slate-500 hover:text-red-500 hover:bg-red-50" title="Bersihkan percakapan" aria-label="Bersihkan percakapan"><span class="material-symbols-outlined text-[20px]">delete_sweep</span></button>
       </div>
@@ -112,13 +113,13 @@
           <div class="space-y-3 flex-1 min-w-0">
             <div class="p-5 rounded-[24px] rounded-tl-md bg-white border-2 border-slate-200">
               <div class="flex items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
-                <span class="font-black text-navy text-sm">Xavi 👋</span>
+                <span class="font-black text-navy text-sm">Jebat 👋</span>
                 <button type="button" onclick="toggleVoiceSpeech('welcome-bot-msg', this)" class="px-2.5 py-1 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-700 text-[11px] font-bold flex items-center gap-1 border border-violet-200" title="Dengarkan suara">
                   <span class="material-symbols-outlined text-[15px] voice-icon">volume_up</span><span class="voice-label">Dengar</span>
                 </button>
               </div>
               <div id="welcome-bot-msg-tab-full" class="space-y-3 pt-3">
-                <p class="text-sm text-slate-700 leading-relaxed">Halo! Aku <strong>Xavi</strong>, tutor AI untuk Informatika kelas XI. Tanya apa saja soal mesin pencari, operator riset, UU ITE & UU PDP, hak cipta, atau netiket — aku jelaskan dengan bahasa yang gampang.</p>
+                <p class="text-sm text-slate-700 leading-relaxed">Halo! Aku <strong>Jebat</strong>, tutor AI untuk Informatika kelas XI. Tanya apa saja soal mesin pencari, operator riset, UU ITE & UU PDP, hak cipta, atau netiket — aku jelaskan dengan bahasa yang gampang.</p>
                 <div class="grid sm:grid-cols-3 gap-2 text-xs">
                   <div class="p-3 rounded-2xl bg-primary-subtle text-primary font-bold flex items-center gap-2"><span class="material-symbols-outlined icon-fill text-[18px]">menu_book</span>Penjelasan rapi</div>
                   <div class="p-3 rounded-2xl bg-amber-50 text-amber-700 font-bold flex items-center gap-2"><span class="material-symbols-outlined icon-fill text-[18px]">bolt</span>Poin inti</div>
@@ -175,6 +176,7 @@
   <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
   <script src="assets/js/main.js"></script>
 
   <script>
@@ -320,7 +322,7 @@
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:0ms"></span>
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:150ms"></span>
           <span class="w-2 h-2 rounded-full bg-purple-500 animate-bounce" style="animation-delay:300ms"></span>
-          <span class="ml-1 text-[11px] text-slate-600">Xavi sedang berpikir…</span>
+          <span class="ml-1 text-[11px] text-slate-600">Jebat sedang berpikir…</span>
         </div>
       `;
       container.appendChild(typing);
@@ -798,3 +800,4 @@
   </script>
 </body>
 </html>
+

@@ -14,6 +14,8 @@
   <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
 
@@ -26,7 +28,7 @@
         <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100" aria-label="Buka menu"><span class="material-symbols-outlined">menu</span></button>
         <div class="relative w-full max-w-md" id="search-box">
           <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[19px]">search</span>
-          <input id="module-search-input" type="search" placeholder="Cari bab atau topik (mis. hoaks, crawling)…" class="w-full bg-slate-100/80 border border-transparent rounded-2xl pl-10 pr-4 py-2 text-xs text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 transition">
+          <input id="module-search-input" type="search" placeholder="Cari bab atau topik…" class="w-full bg-slate-100/80 border border-transparent rounded-2xl pl-10 pr-4 py-2 text-xs text-navy placeholder-slate-400 focus:outline-none focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10 transition">
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs font-extrabold shrink-0">
@@ -40,8 +42,8 @@
       <div id="view-catalog">
         <section class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <div class="text-[11px] font-black tracking-[0.18em] text-primary">PETA BELAJAR • FASE F</div>
-            <h1 class="text-2xl sm:text-4xl font-black text-navy tracking-tight mt-1">Modul Informatika</h1>
+            <div class="hj-eyebrow">Peta belajar · Fase F</div>
+            <h1 class="hj-display text-4xl sm:text-6xl text-white mt-3">Modul <span class="hj-dim">Informatika</span></h1>
             <p class="text-sm text-text-muted mt-1 max-w-xl">Belajar lewat langkah singkat, animasi, dan latihan interaktif. Selesaikan setiap langkah untuk dapat XP!</p>
           </div>
           <div id="guru-bar" class="hidden flex flex-wrap gap-2">
@@ -74,9 +76,7 @@
         </div>
 
         <!-- Header bab -->
-        <section id="study-hero" class="mt-4 relative overflow-hidden rounded-[32px] p-6 sm:p-8 text-white">
-          <div class="absolute inset-0 grid-pattern opacity-20"></div>
-          <div class="absolute -right-10 -top-10 w-64 h-64 rounded-full bg-white/15 blur-2xl"></div>
+        <section id="study-hero" class="mt-4 relative overflow-hidden rounded-[28px] p-6 sm:p-10 text-white border border-white/5">
           <div class="relative flex items-start justify-between gap-4">
             <div class="min-w-0">
               <div class="flex flex-wrap items-center gap-2 text-[11px] font-black">
@@ -84,14 +84,14 @@
                 <span id="study-cat" class="px-3 py-1 rounded-full bg-white/15 border border-white/20"></span>
                 <span class="px-3 py-1 rounded-full bg-white/10 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span><span id="study-dur"></span></span>
               </div>
-              <h1 id="study-title" class="text-2xl sm:text-3xl font-black tracking-tight mt-3 leading-tight"></h1>
+              <h1 id="study-title" class="hj-display text-4xl sm:text-5xl mt-4"></h1>
               <p id="study-desc" class="text-sm text-white/85 mt-2 max-w-2xl"></p>
             </div>
             <div class="hidden sm:block shrink-0" id="study-mascot"></div>
           </div>
           <div class="relative mt-5">
             <div class="flex justify-between text-[11px] font-bold text-white/80 mb-1.5"><span id="study-progress-label">0/0 langkah</span><span id="study-progress-pct">0%</span></div>
-            <div class="h-3 rounded-full bg-black/20 overflow-hidden"><div id="study-progress" class="h-full rounded-full bg-white bar-fill" style="width:0%"></div></div>
+            <div class="h-3 rounded-full bg-black/20 overflow-hidden"><div id="study-progress" class="h-full rounded-full bg-gradient-to-r from-[#8FE3FF] to-white bar-fill" style="width:0%"></div></div>
           </div>
         </section>
 
@@ -118,7 +118,7 @@
         <div id="tab-notes" class="hidden mt-4 grid md:grid-cols-[1fr_1fr] gap-5">
           <div class="bg-white rounded-[28px] border-2 border-slate-200 p-5 space-y-3">
             <div class="font-extrabold text-navy flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600">edit_note</span>Tulis catatan untuk bab ini</div>
-            <input id="note-title" maxlength="120" placeholder="Judul (mis. Beda crawling & indexing)" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-primary focus:bg-white">
+            <input id="note-title" maxlength="120" placeholder="Judul catatan" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl px-4 py-2.5 text-sm font-semibold focus:outline-none focus:border-primary focus:bg-white">
             <textarea id="note-body" rows="6" maxlength="4000" placeholder="Tulis dengan bahasamu sendiri — ini cara terbaik untuk mengingat!" class="w-full bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:border-primary focus:bg-white resize-none"></textarea>
             <button type="button" onclick="saveNote()" class="w-full px-5 py-3 rounded-2xl bg-emerald-500 text-white font-black text-sm border-b-4 border-emerald-700 active:translate-y-0.5 active:border-b-2 transition">Simpan Catatan</button>
           </div>
@@ -142,7 +142,7 @@
         <input type="hidden" id="ed-id">
         <div class="grid sm:grid-cols-3 gap-3">
           <label class="block"><span class="font-bold text-slate-700">Nomor urut</span><input id="ed-number" type="number" min="1" max="99" required class="mt-1 w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2 font-semibold focus:outline-none focus:border-primary"></label>
-          <label class="block"><span class="font-bold text-slate-700">Kategori</span><input id="ed-badge" maxlength="40" required placeholder="mis. Algoritma" class="mt-1 w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-primary"></label>
+          <label class="block"><span class="font-bold text-slate-700">Kategori</span><input id="ed-badge" maxlength="40" required placeholder="Algoritma" class="mt-1 w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-primary"></label>
           <label class="block"><span class="font-bold text-slate-700">Durasi</span><input id="ed-duration" maxlength="20" placeholder="20 Menit" class="mt-1 w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-primary"></label>
         </div>
         <label class="block"><span class="font-bold text-slate-700">Judul</span><input id="ed-title" maxlength="120" required class="mt-1 w-full bg-slate-50 border-2 border-slate-200 rounded-xl px-3 py-2 font-bold focus:outline-none focus:border-primary"></label>
@@ -179,6 +179,7 @@
   <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
   <script src="assets/js/content.js"></script>
   <script src="assets/js/lessons.js"></script>
   <script>
@@ -268,7 +269,7 @@
             <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">schedule</span>${esc(c.duration)}</span>
             ${best !== undefined ? `<span class="flex items-center gap-1 text-emerald-600"><span class="material-symbols-outlined text-[15px] icon-fill">emoji_events</span>${best}</span>` : ''}
           </div>
-          <span class="inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-white text-xs font-black group-hover:gap-2 transition-all" style="background:linear-gradient(135deg,${col.from},${col.to})">${prog.completed ? 'Ulas' : done ? 'Lanjut' : 'Mulai'}<span class="material-symbols-outlined text-[16px]">arrow_forward</span></span>
+          <span class="inline-flex items-center gap-1 px-4 py-2 rounded-full text-white text-xs font-semibold group-hover:gap-2 transition-all" style="background:linear-gradient(135deg,${col.from},${col.to})">${prog.completed ? 'Ulas' : done ? 'Lanjut' : 'Mulai'}<span class="material-symbols-outlined text-[16px]">arrow_forward</span></span>
         </div>
       </article>`;
     }
@@ -311,7 +312,7 @@
       const view = document.getElementById('view-study');
       view.classList.remove('hidden');
       view.classList.remove('page-enter'); void view.offsetWidth; view.classList.add('page-enter');
-      document.getElementById('study-hero').style.background = `linear-gradient(120deg, ${col.from}, ${col.to})`;
+      document.getElementById('study-hero').style.background = `radial-gradient(120% 150% at 0% 100%, ${col.from} 0%, ${col.to} 38%, #070910 100%)`;
       document.getElementById('study-badge').textContent = c.custom ? 'MATERI GURU' : `BAB ${String(c.number).padStart(2, '0')}`;
       document.getElementById('study-cat').textContent = c.badge;
       document.getElementById('study-dur').textContent = c.duration;
@@ -638,3 +639,4 @@
   </script>
 </body>
 </html>
+

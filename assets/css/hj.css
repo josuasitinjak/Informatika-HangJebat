@@ -189,3 +189,146 @@ html.hj-motion [data-m-stagger] > * { opacity: 0; }
 @keyframes hjSpin { to { transform: rotate(360deg); } }
 @keyframes hjPulse { 50% { transform: translate(-50%, -50%) scale(1.12); } }
 @media (prefers-reduced-motion: reduce) { .hj-star::before, .hj-star::after { animation: none; } }
+
+/* ───────────── Maskot robot "Jebat" (assets/js/robot.js) ───────────── */
+.hj-robot { position: relative; width: var(--size, 200px); aspect-ratio: 240 / 290; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
+.hj-robot__stage { width: 100%; height: 100%; animation: hjRobotFloat 4.2s ease-in-out infinite; }
+.hj-robot__svg { overflow: visible; display: block; }
+.hj-robot .r-shadow { transform-box: fill-box; transform-origin: center; animation: hjRobotShadow 4.2s ease-in-out infinite; }
+.hj-robot .r-antenna-tip { animation: hjRobotPulse 1.8s ease-in-out infinite; }
+.hj-robot .r-core { animation: hjRobotPulse 2.4s ease-in-out infinite; }
+.hj-robot .r-core-halo { transform-box: fill-box; transform-origin: center; animation: hjRobotHalo 2.4s ease-in-out infinite; }
+.hj-robot .r-eye { transform-box: fill-box; transform-origin: center; transition: transform 90ms ease; }
+.hj-robot .r-eye.is-blink { transform: scaleY(.12); }
+.hj-robot .r-antenna { transform-box: fill-box; transform-origin: 50% 100%; }
+.hj-robot:hover .r-antenna-tip { fill: #fff; }
+.hj-robot__bubble {
+  position: absolute; left: 50%; bottom: 100%; z-index: 2; margin-bottom: 4px; transform: translateX(-50%);
+  max-width: 240px; width: max-content; padding: 9px 14px; border-radius: 16px;
+  background: #fff; color: #0A0E1C; font-size: 13.5px; font-weight: 600; line-height: 1.35; text-align: center;
+  box-shadow: 0 14px 34px -12px rgba(35,64,255,.7); opacity: 0; pointer-events: none; transition: opacity 200ms;
+}
+.hj-robot__bubble::after { content: ''; position: absolute; left: 50%; top: 100%; transform: translateX(-50%); border: 7px solid transparent; border-top-color: #fff; }
+.hj-robot__bubble.is-on { opacity: 1; }
+@keyframes hjRobotFloat { 50% { transform: translateY(-8px); } }
+@keyframes hjRobotShadow { 50% { transform: scale(.86); opacity: .3; } }
+@keyframes hjRobotPulse { 50% { opacity: .55; } }
+@keyframes hjRobotHalo { 50% { transform: scale(1.25); opacity: .25; } }
+@media (prefers-reduced-motion: reduce) {
+  .hj-robot__stage, .hj-robot .r-shadow, .hj-robot .r-antenna-tip, .hj-robot .r-core, .hj-robot .r-core-halo { animation: none; }
+}
+
+/* ───────────── Cahaya kursor & spotlight (assets/js/cursor-glow.js) ───────────── */
+#hj-cursor-glow {
+  position: fixed; left: 0; top: 0; z-index: 55; width: 560px; height: 560px; margin: -280px 0 0 -280px;
+  border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity 400ms;
+  background: radial-gradient(circle, rgba(110,135,255,.16) 0%, rgba(35,64,255,.07) 38%, transparent 68%);
+  mix-blend-mode: screen; will-change: transform;
+}
+#hj-cursor-glow.is-on { opacity: 1; }
+
+.hj-spot-layer {
+  position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 300ms;
+  background: radial-gradient(260px circle at var(--spot-x) var(--spot-y), rgba(120,145,255,.15), transparent 65%);
+}
+.hj-spot-layer::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+  background: radial-gradient(220px circle at var(--spot-x) var(--spot-y), rgba(175,195,255,.95), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.is-spot > .hj-spot-layer { opacity: 1; }
+/* Permukaan terang: cahaya biru lebih tipis */
+.lp-light .hj-spot-layer, .hj-card-light > .hj-spot-layer, .hj-btn:not(.hj-btn--blue):not(.hj-btn--ghost):not(.hj-btn--dark) > .hj-spot-layer {
+  background: radial-gradient(240px circle at var(--spot-x) var(--spot-y), rgba(35,64,255,.08), transparent 65%);
+}
+.lp-light .hj-spot-layer::before, .hj-card-light > .hj-spot-layer::before { background: radial-gradient(200px circle at var(--spot-x) var(--spot-y), rgba(35,64,255,.55), transparent 70%); }
+.lp-blue > .hj-spot-layer, .lp-bento__d > .hj-spot-layer, .lp-chap > .hj-spot-layer, .lp-engine__visual > .hj-spot-layer { background: radial-gradient(260px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.12), transparent 65%); }
+.lp-blue > .hj-spot-layer::before, .lp-bento__d > .hj-spot-layer::before, .lp-chap > .hj-spot-layer::before, .lp-engine__visual > .hj-spot-layer::before { background: radial-gradient(220px circle at var(--spot-x) var(--spot-y), rgba(255,255,255,.9), transparent 70%); }
+/* Maskot 3D (Three.js) */
+.hj-robot--3d { aspect-ratio: 0.89; }
+.hj-robot--3d .hj-robot__stage { animation: none; }
+.hj-robot--3d canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* ───────────── Transisi sukses masuk/daftar (X.authSuccess) ───────────── */
+.hj-success { position: fixed; inset: 0; z-index: 300; pointer-events: none; overflow: hidden; }
+.hj-success__glow { position: absolute; left: var(--x); top: var(--y); width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle, #fff 0%, #C9D3FF 14%, #5B74FF 34%, rgba(35,64,255,.4) 56%, rgba(35,64,255,0) 72%); }
+.hj-success__ring { position: absolute; left: var(--x); top: var(--y); width: 80px; height: 80px; margin: -40px 0 0 -40px; border-radius: 50%; opacity: 0;
+  border: 1.5px solid rgba(190,205,255,.95); box-shadow: 0 0 26px rgba(91,116,255,.85), inset 0 0 18px rgba(91,116,255,.6); }
+.hj-success__rays i { position: absolute; left: var(--x); top: var(--y); height: 2px; margin-top: -1px; transform-origin: 0 50%; border-radius: 2px; opacity: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(143,227,255,.65) 28%, rgba(91,116,255,0)); }
+.hj-success__veil { position: absolute; inset: 0; opacity: 0;
+  background: radial-gradient(55% 55% at 50% 60%, rgba(35,64,255,.45), transparent 70%), radial-gradient(40% 40% at 0% 100%, rgba(35,64,255,.55), transparent 70%), #05070F; }
+.hj-success__msg { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; color: #fff; opacity: 0; }
+.hj-success__msg h2 { font-size: clamp(38px, 6vw, 80px); margin-top: 16px; }
+.hj-success__msg p { margin-top: 16px; font-size: 14.5px; color: rgba(214,220,240,.6); }
+.hj-success__bar { width: 220px; height: 2px; margin-top: 26px; border-radius: 2px; background: rgba(255,255,255,.12); overflow: hidden; }
+.hj-success__bar span { display: block; height: 100%; background: linear-gradient(90deg, #5B74FF, #8FE3FF); transform-origin: 0 50%; transform: scaleX(0); }
+.hj-success.is-static .hj-success__veil, .hj-success.is-static .hj-success__msg { opacity: 1; }
+.hj-success.is-static .hj-success__bar span { transform: scaleX(1); }
+
+/* ═════════════════════════════════════════════════════════════════════════════
+ * LAPISAN "MOMENTUM" UNTUK HALAMAN APLIKASI
+ * Menyelaraskan pola lama (font tebal, tombol chunky border-b-4, kartu putih bertepi tebal,
+ * gradasi pelangi) dengan gaya beranda: Urbanist tipis, panel kaca, tombol pil biru listrik.
+ * Berlaku di halaman bertema gelap (html.dark) — beranda memakai data-theme-fixed.
+ * ═════════════════════════════════════════════════════════════════════════════ */
+html.dark body { font-family: 'Urbanist', system-ui, sans-serif; }
+
+/* Tipografi */
+html.dark main h1, html.dark .hj-app-h1 { font-weight: 300 !important; letter-spacing: -0.035em; line-height: 1.04; }
+html.dark main h1:not(.hj-display) { font-size: clamp(32px, 4.2vw, 52px) !important; }
+html.dark main h2 { font-weight: 500 !important; letter-spacing: -0.02em; }
+html.dark main h3 { font-weight: 600 !important; letter-spacing: -0.01em; }
+html.dark main .font-black { font-weight: 700; }
+html.dark main .font-extrabold { font-weight: 600; }
+html.dark main .tracking-\[0\.18em\], html.dark main .tracking-\[0\.2em\], html.dark main .tracking-widest { letter-spacing: .16em; }
+
+/* Panel kaca menggantikan kartu putih */
+html.dark :is(main, #play, #result, #editor) .bg-white:not(input):not(textarea):not(select):not(.hj-btn):not(.note-card) {
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)) !important;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+}
+html.dark :is(main, #play, #result, #editor) .border-2 { border-width: 1px !important; }
+html.dark :is(main, #play, #result) :is(.rounded-\[28px\], .rounded-\[32px\], .rounded-3xl) { border-radius: 22px !important; }
+html.dark :is(main, #play, #result) .hover\:border-transparent:hover { border-color: rgba(91,116,255,.45) !important; }
+
+/* Tombol chunky → pil */
+html.dark :is(main, #play, #result, #editor, .levelup-overlay) :is(a, button).border-b-4 {
+  border-bottom-width: 1px !important; border-radius: 999px !important; transform: none;
+  transition: transform .16s cubic-bezier(.22,1,.36,1), box-shadow .28s, background-color .16s, filter .16s;
+}
+html.dark :is(main, #play, #result, #editor, .levelup-overlay) :is(a, button).border-b-4:active { transform: scale(.97) !important; }
+html.dark :is(main, #play, #result, #editor, .levelup-overlay) :is(a, button).border-b-4:is(.bg-primary, .bg-accent, .bg-emerald-500, .bg-navy) {
+  background: #2340FF !important; color: #fff !important; border-color: transparent !important;
+  box-shadow: 0 12px 30px -12px rgba(35,64,255,.9);
+}
+html.dark :is(main, #play, #result, #editor, .levelup-overlay) :is(a, button).border-b-4:is(.bg-primary, .bg-accent, .bg-emerald-500, .bg-navy):hover { box-shadow: 0 0 0 4px rgba(35,64,255,.25), 0 14px 34px -10px rgba(35,64,255,.95); }
+html.dark :is(main, #play, #result, #editor, .levelup-overlay) :is(a, button).border-b-4:is(.bg-white, .bg-white\/10) {
+  background: rgba(255,255,255,.04) !important; border: 1px solid rgba(255,255,255,.16) !important; color: #fff !important;
+}
+html.dark :is(main, #play, #result) :is(a, button).border-b-4.bg-white.text-navy { background: #fff !important; color: #0A0E1C !important; }
+/* tombol status hijau "selesai" tetap hijau tapi pil */
+html.dark :is(main, #play, #result) button.bg-emerald-500.shimmer { background: #12A150 !important; box-shadow: 0 12px 30px -12px rgba(18,161,80,.9); }
+/* tombol rounded-2xl berwarna lain → pil */
+html.dark :is(main, #play, #result) :is(a, button):is(.bg-primary, .bg-emerald-500, .bg-accent).rounded-2xl,
+html.dark :is(main, #play, #result) :is(a, button):is(.bg-primary, .bg-emerald-500, .bg-accent).rounded-xl { border-radius: 999px !important; }
+
+/* Gradasi lama → biru listrik */
+html.dark .bg-brand-gradient { background: linear-gradient(135deg, #2340FF, #5B74FF) !important; }
+html.dark .text-gradient { background: linear-gradient(100deg, #fff, #AFBDFF) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important; }
+html.dark main .bg-gradient-to-br.from-violet-400, html.dark main .bg-gradient-to-r.from-violet-400 { --tw-gradient-from: #5B74FF !important; --tw-gradient-to: #2340FF !important; --tw-gradient-stops: #5B74FF, #2340FF !important; }
+html.dark .grid-pattern { opacity: .12 !important; }
+
+/* Input */
+html.dark main :is(input:not([type=checkbox]):not([type=radio]), textarea, select) { border-radius: 14px; }
+html.dark main :is(input, textarea, select):focus { border-color: #5B74FF !important; box-shadow: 0 0 0 3px rgba(91,116,255,.25) !important; }
+
+/* Layar kuis & hasil */
+html.dark #play.bg-white { background: #05070F !important; }
+html.dark #result { background: radial-gradient(60% 50% at 50% 100%, rgba(35,64,255,.45), transparent 70%), #05070F !important; }
+
+/* Cahaya biru di sudut halaman aplikasi (disisipkan core.js) */
+.hj-app-glow { z-index: -1; }
+.hj-app-glow--b { right: auto; left: -25vw; top: auto; bottom: -35vw; background: radial-gradient(closest-side, rgba(35,64,255,.18), transparent 70%); }

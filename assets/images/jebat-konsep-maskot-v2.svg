@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200">
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#060911"/><stop offset=".58" stop-color="#080D1A"/><stop offset="1" stop-color="#111936"/></linearGradient>
+ <radialGradient id="blueAura"><stop stop-color="#1746D7" stop-opacity=".54"/><stop offset="1" stop-color="#1746D7" stop-opacity="0"/></radialGradient>
+ <linearGradient id="chrome" x1=".16" y1=".08" x2=".84" y2=".92"><stop stop-color="#FFFFFF"/><stop offset=".18" stop-color="#DDE8F7"/><stop offset=".38" stop-color="#8795B1"/><stop offset=".54" stop-color="#F2F7FF"/><stop offset=".74" stop-color="#9BA9C5"/><stop offset="1" stop-color="#414D6B"/></linearGradient>
+ <linearGradient id="chromeSide" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="#F7FBFF"/><stop offset=".28" stop-color="#AAB8D1"/><stop offset=".52" stop-color="#667492"/><stop offset=".76" stop-color="#DAE5F6"/><stop offset="1" stop-color="#56617D"/></linearGradient>
+ <linearGradient id="blue" x1=".2" y1="0" x2=".8" y2="1"><stop stop-color="#7DEBFF"/><stop offset=".2" stop-color="#268BFF"/><stop offset=".55" stop-color="#2340FF"/><stop offset="1" stop-color="#091A68"/></linearGradient>
+ <linearGradient id="blueDark" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#263A86"/><stop offset=".45" stop-color="#101B40"/><stop offset="1" stop-color="#070A16"/></linearGradient>
+ <linearGradient id="lens" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#DAFFFF"/><stop offset=".18" stop-color="#65F0FF"/><stop offset=".5" stop-color="#178BFF"/><stop offset=".73" stop-color="#171E62"/><stop offset="1" stop-color="#060B20"/></linearGradient>
+ <radialGradient id="lensCore"><stop stop-color="#DDFEFF"/><stop offset=".11" stop-color="#79F8FF"/><stop offset=".27" stop-color="#1DBFFF"/><stop offset=".45" stop-color="#173DCD"/><stop offset=".73" stop-color="#0A1234"/><stop offset="1" stop-color="#030611"/></radialGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFF1AD"/><stop offset=".48" stop-color="#FFBE53"/><stop offset="1" stop-color="#AB541A"/></linearGradient>
+ <filter id="shadow" x="-.5" y="-.5" width="2" height="2"><feGaussianBlur in="SourceAlpha" stdDeviation="18"/><feOffset dy="20" dx="5"/><feComponentTransfer><feFuncA type="linear" slope=".55"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="glow"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#AAB8DA" stroke-opacity=".075" stroke-width="1"/></pattern>
+ <pattern id="micro" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".7" fill="#A4D8FF" opacity=".42"/></pattern>
+</defs>
+<!-- Concept-board background -->
+<rect width="1800" height="1200" fill="url(#bg)"/><rect width="1800" height="1200" fill="url(#grid)"/>
+<circle cx="510" cy="710" r="560" fill="url(#blueAura)"/>
+<circle cx="1600" cy="80" r="440" fill="#374CBA" opacity=".08"/>
+<!-- header -->
+<path d="M64 66h28" stroke="#8EA7DB" stroke-width="2"/><text x="110" y="73" fill="#91A7D7" font-family="Arial,sans-serif" font-size="18" letter-spacing="5">KONSEP MASKOT · V2</text>
+<text x="64" y="159" fill="#F1F4FC" font-family="Arial,sans-serif" font-size="69" font-weight="300" letter-spacing="-3">Jebat</text><text x="249" y="159" fill="#59647F" font-family="Arial,sans-serif" font-size="69" font-weight="300" letter-spacing="-3">— penjaga kelas digital</text>
+<!-- Small annotations -->
+<g fill="#D7E4FF" font-family="Arial,sans-serif" font-size="17"><text x="68" y="335"><tspan fill="#8AB0FF" font-weight="700">01</tspan><tspan dx="12">Kepala lensa tunggal</tspan></text><path d="M280 330h67" stroke="#7C91C6"/><text x="65" y="530"><tspan fill="#8AB0FF" font-weight="700">02</tspan><tspan dx="12">Armor biru-perak</tspan></text><path d="M250 525h86" stroke="#7C91C6"/><text x="58" y="861"><tspan fill="#8AB0FF" font-weight="700">03</tspan><tspan dx="12">Inti energi bercahaya</tspan></text><path d="M280 856h64" stroke="#7C91C6"/><text x="587" y="1086"><tspan fill="#8AB0FF" font-weight="700">04</tspan><tspan dx="12">Pose tegap, siap menyapa</tspan></text><path d="M555 1080h-75" stroke="#7C91C6"/></g>
+<!-- floor shadow -->
+<ellipse cx="474" cy="1058" rx="320" ry="52" fill="#01030A" opacity=".64" filter="url(#shadow)"/><ellipse cx="474" cy="1049" rx="240" ry="22" fill="#254CFF" opacity=".3" filter="url(#glow)"/>
+<!-- Robot raised hand behind body -->
+<g filter="url(#shadow)">
+ <path d="M654 731 716 613Q728 589 748 601L777 620Q794 632 783 654L723 780Z" fill="url(#blueDark)" stroke="#090F2B" stroke-width="12"/>
+ <path d="M696 646 742 567Q752 549 772 559L791 570Q808 580 798 599L750 677Z" fill="url(#chromeSide)" stroke="#495675" stroke-width="10"/>
+ <path d="M748 570 777 488Q783 471 799 474Q817 477 814 495L802 576Z" fill="url(#chrome)" stroke="#56627F" stroke-width="8"/>
+ <path d="M777 566 789 478Q792 460 808 462Q825 464 824 483L821 572Z" fill="url(#chrome)" stroke="#56627F" stroke-width="8"/>
+ <path d="M807 570 805 493Q804 475 820 474Q837 473 839 491L849 581Z" fill="url(#chrome)" stroke="#56627F" stroke-width="8"/>
+ <path d="M837 584 820 526Q815 509 831 504Q847 499 855 516L883 591Z" fill="url(#chrome)" stroke="#56627F" stroke-width="8"/>
+ <path d="M743 670Q763 644 798 656L824 674Q840 685 832 705L809 744Q794 767 773 754L739 730Q724 714 743 670Z" fill="url(#chrome)" stroke="#56627F" stroke-width="10"/>
+ <circle cx="785" cy="705" r="13" fill="#304DFF" stroke="#A2DFFF" stroke-width="5" filter="url(#glow)"/>
+</g>
+<!-- legs -->
+<g filter="url(#shadow)">
+ <path d="m358 824-12 112q-2 29-27 45l-32 18q-23 15-8 39 6 9 23 9h138q31 0 29-31l-21-89 9-96Z" fill="url(#blueDark)" stroke="#080E2D" stroke-width="15" stroke-linejoin="round"/>
+ <path d="m517 821 18 114q5 28 31 42l34 19q25 15 10 39-6 11-24 11H449q-29 0-28-31l17-91-11-96Z" fill="url(#blueDark)" stroke="#080E2D" stroke-width="15" stroke-linejoin="round"/>
+ <path d="m281 993 163 4m103-1h132" stroke="#5069FF" stroke-width="10" stroke-linecap="round"/>
+ <path d="m307 969 116 1m55 1h111" stroke="#E4F2FF" stroke-width="5" stroke-linecap="round" opacity=".66"/>
+ <path d="m340 896-7 68m228-67 10 68" stroke="#668DFF" stroke-width="5" opacity=".45"/>
+ <circle cx="405" cy="941" r="24" fill="url(#chrome)" stroke="#293D84" stroke-width="8"/><circle cx="547" cy="941" r="24" fill="url(#chrome)" stroke="#293D84" stroke-width="8"/>
+</g>
+<!-- arms -->
+<g filter="url(#shadow)">
+ <path d="M336 488Q287 492 270 544l-45 131q-12 38 23 59l44 26q34 18 57-16l63-103-10-119Z" fill="url(#blueDark)" stroke="#090F2B" stroke-width="16" stroke-linejoin="round"/>
+ <path d="m287 618-51 59q-18 24 5 45l29 26q26 21 47-4l48-64-78-62Z" fill="url(#chromeSide)" stroke="#475575" stroke-width="10"/>
+ <path d="M601 489q48 3 67 55l50 130q13 35-17 58l-45 32q-32 21-55-12l-69-101 9-120Z" fill="url(#blueDark)" stroke="#090F2B" stroke-width="16" stroke-linejoin="round"/>
+ <path d="m673 616 49 60q18 25-5 47l-29 27q-24 20-46-4l-46-64 77-66Z" fill="url(#chromeSide)" stroke="#475575" stroke-width="10"/>
+ <path d="m268 680 62 33m336-32-60 35" stroke="#8EABFF" stroke-width="8" stroke-linecap="round"/>
+ <circle cx="294" cy="707" r="11" fill="#FFB950"/><circle cx="694" cy="707" r="11" fill="#FFB950"/>
+</g>
+<!-- torso armor -->
+<g filter="url(#shadow)">
+ <path d="M344 492q29-42 112-48h73q84 6 113 48l43 180-36 116q-13 43-58 48H397q-45-5-58-48l-37-116 42-180Z" fill="url(#blue)" stroke="#081C5D" stroke-width="17" stroke-linejoin="round"/>
+ <path d="m382 526 73-29 94 0 74 29 21 126-30 92q-8 25-36 28H426q-28-3-36-28l-30-92 22-126Z" fill="url(#chromeSide)" stroke="#263E91" stroke-width="12" stroke-linejoin="round"/>
+ <path d="m421 548 89-17 89 17 17 96-24 71q-6 16-25 17H453q-20-1-25-17l-24-71 17-96Z" fill="url(#blueDark)" stroke="#8798FF" stroke-width="7"/>
+ <path d="M447 581h126M434 607h152" stroke="#7498FF" stroke-width="5" stroke-linecap="round" opacity=".54"/>
+ <path d="M484 672q27-20 53 0v35q-26 19-53 0v-35Z" fill="url(#gold)" stroke="#FFF0AE" stroke-width="4"/>
+ <circle cx="510" cy="689" r="10" fill="#FFF5CE" filter="url(#glow)"/>
+ <path d="m363 555-15 82m290-82 17 82" stroke="#CBF2FF" stroke-width="7" stroke-linecap="round" opacity=".63"/>
+ <circle cx="372" cy="576" r="9" fill="url(#gold)"/><circle cx="638" cy="576" r="9" fill="url(#gold)"/>
+ <path d="M385 770h251" stroke="#8BEAFF" stroke-width="5" opacity=".7"/>
+</g>
+<!-- head-neck collar -->
+<path d="M414 435h194v86q0 31-32 40H446q-32-9-32-40v-86Z" fill="url(#blueDark)" stroke="#080E2D" stroke-width="12"/>
+<path d="M448 477h126" stroke="#6A7BFF" stroke-width="7" stroke-linecap="round"/>
+<!-- head: large spherical plated shell -->
+<g filter="url(#shadow)">
+ <path d="M266 268q2-154 150-194 105-29 208 17 124 55 139 180l-9 119q-12 126-134 161-130 39-260-13-100-40-100-151l6-119Z" fill="url(#chrome)" stroke="#394665" stroke-width="18"/>
+ <path d="M285 285q2-123 126-167 114-38 209 5 97 43 119 146l-12 88q-17 89-106 117-113 36-224-6-100-37-110-121l-2-62Z" fill="url(#chromeSide)" opacity=".72"/>
+ <path d="M300 239q23-111 145-145" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" opacity=".87"/>
+ <path d="M313 217q44-71 111-91" stroke="#D8E8FF" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+ <!-- head plate seams -->
+ <path d="M356 119q-38 98-12 194m217-240q50 83 45 162m-290 108q18 66 69 92" fill="none" stroke="#53627F" stroke-width="6" opacity=".56"/>
+ <path d="M367 130q-32 91-17 174m210-223q42 73 42 137" fill="none" stroke="#F8FBFF" stroke-width="5" opacity=".76"/>
+ <circle cx="343" cy="240" r="7" fill="#FFBE54"/><circle cx="630" cy="240" r="7" fill="#FFBE54"/>
+ <!-- top antenna based on sketch -->
+ <path d="M527 103q49-36 69-76l20-3q10 3 7 13l-19 75" fill="url(#blueDark)" stroke="#4E5C7B" stroke-width="9"/>
+ <circle cx="620" cy="19" r="19" fill="url(#gold)" stroke="#FFF4C3" stroke-width="7" filter="url(#glow)"/>
+ <path d="M617 2v-31" stroke="#BDD9FF" stroke-width="7" stroke-linecap="round"/>
+ <!-- secondary sensor eye -->
+ <circle cx="384" cy="340" r="54" fill="#26334F" stroke="#556586" stroke-width="12"/>
+ <circle cx="384" cy="340" r="41" fill="url(#chrome)" stroke="#D3E5FF" stroke-width="6"/>
+ <circle cx="384" cy="340" r="27" fill="#071324" stroke="#6C87B9" stroke-width="5"/>
+ <circle cx="384" cy="340" r="12" fill="#9CF6FF" filter="url(#glow)"/><circle cx="378" cy="333" r="5" fill="#FFFFFF"/>
+ <!-- primary oversized optical lens -->
+ <circle cx="547" cy="323" r="118" fill="#11192D" stroke="#4A5878" stroke-width="18"/>
+ <circle cx="547" cy="323" r="99" fill="url(#chromeSide)" stroke="#D3E8FF" stroke-width="8"/>
+ <circle cx="547" cy="323" r="82" fill="#10182D" stroke="#506BFF" stroke-width="8"/>
+ <circle cx="547" cy="323" r="68" fill="url(#lens)" stroke="#1B2C63" stroke-width="7"/>
+ <circle cx="547" cy="323" r="48" fill="url(#lensCore)" stroke="#6FF2FF" stroke-opacity=".75" stroke-width="4"/>
+ <circle cx="547" cy="323" r="18" fill="#06112B" stroke="#BAFFFF" stroke-width="5" filter="url(#glow)"/>
+ <circle cx="541" cy="316" r="8" fill="#FFFFFF" opacity=".95"/>
+ <path d="M492 272q21-25 51-27" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" opacity=".85"/>
+ <!-- concentric mechanical iris ticks -->
+ <g stroke="#AFC1E2" stroke-width="4" stroke-linecap="round" opacity=".84"><path d="M547 219v13m0 182v13m104-104h-13M456 323h-13M621 249l-9 9m-130 130-9 9m148 0-9-9m-130-130-9-9"/></g>
+ <path d="M480 416q61 25 125-2" fill="none" stroke="#243CFF" stroke-width="9" stroke-linecap="round" opacity=".8"/>
+ <!-- cheek armor and friendly curve -->
+ <path d="M347 409q18 20 41 21m263-40q-19 22-39 27" fill="none" stroke="#5364B7" stroke-width="8" stroke-linecap="round"/>
+ <path d="M452 448q48 29 96 7" fill="none" stroke="#334782" stroke-width="8" stroke-linecap="round"/>
+ <path d="M449 447q43 21 88 6" fill="none" stroke="#DCEBFF" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+</g>
+<!-- expression cards -->
+<text x="896" y="218" fill="#91A7D7" font-family="Arial,sans-serif" font-size="16" letter-spacing="4">EKSPRESI &amp; REAKSI</text>
+<g font-family="Arial,sans-serif">
+ <g><rect x="896" y="238" width="190" height="236" rx="25" fill="#FFFFFF" fill-opacity=".035" stroke="#A9B9DC" stroke-opacity=".22" stroke-width="2"/><rect x="949" y="268" width="84" height="66" rx="30" fill="url(#chrome)" stroke="#7281A6" stroke-width="3"/><rect x="956" y="285" width="70" height="33" rx="17" fill="#101C3A" stroke="#627CFF" stroke-width="3"/><circle cx="979" cy="301" r="7" fill="#70F4FF" filter="url(#glow)"/><circle cx="1004" cy="301" r="7" fill="#70F4FF" filter="url(#glow)"/><path d="M981 320q11 8 22 0" stroke="#73EDFF" stroke-width="3" fill="none" stroke-linecap="round"/><text x="991" y="391" fill="#F4F6FF" font-size="19" font-weight="700" text-anchor="middle">Siaga</text><text x="991" y="420" fill="#91A3CD" font-size="15" text-anchor="middle">Lensa ikuti kursor</text></g>
+ <g><rect x="1102" y="238" width="190" height="236" rx="25" fill="#FFFFFF" fill-opacity=".035" stroke="#A9B9DC" stroke-opacity=".22" stroke-width="2"/><rect x="1155" y="268" width="84" height="66" rx="30" fill="url(#chrome)" stroke="#7281A6" stroke-width="3"/><rect x="1162" y="285" width="70" height="33" rx="17" fill="#101C3A" stroke="#627CFF" stroke-width="3"/><path d="m1173 299 17 3m17-3 17-3" stroke="#7DF4FF" stroke-width="4" stroke-linecap="round"/><path d="M1186 320h14" stroke="#7DF4FF" stroke-width="3" stroke-linecap="round"/><text x="1197" y="391" fill="#F4F6FF" font-size="19" font-weight="700" text-anchor="middle">Fokus</text><text x="1197" y="420" fill="#91A3CD" font-size="15" text-anchor="middle">Saat sedang belajar</text></g>
+ <g><rect x="1308" y="238" width="190" height="236" rx="25" fill="#FFFFFF" fill-opacity=".035" stroke="#A9B9DC" stroke-opacity=".22" stroke-width="2"/><rect x="1361" y="268" width="84" height="66" rx="30" fill="url(#chrome)" stroke="#7281A6" stroke-width="3"/><rect x="1368" y="285" width="70" height="33" rx="17" fill="#101C3A" stroke="#627CFF" stroke-width="3"/><path d="M1380 300q8-8 16 0m16 0q8-8 16 0" stroke="#7DF4FF" stroke-width="4" stroke-linecap="round"/><text x="1403" y="391" fill="#F4F6FF" font-size="19" font-weight="700" text-anchor="middle">Ramah</text><text x="1403" y="420" fill="#91A3CD" font-size="15" text-anchor="middle">Sapa dan bantu siswa</text></g>
+ <g><rect x="1514" y="238" width="222" height="236" rx="25" fill="#FFFFFF" fill-opacity=".035" stroke="#A9B9DC" stroke-opacity=".22" stroke-width="2"/><rect x="1583" y="268" width="84" height="66" rx="30" fill="url(#chrome)" stroke="#7281A6" stroke-width="3"/><rect x="1590" y="285" width="70" height="33" rx="17" fill="#101C3A" stroke="#627CFF" stroke-width="3"/><circle cx="1612" cy="300" r="8" fill="none" stroke="#72F2FF" stroke-width="4"/><circle cx="1641" cy="300" r="8" fill="none" stroke="#72F2FF" stroke-width="4"/><text x="1625" y="391" fill="#F4F6FF" font-size="19" font-weight="700" text-anchor="middle">Kagum</text><text x="1625" y="420" fill="#91A3CD" font-size="15" text-anchor="middle">Saat naik level</text></g>
+</g>
+<!-- character traits -->
+<text x="896" y="531" fill="#91A7D7" font-family="Arial,sans-serif" font-size="16" letter-spacing="4">KARAKTER</text>
+<g font-family="Arial,sans-serif">
+ <g><rect x="896" y="553" width="404" height="139" rx="24" fill="#FFFFFF" fill-opacity=".025" stroke="#A9B9DC" stroke-opacity=".18" stroke-width="2"/><path d="m926 589 9-9 9 9-9 9-9-9Z" fill="#526AFF" filter="url(#glow)"/><text x="958" y="596" fill="#F3F5FF" font-size="22" font-weight="700">Tegap &amp; berwibawa</text><text x="926" y="634" fill="#AAB9D7" font-size="16">Bahu berlapis, lensa optik presisi,</text><text x="926" y="660" fill="#AAB9D7" font-size="16">postur siap menjaga ruang belajar.</text></g>
+ <g><rect x="1318" y="553" width="418" height="139" rx="24" fill="#FFFFFF" fill-opacity=".025" stroke="#A9B9DC" stroke-opacity=".18" stroke-width="2"/><path d="m1348 589 9-9 9 9-9 9-9-9Z" fill="#526AFF" filter="url(#glow)"/><text x="1380" y="596" fill="#F3F5FF" font-size="22" font-weight="700">Ramah &amp; responsif</text><text x="1348" y="634" fill="#AAB9D7" font-size="16">Cahaya mata berubah ekspresif;</text><text x="1348" y="660" fill="#AAB9D7" font-size="16">tatapan mengikuti arah perhatian.</text></g>
+ <g><rect x="896" y="709" width="404" height="139" rx="24" fill="#FFFFFF" fill-opacity=".025" stroke="#A9B9DC" stroke-opacity=".18" stroke-width="2"/><path d="m926 745 9-9 9 9-9 9-9-9Z" fill="#526AFF" filter="url(#glow)"/><text x="958" y="752" fill="#F3F5FF" font-size="22" font-weight="700">Material 3D detail</text><text x="926" y="790" fill="#AAB9D7" font-size="16">Krom berkilau, sambungan gelap,</text><text x="926" y="816" fill="#AAB9D7" font-size="16">pantulan tepi dan bayangan lembut.</text></g>
+ <g><rect x="1318" y="709" width="418" height="139" rx="24" fill="#FFFFFF" fill-opacity=".025" stroke="#A9B9DC" stroke-opacity=".18" stroke-width="2"/><path d="m1348 745 9-9 9 9-9 9-9-9Z" fill="#526AFF" filter="url(#glow)"/><text x="1380" y="752" fill="#F3F5FF" font-size="22" font-weight="700">Siap jadi teman belajar</text><text x="1348" y="790" fill="#AAB9D7" font-size="16">Inti energi menyala saat belajar;</text><text x="1348" y="816" fill="#AAB9D7" font-size="16">lambaian menyambut pengguna.</text></g>
+</g>
+<!-- palette -->
+<text x="896" y="909" fill="#91A7D7" font-family="Arial,sans-serif" font-size="16" letter-spacing="4">PALET</text>
+<g font-family="Arial,sans-serif" font-size="14">
+ <rect x="896" y="929" width="126" height="76" rx="17" fill="url(#chrome)" stroke="#DDEAFF" stroke-opacity=".6" stroke-width="2"/><text x="896" y="1034" fill="#C4D4F2" font-weight="700">#D8E2F1</text><text x="896" y="1058" fill="#8F9FBE">Krom utama</text>
+ <rect x="1040" y="929" width="126" height="76" rx="17" fill="url(#blue)" stroke="#6389FF" stroke-width="2"/><text x="1040" y="1034" fill="#C4D4F2" font-weight="700">#2340FF</text><text x="1040" y="1058" fill="#8F9FBE">Armor biru</text>
+ <rect x="1184" y="929" width="126" height="76" rx="17" fill="#070A16" stroke="#66728C" stroke-width="2"/><text x="1184" y="1034" fill="#C4D4F2" font-weight="700">#070A16</text><text x="1184" y="1058" fill="#8F9FBE">Visor</text>
+ <rect x="1328" y="929" width="126" height="76" rx="17" fill="url(#lens)" stroke="#8AF6FF" stroke-width="2"/><text x="1328" y="1034" fill="#C4D4F2" font-weight="700">#8FE3FF</text><text x="1328" y="1058" fill="#8F9FBE">Lensa LED</text>
+ <rect x="1472" y="929" width="126" height="76" rx="17" fill="url(#gold)" stroke="#FFE9A4" stroke-width="2"/><text x="1472" y="1034" fill="#C4D4F2" font-weight="700">#FFBE53</text><text x="1472" y="1058" fill="#8F9FBE">Aksen energi</text>
+ <text x="1620" y="969" fill="#C7D7F3" font-size="18" font-weight="700">JEBAT</text><text x="1620" y="996" fill="#8F9FBE" font-size="14">Penjaga kelas digital</text>
+</g>
+<text x="64" y="1156" fill="#637399" font-family="Arial,sans-serif" font-size="14" letter-spacing="4">INFORMATIKA · SMAN 1 BATAM · XI HJ 5</text>
+</svg>

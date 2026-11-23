@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Informatika — SMAN 1 Batam</title>
-  <meta name="description" content="Media belajar Informatika Fase F (Kurikulum Merdeka) kelas XI SMAN 1 Batam: cara kerja mesin pencari, riset anti-hoaks, hukum siber (UU ITE & UU PDP), hak cipta, dan netiket — lewat simulasi interaktif.">
+  <meta name="description" content="Media belajar Informatika Fase F kelas XI SMAN 1 Batam: Mesin Pencari, Hukum dan Perundang-Undangan Digital di Indonesia, serta Analisis Data (Excel dan Power BI).">
   <meta name="theme-color" content="#05070F">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
   <link rel="stylesheet" href="assets/css/landing.css">
+  <link rel="stylesheet" href="assets/css/demo-videos.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="bg-night text-[#EEF1FA] antialiased">
   <a href="#isi" class="hj-skip">Lewati ke konten</a>
@@ -71,7 +74,7 @@
         </h1>
 
         <dl class="lp-stats" aria-label="Isi platform (dihitung dari materi yang tersedia)">
-          <div data-hero-in><dt>Bab inti</dt><dd data-stat="chapters">4</dd></div>
+          <div data-hero-in><dt>Bab inti</dt><dd>3</dd></div>
           <div data-hero-in><dt>Aktivitas interaktif</dt><dd data-stat="widgets">0</dd></div>
           <div data-hero-in><dt>Soal latihan</dt><dd data-stat="questions">0</dd></div>
         </dl>
@@ -79,10 +82,11 @@
 
         <div class="lp-hero__side">
           <p class="lp-hero__lead" data-hero-in>Pahami cara internet bekerja — dan cara memakainya dengan bijak, tepat saat kamu membutuhkannya.</p>
-          <p class="lp-hero__muted" data-hero-in>Media belajar Informatika kelas XI SMAN 1 Batam. Mesin pencari, riset anti-hoaks, hukum siber, sampai netiket — dipelajari lewat simulasi interaktif, bukan hafalan.</p>
+          <p class="lp-hero__muted" data-hero-in>Media belajar Informatika kelas XI SMAN 1 Batam. Pelajari Mesin Pencari, Hukum dan Perundang-Undangan Digital di Indonesia, serta Analisis Data dengan Excel dan Power BI lewat simulasi interaktif.</p>
           <div class="flex flex-wrap items-center gap-5 mt-6" data-hero-in>
             <button type="button" class="hj-btn" data-drawer-open>Mulai belajar</button>
             <a href="#materi" class="hj-link">Lihat materi</a>
+            <a href="glosarium.html" class="hj-link">Buka glosarium</a>
           </div>
         </div>
       </div>
@@ -144,9 +148,9 @@
 
           <!-- Jumlah bab -->
           <article class="lp-bento__card lp-bento__b bg-[#EEF0F5]" data-m data-m-delay="0.05">
-            <div class="text-[64px] leading-none font-light text-[#0A0E1C] tracking-tight"><span data-m-count="4">4</span></div>
+            <div class="text-[64px] leading-none font-light text-[#0A0E1C] tracking-tight"><span data-m-count="3">3</span></div>
             <div class="mt-3 text-[15px] font-semibold text-[#0A0E1C]">Bab inti Fase F</div>
-            <p class="text-[13.5px] text-[#5B6275] mt-1 leading-relaxed">Mesin pencari, strategi riset, hukum digital, serta hak cipta & netiket.</p>
+            <p class="text-[13.5px] text-[#5B6275] mt-1 leading-relaxed">1. Mesin Pencari<br>2. Hukum dan Perundang-Undangan Digital di Indonesia<br>3. Analisis Data (Excel dan Power BI).</p>
           </article>
 
           <!-- Konverter bilangan -->
@@ -223,9 +227,10 @@
     <section id="materi" class="lp-dark" aria-labelledby="materi-title">
       <div class="lp-stack-head">
         <h2 id="materi-title" class="hj-display text-4xl sm:text-6xl text-center" data-m>Peta Materi</h2>
+        <p class="text-center text-white/55 mt-4 text-[15px]" data-m data-m-delay="0.1">Semester 1 · materi yang sudah kita pelajari, dalam demo singkat</p>
       </div>
       <div class="lp-stack-meta" aria-hidden="true">
-        <span id="stack-count" class="font-mono">01 / 04</span>
+        <span id="stack-count" class="font-mono">01 / 03</span>
         <a href="modul.html" id="stack-link" class="hj-btn hj-btn--ghost hj-btn--sm" tabindex="-1">Buka bab</a>
       </div>
       <div class="lp-stack" id="chapter-stack"></div>
@@ -238,25 +243,25 @@
           <span class="block" data-m>Etika digital</span>
           <span class="block hj-dim" data-m data-m-delay="0.1">bukan sekadar teori</span>
         </h2>
-        <div class="lp-chrome-stage" id="chrome-law" aria-hidden="true"><div class="lp-chrome-obj" data-glyph="§"></div></div>
+        <div class="lp-mascot-stage" id="law-mascot" title="Klik aku!"></div>
         <div class="lp-law__grid" data-m-stagger>
           <article class="lp-law__item hj-glass">
             <div class="hj-chip hj-chip--blue">UU No. 1 Tahun 2024</div>
             <h3>UU ITE</h3>
             <p>Perubahan kedua atas UU No. 11 Tahun 2008 tentang Informasi dan Transaksi Elektronik. Mengatur antara lain larangan menyebarkan berita bohong yang menimbulkan kerusuhan, ujaran kebencian, dan akses ilegal ke sistem elektronik orang lain.</p>
-            <a href="modul.html?bab=3" class="hj-link mt-auto">Pelajari di Bab 3</a>
+            <a href="modul.html?bab=2" class="hj-link mt-auto">Pelajari di Bab 2</a>
           </article>
           <article class="lp-law__item hj-glass">
             <div class="hj-chip hj-chip--blue">UU No. 27 Tahun 2022</div>
             <h3>UU Pelindungan Data Pribadi</h3>
             <p>Membedakan data pribadi umum (mis. nama, jenis kelamin) dan spesifik (mis. data kesehatan, biometrik), serta memberi hak kepada pemilik data — seperti mengakses dan meminta penghapusan datanya.</p>
-            <a href="modul.html?bab=3" class="hj-link mt-auto">Pelajari di Bab 3</a>
+            <a href="modul.html?bab=2" class="hj-link mt-auto">Pelajari di Bab 2</a>
           </article>
           <article class="lp-law__item hj-glass">
             <div class="hj-chip hj-chip--blue">UU No. 28 Tahun 2014</div>
             <h3>UU Hak Cipta</h3>
             <p>Hak cipta timbul otomatis begitu karya diwujudkan (prinsip deklaratif). Mengutip karya untuk pendidikan boleh, asalkan sumbernya disebutkan dan tidak merugikan kepentingan wajar penciptanya.</p>
-            <a href="modul.html?bab=4" class="hj-link mt-auto">Pelajari di Bab 4</a>
+            <a href="modul.html?bab=2" class="hj-link mt-auto">Pelajari di Bab 2</a>
           </article>
         </div>
       </div>
@@ -296,7 +301,7 @@
       <div class="lp-end hj-glow-bg">
         <div class="lp-chrome-stage lp-chrome-stage--end" id="chrome-end" aria-hidden="true"><div class="lp-chrome-obj" data-glyph="?"></div></div>
         <div class="relative text-center">
-          <h2 id="end-title" class="hj-display text-4xl sm:text-6xl" data-m><span class="hj-fade-text">Ada pertanyaan?</span> <span class="hj-dim">Tanya Xavi.</span></h2>
+          <h2 id="end-title" class="hj-display text-4xl sm:text-6xl" data-m><span class="hj-fade-text">Ada pertanyaan?</span> <span class="hj-dim">Tanya Jebat.</span></h2>
           <p class="text-[#B9C0D6] mt-4 max-w-md mx-auto" data-m data-m-delay="0.1">Asisten AI di menu Tanya AI siap menjelaskan ulang materi dengan bahasa yang lebih santai.</p>
           <div class="flex flex-wrap justify-center gap-4 mt-8" data-m data-m-delay="0.2">
             <button type="button" class="hj-btn" data-drawer-open>Mulai belajar</button>
@@ -310,7 +315,7 @@
           </div>
           <nav class="lp-footer__nav" aria-label="Tautan kaki halaman">
             <div><span>Belajar</span><a href="modul.html">Modul</a><a href="kuis.html">Kuis Arena</a><a href="simulator.html">Simulator</a></div>
-            <div><span>Alat bantu</span><a href="catatan.html">Catatan</a><a href="tanya-ai.html">Tanya AI</a><a href="komunitas.html">Komunitas</a></div>
+            <div><span>Alat bantu</span><a href="catatan.html">Catatan</a><a href="tanya-ai.html">Tanya AI</a><a href="tugas.html">Tugas</a></div>
             <div><span>Akun</span><a href="login.html">Masuk</a><a href="register.html">Daftar</a><a href="dashboard.html">Dashboard</a></div>
           </nav>
           <p class="lp-footer__note">Media pembelajaran Informatika Fase F · Kurikulum Merdeka. Dibuat untuk kelas XI SMAN 1 Batam.</p>
@@ -318,11 +323,6 @@
       </div>
     </section>
   </main>
-
-  <!-- Tombol suara melayang -->
-  <button type="button" id="sound-btn" class="lp-sound" aria-pressed="true" aria-label="Efek suara aktif">
-    <span class="material-symbols-outlined" aria-hidden="true">volume_up</span>
-  </button>
 
   <!-- ═════════════ DRAWER "MULAI BELAJAR" ═════════════ -->
   <div id="drawer" class="lp-drawer" hidden>
@@ -340,7 +340,12 @@
   <script src="assets/js/core.js"></script>
   <script src="assets/js/content.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
   <script src="assets/js/gradient-ascii.js"></script>
+  <script src="assets/js/demo-videos.js"></script>
   <script src="assets/js/landing.js"></script>
 </body>
 </html>
+
+
+

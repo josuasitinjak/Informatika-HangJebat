@@ -8,16 +8,17 @@ Media belajar Informatika Fase F (Kurikulum Merdeka) untuk siswa & guru. Situs s
 
 ## Arsitektur
 - `assets/js/core.js` — fondasi semua halaman: `window.X` (escape HTML, redirect aman, progres per akun: XP/level/streak/lencana, efek suara Web Audio, confetti, toast, scroll-reveal, maskot SVG "Xavi", sidebar terpadu, jembatan cloud Apps Script). Sidebar setiap halaman dirender ulang dari `NAV` di file ini — tambah menu di sana, bukan di HTML.
-- `assets/js/content.js` — `window.XContent`: 4 bab bawaan (langkah `read` / `widget` / `check`) + bank soal `QUIZ` (tipe `mc`, `tf`, `order`, `build`).
-- `assets/js/lessons.js` — `window.XLessons`: 11 widget interaktif (`mount(nama, el, {onDone})`), dataset mesin pencari mini `DOCS`, `parseQuery`/`search` operator pencarian.
+- `assets/js/content.js` — `window.XContent`: 3 bab bawaan (langkah `read` / `widget` / `check`) + bank soal `QUIZ` (tipe `mc`, `tf`, `order`, `build`).
+- `assets/js/lessons.js` — `window.XLessons`: 12 widget interaktif (`mount(nama, el, {onDone})`), dataset mesin pencari mini `DOCS`, `parseQuery`/`search` operator pencarian.
 - `assets/js/auth.js` — login/register ke Google Apps Script (POST `text/plain`), sesi di `localStorage['xavetra_user']`.
 - `assets/js/gemini.js` — Tanya AI (Groq) + parser markdown visual (`formatMarkdown` meng-escape HTML).
 - `assets/js/tw-config.js` — token Tailwind bersama (dimuat setelah CDN Tailwind).
 - `assets/css/style.css` — sistem animasi (reveal, pop, shake, confetti, maskot, marquee) + `prefers-reduced-motion`.
-- `google_sheets_auth_script.example.gs` — Apps Script v2 (token sesi, hash kata sandi, `saveScore`, `listScores`, `listChapters`, `saveChapters`). Versi deploy pribadi `google_sheets_auth_script.gs` di-gitignore.
+- `google_sheets_auth_script.example.gs` — Apps Script v3 (akun, nilai, materi, profil, peringkat anonim, tugas, agenda). Versi deploy pribadi `google_sheets_auth_script.gs` di-gitignore.
+- `assets/js/animated-list.js` + `assets/css/animated-list.css` — daftar interaktif aksesibel; `assets/js/classroom.js` — peringkat, agenda, profil, tugas.
 
 ## Kunci localStorage
-`xavetra_user`, `xavetra_progress_v2::<username>`, `xavetra_student_notes` (`{id, chapter, chapterId?, title, body, date}`), `xavetra_custom_chapters`, `xavetra_community_posts`, `xavetra_sound`, `xavetra_focus_sessions`.
+`xavetra_user`, `xavetra_progress_v2::<username>`, `xavetra_student_notes` (`{id, chapter, chapterId?, title, body, date}`), `xavetra_custom_chapters`, `xavetra_sound`, `xavetra_focus_sessions`.
 
 ## Aturan wajib
 - Selalu escape data pengguna/AI sebelum `innerHTML` (`X.esc`). Jangan taruh teks bebas di atribut `onclick`; pakai `data-*` atau map JS.

@@ -14,6 +14,8 @@
   <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
   <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 z-40 hidden lg:hidden backdrop-blur-sm"></div>
@@ -30,13 +32,11 @@
     </header>
 
     <main data-m-page class="flex-grow p-4 sm:p-8 max-w-5xl mx-auto w-full space-y-6">
-      <section class="relative overflow-hidden rounded-[32px] bg-[#0B1530] text-white p-6 sm:p-8">
-        <div class="absolute inset-0 grid-pattern opacity-20"></div>
-        <div class="absolute -right-16 -top-16 w-72 h-72 rounded-full bg-orange-500/30 blur-3xl"></div>
+      <section class="hj-glow-bg rounded-[28px] text-white p-6 sm:p-10 border border-white/5">
         <div class="relative flex flex-col sm:flex-row sm:items-center gap-5">
           <div id="hero-mascot" class="shrink-0 hidden sm:block"></div>
           <div class="flex-1">
-            <div class="text-[11px] font-black tracking-[0.18em] text-amber-300">SEMESTER GANJIL 2026/2027</div>
+            <div class="text-[11px] font-semibold tracking-[0.16em] text-white/70">SEMESTER GANJIL 2026/2027</div>
             <h1 class="text-2xl sm:text-4xl font-black tracking-tight mt-1">Misi Tugas Kelas</h1>
             <p class="text-sm text-blue-100/90 mt-2 max-w-xl">Dua tugas utama: analisis kasus hukum digital (kelompok) dan investigasi isu dengan triangulasi (mandiri). Pakai checklist di bawah biar laporanmu siap dinilai.</p>
           </div>
@@ -49,6 +49,17 @@
 
       <!-- Tugas cards -->
       <section class="space-y-4" id="tasks"></section>
+
+      <section class="bg-white rounded-[28px] border-2 border-slate-200 p-5 sm:p-6" data-reveal>
+        <div class="flex items-start justify-between gap-3"><div><h2 class="text-lg font-black text-navy">Kumpulkan tugas</h2><p class="text-xs text-text-muted mt-1">Kirim tautan atau file. Status dan umpan balik tersimpan bersama di server kelas.</p></div><span class="material-symbols-outlined text-primary">cloud_upload</span></div>
+        <form id="submission-form" class="mt-4 grid sm:grid-cols-2 gap-3">
+          <label class="text-xs font-bold text-text-muted">Pilih tugas<select id="submission-task-select" name="taskId" required class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"><option value="t1">Analisis Kasus Hukum Digital</option><option value="t2">Investigasi Isu Digital</option><option value="t3">Analisis Data Excel & Power BI</option></select></label>
+          <label class="text-xs font-bold text-text-muted">Tautan tugas<input name="url" type="url" placeholder="https://…" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-sm"></label>
+          <label class="sm:col-span-2 text-xs font-bold text-text-muted">Atau pilih file (PDF, Office, PNG, JPG; maks. 4 MB)<input name="file" type="file" accept=".pdf,.docx,.xlsx,.pptx,.png,.jpg,.jpeg" class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"></label>
+          <div class="sm:col-span-2 flex items-center gap-3"><button id="submit-task-btn" class="px-5 py-2.5 rounded-full bg-primary text-white text-xs font-bold">Kirim tugas</button><span id="submission-msg" class="text-xs text-text-muted" aria-live="polite"></span></div>
+        </form>
+        <h3 class="mt-6 text-sm font-bold text-navy">Status pengumpulan</h3><div id="my-submissions" class="mt-2"></div>
+      </section>
 
       <!-- Checklist -->
       <section id="checklist" class="bg-white rounded-[28px] border-2 border-slate-200 p-5 sm:p-6" data-reveal>
@@ -77,7 +88,10 @@
   <!-- Motion (dulu Framer Motion): global window.Motion -->
   <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
   <script src="assets/js/core.js"></script>
+  <script src="assets/js/animated-list.js"></script>
+  <script src="assets/js/classroom.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
   <script>
     function toggleSidebar() {
       document.getElementById('main-sidebar').classList.toggle('-translate-x-full');
@@ -94,7 +108,7 @@
     ];
     const TASKS = [
       {
-        id: 't1', badge: 'KELOMPOK • 7 SISWA', due: 'Batas: 1 minggu', icon: 'groups', grad: 'from-[#FF7A2F] to-[#EF4444]',
+        id: 't1', badge: 'KELOMPOK • 7 SISWA', due: 'Batas: 1 minggu', icon: 'groups', grad: 'from-[#2340FF] to-[#5B74FF]',
         title: 'Analisis Kasus Pelanggaran Hukum Digital di Indonesia', out: 'Laporan PDF 2–3 halaman + presentasi 5 menit',
         body: () => `<p class="text-sm text-slate-700">Pilih <b>1 kasus nyata</b> pelanggaran hukum siber di Indonesia dalam <b>2 tahun terakhir</b>. Pilih kategorinya:</p>
           <div class="mt-3 grid sm:grid-cols-2 gap-2" id="cats">${CATS.map((c) => `<button type="button" data-cat="${c.k}" class="opt-card text-left p-3 rounded-2xl border-2 border-slate-200 bg-white flex items-start gap-3"><span class="w-9 h-9 rounded-xl bg-gradient-to-br ${c.color} text-white font-black flex items-center justify-center shrink-0">${c.k}</span><span><span class="block text-sm font-extrabold text-navy">${c.t}</span><span class="block text-[11px] font-bold text-text-muted">${c.law}</span></span></button>`).join('')}</div>
@@ -103,11 +117,18 @@
           <ol class="mt-2 space-y-2">${['Kronologi kasus — peristiwa, waktu, media, pihak terdampak', 'Analisis pasal — pasal UU ITE/UU PDP yang dilanggar + alasannya', 'Sanksi hukum — vonis/tuntutan (penjara & denda)', 'Triangulasi 3 sumber — minimal 3 rujukan resmi', 'Solusi & pencegahan — rekomendasi netiket'].map((s, i) => `<li class="flex items-start gap-3"><span class="w-7 h-7 rounded-lg bg-primary text-white text-xs font-black flex items-center justify-center shrink-0">${i + 1}</span><span class="text-sm text-slate-700 pt-1">${s}</span></li>`).join('')}</ol>`,
       },
       {
-        id: 't2', badge: 'MANDIRI', due: 'Batas: pertemuan berikutnya', icon: 'person_search', grad: 'from-[#1F6BFF] to-[#7C3AED]',
+        id: 't2', badge: 'MANDIRI', due: 'Batas: pertemuan berikutnya', icon: 'person_search', grad: 'from-[#6D4AFF] to-[#2340FF]',
         title: 'Investigasi Isu Digital & Triangulasi 3 Sumber', out: 'Laporan singkat 1–2 halaman',
         body: () => `<p class="text-sm text-slate-700">Buktikan kebenaran sebuah isu yang sedang viral dengan langkah berikut:</p>
           <div class="mt-3 grid sm:grid-cols-3 gap-2">${[['campaign', 'Pilih isu', 'Satu berita viral yang berpotensi hoaks/misinformasi.'], ['manage_search', 'Cari cerdas', 'Minimal 2 mesin pencari + operator site:, filetype:, dan " ".'], ['change_history', 'Triangulasi', '3 sumber independen: lembaga resmi, media Dewan Pers, pakar/jurnal.']].map(([ic, t, d], i) => `<div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200"><div class="flex items-center gap-2"><span class="w-8 h-8 rounded-xl bg-white text-primary flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-[18px]">${ic}</span></span><span class="text-[10px] font-black text-text-muted">LANGKAH ${i + 1}</span></div><div class="text-sm font-black text-navy mt-2">${t}</div><div class="text-xs text-slate-600 mt-1">${d}</div></div>`).join('')}</div>
           <a href="simulator.html" class="mt-4 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-violet-50 border-2 border-violet-200 text-xs font-black text-violet-700">Latihan dulu di Simulator Riset <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>`,
+      },
+      {
+        id: 't3', badge: 'MANDIRI', due: 'Batas: pertemuan berikutnya', icon: 'query_stats', grad: 'from-[#0E9F8E] to-[#1FA58E]',
+        title: 'Analisis Data dengan Excel dan Power BI', out: 'Berkas Excel + dasbor Power BI atau PDF ekspor',
+        body: () => `<p class="text-sm text-slate-700">Gunakan dataset latihan penjualan koperasi. Bersihkan data, hitung total, lalu sajikan satu temuan yang didukung angka.</p>
+          <a href="assets/data/penjualan-koperasi.csv" download class="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800"><span class="material-symbols-outlined text-[16px]">download</span>Unduh dataset latihan</a>
+          <ol class="mt-4 space-y-2">${['Periksa kolom, format angka, dan nilai kosong di Excel.', 'Gunakan SUM dan AVERAGE; ringkas produk atau bulan dengan Tabel Pivot.', 'Buat grafik yang menjawab satu pertanyaan tentang data.', 'Impor dataset ke Power BI, susun visual sederhana, dan cantumkan sumber.', 'Sembunyikan informasi pribadi; dataset ini hanya berisi data latihan.'].map((x,i)=>`<li class="flex gap-3 text-sm text-slate-700"><b class="text-primary">${i+1}.</b><span>${x}</span></li>`).join('')}</ol>`,
       },
     ];
 
@@ -170,25 +191,47 @@
       if (done.length === CK_ITEMS.length) { X.sfx.win(); X.confetti({ count: 140 }); showToast('Laporanmu siap dikumpulkan! 🎉'); }
     });
 
-    const RUBRIC = [
-      ['Ketepatan analisis regulasi digital', 40, 'from-orange-400 to-red-500', 'Memetakan pasal UU ITE / UU PDP yang dilanggar secara akurat beserta landasan hukumnya.'],
-      ['Validitas triangulasi 3 sumber', 30, 'from-sky-400 to-blue-600', 'Sumber resmi, media terdaftar Dewan Pers, dan pakar independen — tanpa rujukan anonim.'],
-      ['Sistematika & kerapian laporan', 20, 'from-violet-400 to-fuchsia-600', 'Runtut, tata bahasa baik, PDF terstruktur, sitasi jelas.'],
-      ['Etika & netiket digital', 10, 'from-emerald-400 to-teal-600', 'Menjaga privasi korban, tidak doxing, objektif menarik simpulan.'],
-    ];
-    document.getElementById('rubric').innerHTML = RUBRIC.map(([t, w, g, d], i) => `<details class="group rounded-2xl border-2 border-slate-200 p-4 open:border-primary transition">
-      <summary class="list-none cursor-pointer flex items-center gap-3">
-        <span class="text-2xl font-black text-navy w-14">${w}%</span>
-        <span class="flex-1 min-w-0"><span class="block text-sm font-extrabold text-navy">${t}</span><span class="block mt-1.5 h-2 rounded-full bg-slate-100 overflow-hidden"><span class="block h-full rounded-full bg-gradient-to-r ${g} bar-fill" data-w="${w}" style="width:0%"></span></span></span>
-        <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition">expand_more</span>
-      </summary>
-      <p class="mt-3 pl-[68px] text-xs text-slate-600">${d}</p></details>`).join('');
-    setTimeout(() => document.querySelectorAll('[data-w]').forEach((b) => (b.style.width = b.dataset.w * 2.5 + '%')), 300);
+    const RUBRICS = {
+      t1: [
+        ['Ketepatan analisis regulasi digital', 40, 'from-orange-400 to-red-500', 'Memetakan pasal UU ITE / UU PDP yang dilanggar secara akurat beserta landasan hukumnya.'],
+        ['Validitas triangulasi 3 sumber', 30, 'from-sky-400 to-blue-600', 'Sumber resmi, media terdaftar Dewan Pers, dan pakar independen.'],
+        ['Sistematika & kerapian laporan', 20, 'from-violet-400 to-fuchsia-600', 'Runtut, tata bahasa baik, PDF terstruktur, sitasi jelas.'],
+        ['Etika & privasi', 10, 'from-emerald-400 to-teal-600', 'Menjaga privasi korban, tidak doxing, dan objektif.'],
+      ],
+      t2: [
+        ['Ketepatan memilih isu dan klaim', 25, 'from-orange-400 to-red-500', 'Pertanyaan investigasi jelas dan dapat diperiksa.'],
+        ['Kualitas pencarian dan SIFT', 25, 'from-sky-400 to-blue-600', 'Query efektif, sumber asal diperiksa, klaim ditelusuri.'],
+        ['Triangulasi sumber independen', 35, 'from-violet-400 to-fuchsia-600', 'Membandingkan sumber resmi, media, dan pakar/jurnal.'],
+        ['Simpulan dan atribusi', 15, 'from-emerald-400 to-teal-600', 'Simpulan sesuai bukti dan rujukan dicantumkan.'],
+      ],
+      t3: [
+        ['Ketepatan dan kebersihan data', 30, 'from-orange-400 to-red-500', 'Kolom, satuan, nilai kosong, dan duplikasi diperiksa.'],
+        ['Rumus dan ringkasan', 30, 'from-sky-400 to-blue-600', 'Perhitungan Excel benar dan Tabel Pivot menjawab pertanyaan.'],
+        ['Visualisasi dan temuan', 25, 'from-violet-400 to-fuchsia-600', 'Grafik mudah dibaca dan temuan didukung angka.'],
+        ['Sumber dan perlindungan privasi', 15, 'from-emerald-400 to-teal-600', 'Sumber data dan satuan jelas, tidak membuka data pribadi.'],
+      ],
+    };
+    function renderRubric(taskId) {
+      const rows = RUBRICS[taskId] || RUBRICS.t1;
+      document.getElementById('rubric').innerHTML = rows.map(([t, w, g, d]) => `<details class="group rounded-2xl border-2 border-slate-200 p-4 open:border-primary transition">
+        <summary class="list-none cursor-pointer flex items-center gap-3">
+          <span class="text-2xl font-black text-navy w-14">${w}%</span>
+          <span class="flex-1 min-w-0"><span class="block text-sm font-extrabold text-navy">${t}</span><span class="block mt-1.5 h-2 rounded-full bg-slate-100 overflow-hidden"><span class="block h-full rounded-full bg-gradient-to-r ${g} bar-fill" data-w="${w}" style="width:0%"></span></span></span>
+          <span class="material-symbols-outlined text-slate-400 group-open:rotate-180 transition">expand_more</span>
+        </summary>
+        <p class="mt-3 pl-[68px] text-xs text-slate-600">${d}</p></details>`).join('');
+      setTimeout(() => document.querySelectorAll('[data-w]').forEach((b) => (b.style.width = b.dataset.w * 2.5 + '%')), 80);
+    }
+    const taskSelect = document.getElementById('submission-task-select');
+    taskSelect.addEventListener('change', () => renderRubric(taskSelect.value));
+    renderRubric(taskSelect.value);
 
     function downloadTemplate() {
       const u = X.getUser() || {};
       const html = `<html><head><meta charset="utf-8"><title>Template Laporan</title>
-        <style>body{font-family:Calibri,Arial;font-size:12pt;line-height:1.5} h1{font-size:16pt;text-align:center} h2{font-size:13pt;color:#1F3B8C;margin-top:18pt} td{border:1px solid #999;padding:4pt 8pt}</style></head><body>
+        <style>body{font-family:Calibri,Arial;font-size:12pt;line-height:1.5} h1{font-size:16pt;text-align:center} h2{font-size:13pt;color:#1F3B8C;margin-top:18pt} td{border:1px solid #999;padding:4pt 8pt}</style>  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
+</head><body>
         <h1>LAPORAN ANALISIS KASUS PELANGGARAN HUKUM DIGITAL</h1>
         <p style="text-align:center">Mata Pelajaran Informatika • Fase F • SMAN 1 Batam</p>
         <table style="border-collapse:collapse;width:100%"><tr><td>Kelompok</td><td>…</td></tr><tr><td>Anggota (7 orang)</td><td>1. ${esc(u.name || '…')}<br>2.<br>3.<br>4.<br>5.<br>6.<br>7.</td></tr><tr><td>Kelas</td><td>${esc(u.kelas || 'XI …')}</td></tr><tr><td>Kategori kasus</td><td>A / B / C / D</td></tr></table>
@@ -208,6 +251,8 @@
 
     renderTasks();
     renderChecklist();
+    window.ClassroomUI && ClassroomUI.initTasks();
   </script>
 </body>
 </html>
+

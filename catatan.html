@@ -14,6 +14,8 @@
   <script src="assets/js/tw-config.js"></script>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/hj.css">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0A0E1C">
 </head>
 <body class="bg-canvas text-text-main font-sans min-h-screen antialiased flex">
   <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-navy/40 z-40 hidden lg:hidden backdrop-blur-sm"></div>
@@ -77,6 +79,7 @@
   <script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js"></script>
   <script src="assets/js/core.js"></script>
   <script src="assets/js/motion-ui.js"></script>
+  <script src="assets/js/cursor-glow.js"></script>
   <script src="assets/js/content.js"></script>
   <script>
     function toggleSidebar() {
@@ -204,10 +207,10 @@
     });
 
     const TPL = {
-      operator: ['Bab 02: Strategi Riset', 'Rumus Operator Pencarian', '"frasa" → cari frasa persis\n-kata → kecualikan kata\nsite:go.id → hanya situs pemerintah\nfiletype:pdf → hanya PDF\nkata1 OR kata2 → salah satu\nintitle:kata → kata wajib di judul'],
+      operator: ['Bab 01: Mesin Pencari', 'Rumus Operator Pencarian', '"frasa" → cari frasa persis\n-kata → kecualikan kata\nsite:go.id → hanya situs pemerintah\nfiletype:pdf → hanya PDF\nkata1 OR kata2 → salah satu\nintitle:kata → kata wajib di judul'],
       triangulasi: ['Bab 02: Strategi Riset', 'Triangulasi 3 Sumber', '1. Lembaga resmi (.go.id / .ac.id)\n2. Media terverifikasi Dewan Pers\n3. Pakar / jurnal ilmiah\nIngat SIFT: Stop – Investigate – Find – Trace'],
-      ite: ['Bab 03: Hukum Digital', 'Pasal Penting UU ITE (UU 1/2024)', 'Pasal 27: kesusilaan & judi (27A pencemaran, 27B pemerasan)\nPasal 28(1): berita bohong merugikan konsumen\nPasal 28(2): ujaran kebencian SARA\nPasal 28(3): hoaks yang memicu kerusuhan\nPasal 30: akses ilegal\nPasal 32: merusak/membocorkan data'],
-      cc: ['Bab 04: Hak Cipta & Netiket', 'Kode Lisensi Creative Commons', 'BY = wajib cantumkan nama\nNC = tidak untuk komersial\nSA = turunan pakai lisensi sama\nND = tidak boleh diubah\nCC0 = domain publik\nAtribusi: Judul – Pencipta – Sumber – Lisensi'],
+      ite: ['Bab 02: Hukum Digital', 'Pasal Penting UU ITE (UU 1/2024)', 'Pasal 27: kesusilaan & judi (27A pencemaran, 27B pemerasan)\nPasal 28(1): berita bohong merugikan konsumen\nPasal 28(2): ujaran kebencian SARA\nPasal 28(3): hoaks yang memicu kerusuhan\nPasal 30: akses ilegal\nPasal 32: merusak/membocorkan data'],
+      cc: ['Bab 02: Hukum Digital', 'Kode Lisensi Creative Commons', 'BY = wajib cantumkan nama\nNC = tidak untuk komersial\nSA = turunan pakai lisensi sama\nND = tidak boleh diubah\nCC0 = domain publik\nAtribusi: Judul – Pencipta – Sumber – Lisensi'],
     };
     document.querySelectorAll('[data-tpl]').forEach((b) => b.addEventListener('click', () => {
       const [ch, t, body] = TPL[b.dataset.tpl];
@@ -239,3 +242,4 @@
   </script>
 </body>
 </html>
+

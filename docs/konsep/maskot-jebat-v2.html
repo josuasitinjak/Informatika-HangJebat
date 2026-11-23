@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Konsep Maskot Jebat v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 1600px; height: 1000px; background: #05070F; color: #EEF1FA; font-family: 'Urbanist', sans-serif; overflow: hidden; position: relative; }
+  .glow { position: absolute; inset: 0; background:
+      radial-gradient(45% 60% at 28% 70%, rgba(35,64,255,.55), transparent 70%),
+      radial-gradient(30% 40% at 0% 100%, rgba(35,64,255,.6), transparent 70%),
+      radial-gradient(25% 30% at 95% 5%, rgba(91,116,255,.25), transparent 70%); }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 40px 40px; }
+  header { position: absolute; left: 56px; top: 44px; }
+  .eyebrow { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #8C94AB; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ''; width: 22px; height: 1px; background: currentColor; }
+  h1 { font-weight: 300; font-size: 64px; letter-spacing: -.03em; line-height: 1; margin-top: 14px; }
+  h1 span { color: rgba(214,220,240,.5); }
+  .hero { position: absolute; left: 40px; top: 150px; width: 620px; height: 840px; }
+  .side { position: absolute; left: 700px; top: 60px; right: 56px; bottom: 44px; display: grid; grid-template-rows: auto auto 1fr; gap: 26px; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tile { background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.09); border-radius: 20px; padding: 14px 14px 16px; text-align: center; }
+  .tile svg { width: 100%; height: 170px; display: block; }
+  .tile b { display: block; font-size: 16px; font-weight: 600; margin-top: 6px; }
+  .tile small { display: block; font-size: 12.5px; color: #8C94AB; margin-top: 2px; }
+  .label { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #8C94AB; font-weight: 600; margin-bottom: 12px; }
+  .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .trait { border: 1px solid rgba(255,255,255,.09); border-radius: 18px; padding: 16px 18px; background: rgba(255,255,255,.025); }
+  .trait h3 { font-size: 18px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .trait h3 i { width: 8px; height: 8px; background: #5B74FF; transform: rotate(45deg); box-shadow: 0 0 10px #5B74FF; }
+  .trait p { font-size: 14px; color: #A9B0C5; line-height: 1.55; margin-top: 6px; }
+  .bottom { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-self: end; }
+  .palette { display: flex; gap: 10px; }
+  .sw { flex: 1; }
+  .sw div { height: 46px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); }
+  .sw span { display: block; font: 600 11px 'JetBrains Mono', monospace; color: #8C94AB; margin-top: 6px; }
+  .sw em { display: block; font-style: normal; font-size: 12.5px; color: #DDE2F1; margin-top: 1px; }
+  .callouts { position: absolute; inset: 0; pointer-events: none; }
+  .co { position: absolute; font-size: 13px; color: #C9D0E4; display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .co::before { content: ''; width: 34px; height: 1px; background: rgba(175,195,255,.6); }
+  .co.r::before { order: 2; }
+  .co b { font: 600 11px 'JetBrains Mono', monospace; color: #AFBDFF; }
+  .name { position: absolute; left: 56px; bottom: 40px; font: 600 12px 'JetBrains Mono', monospace; color: #69718A; letter-spacing: .1em; }
+</style>
+</head>
+<body>
+<div class="glow"></div><div class="grid"></div>
+
+<header>
+  <div class="eyebrow">Konsep maskot · v2</div>
+  <h1>Jebat <span>— penjaga kelas digital</span></h1>
+</header>
+
+<!-- ═════════ DEFINISI BERSAMA ═════════ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="chrome" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset=".18" stop-color="#E6EAF3"/><stop offset=".42" stop-color="#B7BFD2"/>
+      <stop offset=".6" stop-color="#F4F6FB"/><stop offset=".82" stop-color="#7C859E"/><stop offset="1" stop-color="#4A5270"/>
+    </linearGradient>
+    <linearGradient id="chromeV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBFCFF"/><stop offset=".45" stop-color="#C6CDDD"/><stop offset=".75" stop-color="#8A93AC"/><stop offset="1" stop-color="#5A6380"/>
+    </linearGradient>
+    <linearGradient id="chromeH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F7F9FD"/><stop offset=".35" stop-color="#DCE1EC"/><stop offset=".7" stop-color="#8F98B0"/><stop offset="1" stop-color="#4E5672"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3B4566"/><stop offset=".55" stop-color="#1A2038"/><stop offset="1" stop-color="#0C1020"/>
+    </linearGradient>
+    <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B2347"/><stop offset=".55" stop-color="#070A16"/><stop offset="1" stop-color="#121A3C"/>
+    </linearGradient>
+    <linearGradient id="led" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2FCFF"/><stop offset=".5" stop-color="#8FE3FF"/><stop offset="1" stop-color="#4D7BFF"/>
+    </linearGradient>
+    <radialGradient id="core" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#B6C4FF"/><stop offset=".7" stop-color="#2340FF" stop-opacity=".6"/><stop offset="1" stop-color="#2340FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="floor" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#5B74FF" stop-opacity=".75"/><stop offset=".5" stop-color="#2340FF" stop-opacity=".3"/><stop offset="1" stop-color="#2340FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glowF" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bigGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="ao" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="rim" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/></filter>
+
+    <!-- Kepala (tanpa wajah) -->
+    <g id="head">
+      <!-- jambul pendekar -->
+      <path d="M300 78 L318 132 L300 142 L282 132 Z" fill="url(#chromeH)"/>
+      <path d="M300 78 L300 142 L282 132 Z" fill="#fff" opacity=".35"/>
+      <circle cx="300" cy="84" r="7" fill="#9FE8FF" filter="url(#glowF)"/>
+      <!-- modul telinga -->
+      <rect x="192" y="166" width="26" height="64" rx="12" fill="url(#steel)"/>
+      <rect x="382" y="166" width="26" height="64" rx="12" fill="url(#steel)"/>
+      <rect x="199" y="182" width="11" height="32" rx="5.5" fill="#5B74FF" filter="url(#glowF)"/>
+      <rect x="390" y="182" width="11" height="32" rx="5.5" fill="#5B74FF" filter="url(#glowF)"/>
+      <!-- helm -->
+      <rect x="210" y="120" width="180" height="152" rx="66" fill="url(#chrome)"/>
+      <path d="M232 150 Q262 124 304 124" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".9"/>
+      <path d="M226 176 Q224 160 232 150" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none" opacity=".6"/>
+      <!-- garis dahi -->
+      <path d="M250 150 H350" stroke="#5B74FF" stroke-width="2.5" stroke-linecap="round" opacity=".55"/>
+      <!-- visor -->
+      <rect x="226" y="160" width="148" height="86" rx="40" fill="url(#visor)" stroke="#5B74FF" stroke-opacity=".7" stroke-width="2.5"/>
+      <path d="M240 178 Q252 166 276 164" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".18"/>
+      <!-- rahang -->
+      <path d="M244 258 Q300 280 356 258" stroke="#6B7390" stroke-width="2.5" fill="none" opacity=".55"/>
+      <!-- cahaya tepi biru (kanan) -->
+      <path d="M386 160 Q394 196 384 238" stroke="#7C93FF" stroke-width="4" fill="none" stroke-linecap="round" filter="url(#rim)" opacity=".9"/>
+    </g>
+
+    <!-- Ekspresi -->
+    <g id="eyes-idle">
+      <rect x="259" y="186" width="24" height="34" rx="12" fill="url(#led)" filter="url(#glowF)"/>
+      <rect x="317" y="186" width="24" height="34" rx="12" fill="url(#led)" filter="url(#glowF)"/>
+      <path d="M288 232 Q300 240 312 232" stroke="#8FE3FF" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </g>
+    <g id="eyes-happy">
+      <path d="M257 210 Q271 190 285 210" stroke="#9FE8FF" stroke-width="6.5" fill="none" stroke-linecap="round" filter="url(#glowF)"/>
+      <path d="M315 210 Q329 190 343 210" stroke="#9FE8FF" stroke-width="6.5" fill="none" stroke-linecap="round" filter="url(#glowF)"/>
+      <path d="M284 226 Q300 242 316 226" stroke="#8FE3FF" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="248" cy="226" rx="10" ry="5" fill="#7C8CFF" opacity=".6"/><ellipse cx="352" cy="226" rx="10" ry="5" fill="#7C8CFF" opacity=".6"/>
+    </g>
+    <g id="eyes-focus">
+      <rect x="259" y="198" width="24" height="16" rx="8" fill="url(#led)" filter="url(#glowF)"/>
+      <rect x="317" y="198" width="24" height="16" rx="8" fill="url(#led)" filter="url(#glowF)"/>
+      <path d="M256 190 L286 194" stroke="#8FE3FF" stroke-width="4" stroke-linecap="round"/><path d="M344 190 L314 194" stroke="#8FE3FF" stroke-width="4" stroke-linecap="round"/>
+      <rect x="290" y="230" width="20" height="4" rx="2" fill="#8FE3FF"/>
+    </g>
+    <g id="eyes-shy">
+      <path d="M260 196 L280 206 L260 216" stroke="#9FE8FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowF)"/>
+      <path d="M340 196 L320 206 L340 216" stroke="#9FE8FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowF)"/>
+      <path d="M290 230 Q300 236 310 230" stroke="#8FE3FF" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="248" cy="226" rx="10" ry="5" fill="#7C8CFF" opacity=".6"/><ellipse cx="352" cy="226" rx="10" ry="5" fill="#7C8CFF" opacity=".6"/>
+    </g>
+    <g id="eyes-wow">
+      <circle cx="271" cy="203" r="14" fill="none" stroke="#9FE8FF" stroke-width="6" filter="url(#glowF)"/>
+      <circle cx="329" cy="203" r="14" fill="none" stroke="#9FE8FF" stroke-width="6" filter="url(#glowF)"/>
+      <ellipse cx="300" cy="234" rx="6" ry="7" fill="#8FE3FF"/>
+    </g>
+
+    <!-- Kepalan tangan (untuk pose tutup mata) -->
+    <g id="fist">
+      <rect x="-26" y="-24" width="52" height="48" rx="20" fill="url(#chrome)"/>
+      <path d="M-18 -10 H18 M-18 2 H18" stroke="#6B7390" stroke-width="2" opacity=".6"/>
+      <path d="M-16 -18 Q0 -26 16 -18" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ═════════ POSE UTAMA ═════════ -->
+<svg class="hero" viewBox="0 0 600 900" aria-label="Robot Jebat berdiri tegak sambil melambai">
+  <!-- lantai & pantulan -->
+  <ellipse cx="300" cy="852" rx="230" ry="34" fill="url(#floor)"/>
+  <ellipse cx="300" cy="848" rx="120" ry="12" fill="#000" opacity=".55" filter="url(#ao)"/>
+  <!-- halo belakang -->
+  <circle cx="300" cy="400" r="210" fill="#2340FF" opacity=".18" filter="url(#bigGlow)"/>
+
+  <!-- KAKI -->
+  <g id="legs">
+    <!-- paha -->
+    <rect x="236" y="570" width="54" height="120" rx="24" fill="url(#steel)"/>
+    <rect x="310" y="570" width="54" height="120" rx="24" fill="url(#steel)"/>
+    <!-- lutut -->
+    <circle cx="263" cy="696" r="26" fill="url(#chrome)"/><circle cx="337" cy="696" r="26" fill="url(#chrome)"/>
+    <circle cx="263" cy="696" r="8" fill="#5B74FF" filter="url(#glowF)"/><circle cx="337" cy="696" r="8" fill="#5B74FF" filter="url(#glowF)"/>
+    <!-- tulang kering -->
+    <path d="M232 716 Q262 704 294 716 L290 806 Q262 814 236 806 Z" fill="url(#chromeH)"/>
+    <path d="M306 716 Q338 704 368 716 L364 806 Q338 814 310 806 Z" fill="url(#chromeH)"/>
+    <path d="M244 730 L246 790" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="M318 730 L320 790" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+    <path d="M360 722 L356 800" stroke="#7C93FF" stroke-width="4" stroke-linecap="round" filter="url(#rim)"/>
+    <!-- sepatu -->
+    <path d="M222 806 H296 Q304 806 304 816 V834 Q304 846 292 846 H214 Q200 846 202 834 Q206 812 222 806 Z" fill="url(#steel)"/>
+    <path d="M304 806 H378 Q394 812 398 834 Q400 846 386 846 H308 Q296 846 296 834 V816 Q296 806 304 806 Z" fill="url(#steel)"/>
+    <path d="M210 832 H300 M300 832 H392" stroke="#5B74FF" stroke-width="3" opacity=".8"/>
+    <path d="M214 818 Q226 808 246 808" stroke="#fff" stroke-width="3" fill="none" opacity=".35" stroke-linecap="round"/>
+  </g>
+
+  <!-- PINGGUL -->
+  <path d="M222 530 H378 Q394 530 390 550 L374 598 Q370 610 356 610 H244 Q230 610 226 598 L210 550 Q206 530 222 530 Z" fill="url(#chrome)"/>
+  <path d="M220 548 H380" stroke="#5B74FF" stroke-width="3" opacity=".75"/>
+  <path d="M290 548 L300 600 L310 548" fill="url(#steel)" opacity=".9"/>
+  <ellipse cx="300" cy="528" rx="80" ry="12" fill="#000" opacity=".45" filter="url(#ao)"/>
+
+  <!-- PINGGANG -->
+  <rect x="256" y="486" width="88" height="50" rx="16" fill="url(#steel)"/>
+  <path d="M266 498 H334 M266 510 H334 M266 522 H334" stroke="#5B74FF" stroke-width="2" opacity=".5"/>
+
+  <!-- LENGAN KIRI (sisi penonton) — tegak di samping badan -->
+  <g>
+    <rect x="148" y="372" width="42" height="96" rx="19" fill="url(#steel)"/>
+    <circle cx="169" cy="476" r="22" fill="url(#chrome)"/>
+    <path d="M144 486 Q170 476 196 486 L190 572 Q170 580 150 572 Z" fill="url(#chromeH)"/>
+    <path d="M154 498 L158 560" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+    <rect x="144" y="568" width="52" height="54" rx="21" fill="url(#chrome)"/>
+    <path d="M150 586 H190 M150 600 H190" stroke="#6B7390" stroke-width="2" opacity=".55"/>
+    <path d="M152 576 Q170 568 188 576" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
+  </g>
+
+  <!-- BADAN (bentuk V: bahu lebar, pinggang ramping) -->
+  <path d="M176 330 Q300 296 424 330 L410 412 Q398 484 340 500 H260 Q202 484 190 412 Z" fill="url(#chrome)"/>
+  <path d="M212 350 Q300 328 388 350 L378 410 Q368 464 326 478 H274 Q232 464 222 410 Z" fill="url(#steel)"/>
+  <!-- inti dada belah ketupat -->
+  <circle cx="300" cy="404" r="56" fill="url(#core)" opacity=".75"/>
+  <path d="M300 370 L332 404 L300 438 L268 404 Z" fill="#0A0E1C" stroke="#5B74FF" stroke-width="3"/>
+  <path d="M300 382 L320 404 L300 426 L280 404 Z" fill="#C9D6FF" filter="url(#glowF)"/>
+  <path d="M300 390 L313 404 L300 418 L287 404 Z" fill="#fff"/>
+  <!-- garis panel -->
+  <path d="M232 452 L262 466 M368 452 L338 466" stroke="#5B74FF" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+  <path d="M188 344 Q240 322 300 318" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".85"/>
+  <path d="M196 360 Q194 390 200 420" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".45"/>
+  <path d="M414 344 Q412 400 398 450" stroke="#7C93FF" stroke-width="5" stroke-linecap="round" fill="none" filter="url(#rim)"/>
+
+  <!-- KERAH & LEHER -->
+  <ellipse cx="300" cy="300" rx="70" ry="16" fill="#000" opacity=".5" filter="url(#ao)"/>
+  <rect x="270" y="270" width="60" height="44" rx="14" fill="url(#steel)"/>
+  <path d="M270 288 H330" stroke="#5B74FF" stroke-width="3" opacity=".7"/>
+  <path d="M232 326 Q300 296 368 326 L360 340 Q300 316 240 340 Z" fill="url(#chromeV)"/>
+
+  <!-- PELINDUNG BAHU -->
+  <path d="M124 356 Q124 302 178 296 Q228 296 236 332 Q240 376 198 388 Q136 396 124 356 Z" fill="url(#chrome)"/>
+  <path d="M138 336 Q150 306 184 304" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".9"/>
+  <path d="M140 362 Q184 378 230 352" stroke="#5B74FF" stroke-width="3" fill="none" opacity=".75"/>
+  <path d="M476 356 Q476 302 422 296 Q372 296 364 332 Q360 376 402 388 Q464 396 476 356 Z" fill="url(#chrome)"/>
+  <path d="M460 360 Q470 330 450 310" stroke="#7C93FF" stroke-width="5" stroke-linecap="round" fill="none" filter="url(#rim)"/>
+  <path d="M460 362 Q416 378 370 352" stroke="#5B74FF" stroke-width="3" fill="none" opacity=".75"/>
+
+  <!-- LENGAN KANAN (sisi penonton) — melambai -->
+  <g>
+    <path d="M412 362 L444 340 L506 428 L474 452 Z" fill="url(#steel)" stroke="url(#steel)" stroke-width="10" stroke-linejoin="round"/>
+    <circle cx="490" cy="440" r="23" fill="url(#chrome)"/>
+    <circle cx="490" cy="440" r="7" fill="#5B74FF" filter="url(#glowF)"/>
+    <path d="M466 436 L514 446 L532 334 L492 326 Z" fill="url(#chromeH)" stroke="url(#chromeH)" stroke-width="8" stroke-linejoin="round"/>
+    <path d="M478 424 L496 340" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+    <!-- telapak terbuka -->
+    <g transform="rotate(10 516 296)">
+      <rect x="490" y="270" width="54" height="58" rx="18" fill="url(#chrome)"/>
+      <rect x="490" y="226" width="12" height="44" rx="6" fill="url(#chromeV)"/>
+      <rect x="504" y="218" width="12" height="52" rx="6" fill="url(#chromeV)"/>
+      <rect x="518" y="220" width="12" height="50" rx="6" fill="url(#chromeV)"/>
+      <rect x="532" y="230" width="12" height="42" rx="6" fill="url(#chromeV)"/>
+      <rect x="474" y="282" width="22" height="12" rx="6" fill="url(#chromeH)" transform="rotate(-30 485 288)"/>
+      <circle cx="517" cy="300" r="7" fill="#5B74FF" filter="url(#glowF)"/>
+    </g>
+    <!-- garis gerak lambaian -->
+    <path d="M560 236 Q574 262 566 290" stroke="#AFBDFF" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+    <path d="M578 224 Q596 260 584 300" stroke="#AFBDFF" stroke-width="3" fill="none" stroke-linecap="round" opacity=".4"/>
+  </g>
+
+  <!-- KEPALA -->
+  <ellipse cx="300" cy="276" rx="72" ry="12" fill="#000" opacity=".5" filter="url(#ao)"/>
+  <g transform="translate(0 0)"><use href="#head"/><use href="#eyes-happy"/></g>
+</svg>
+
+<!-- Keterangan pada pose utama -->
+<div class="callouts">
+  <div class="co r" style="left:96px; top:228px"><b>01</b> Jambul pendekar + LED</div>
+  <div class="co r" style="left:22px; top:410px"><b>02</b> Bahu lebar</div>
+  <div class="co r" style="left:22px; top:548px"><b>03</b> Inti dada</div>
+  <div class="co" style="left:470px; top:900px"><b>04</b> Berdiri tegak, kaki sejajar</div>
+</div>
+
+<!-- ═════════ PANEL KANAN ═════════ -->
+<div class="side">
+  <div style="margin-top:84px">
+    <div class="label">Ekspresi & reaksi</div>
+    <div class="tiles">
+      <div class="tile"><svg viewBox="170 70 260 230"><use href="#head"/><use href="#eyes-idle"/></svg><b>Siaga</b><small>Mata ikut kursor</small></div>
+      <div class="tile"><svg viewBox="170 70 260 230"><use href="#head"/><use href="#eyes-focus"/></svg><b>Fokus</b><small>Saat siswa mengetik</small></div>
+      <div class="tile"><svg viewBox="170 70 260 230"><use href="#head"/><use href="#eyes-shy"/><use href="#fist" transform="translate(272 214) rotate(-12)"/><use href="#fist" transform="translate(328 214) rotate(12)"/></svg><b>Tutup mata</b><small>Kolom kata sandi</small></div>
+      <div class="tile"><svg viewBox="170 70 260 230"><use href="#head"/><use href="#eyes-wow"/></svg><b>Kagum</b><small>Naik level / lencana</small></div>
+    </div>
+  </div>
+
+  <div>
+    <div class="label">Karakter</div>
+    <div class="traits">
+      <div class="trait"><h3><i></i>Tegak & berwibawa</h3><p>Siluet huruf V: bahu lebar berpelindung, pinggang ramping, kaki sejajar. Jambul di helm terinspirasi pendekar Hang Jebat.</p></div>
+      <div class="trait"><h3><i></i>Ramah & asik</h3><p>Mata LED lembut, senyum, pipi berpendar, dan lambaian tangan. Kesannya tegas, bukan galak.</p></div>
+      <div class="trait"><h3><i></i>Tampilan 3D</h3><p>Krom dengan sorot cahaya dari kiri atas, bayangan di setiap sambungan, dan cahaya tepi biru dari belakang. Selaras dengan tema Momentum.</p></div>
+      <div class="trait"><h3><i></i>Responsif</h3><p>Kepala dan mata mengikuti kursor, badan sedikit condong, inti dada berdenyut. Pose berganti: siaga, melambai, tutup mata, merayakan.</p></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div>
+      <div class="label">Palet</div>
+      <div class="palette">
+        <div class="sw"><div style="background:linear-gradient(135deg,#fff,#B7BFD2 45%,#4A5270)"></div><span>CHROME</span><em>Badan</em></div>
+        <div class="sw"><div style="background:linear-gradient(135deg,#3B4566,#0C1020)"></div><span>#1A2038</span><em>Sambungan</em></div>
+        <div class="sw"><div style="background:#070A16"></div><span>#070A16</span><em>Visor</em></div>
+        <div class="sw"><div style="background:linear-gradient(180deg,#F2FCFF,#8FE3FF,#4D7BFF)"></div><span>#8FE3FF</span><em>LED</em></div>
+        <div class="sw"><div style="background:#2340FF"></div><span>#2340FF</span><em>Cahaya</em></div>
+      </div>
+    </div>
+    <div class="trait" style="align-self:end"><h3><i></i>Di web nanti</h3><p>Dibuat sebagai SVG berlapis (ringan, tajam di semua ukuran). Pose penuh tampil di halaman Masuk/Daftar, kepala saja untuk ukuran kecil.</p></div>
+  </div>
+</div>
+
+<div class="name">INFORMATIKA · SMAN 1 BATAM · XI HJ 5</div>
+</body>
+</html>

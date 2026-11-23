@@ -305,52 +305,55 @@
     showEngine('baca');
   }
 
-  // ───────── Peta materi: kartu bertumpuk ─────────
-  function chapterArt(c, i) {
-    const id = `ga${i}`;
-    const bg = `<defs><radialGradient id="${id}" cx="50%" cy="110%" r="80%"><stop offset="0" stop-color="#2340FF" stop-opacity=".9"/><stop offset=".55" stop-color="#1424B8" stop-opacity=".25"/><stop offset="1" stop-color="#070910" stop-opacity="0"/></radialGradient>
-      <linearGradient id="${id}c" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#9AA3BC"/><stop offset=".55" stop-color="#F4F6FB"/><stop offset=".8" stop-color="#5A6380"/><stop offset="1" stop-color="#E7EBF4"/></linearGradient></defs>
-      <rect width="800" height="425" fill="#070910"/><rect width="800" height="425" fill="url(#${id})"/>`;
-    let art = '';
-    if (i === 0) {
-      const pts = [[220, 150], [330, 110], [420, 170], [520, 120], [600, 200], [280, 250], [400, 270], [520, 290], [350, 330], [470, 210]];
-      const ed = [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [6, 7], [7, 4], [6, 8], [2, 9], [9, 7], [1, 9], [5, 8]];
-      art = ed.map(([a, b]) => `<line x1="${pts[a][0]}" y1="${pts[a][1]}" x2="${pts[b][0]}" y2="${pts[b][1]}" stroke="rgba(170,185,255,.45)" stroke-width="1.2" class="crawl-edge active"/>`).join('')
-        + pts.map(([x, y], k) => `<circle cx="${x}" cy="${y}" r="${k % 3 === 0 ? 9 : 6}" fill="${k % 3 === 0 ? '#fff' : '#8EA2FF'}" opacity="${k % 3 === 0 ? 1 : 0.8}"/>`).join('');
-    } else if (i === 1) {
-      art = `<rect x="190" y="170" width="420" height="58" rx="29" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.25)"/>
-        <text x="222" y="207" font-family="JetBrains Mono" font-size="19" fill="#fff">"hoaks gempa" site:go.id</text>
-        ${[['filetype:pdf', 150, 110], ['-viral', 520, 120], ['intitle:', 600, 300], ['OR', 210, 310], ['triangulasi', 380, 330]].map(([t, x, y]) => `<g><rect x="${x}" y="${y - 22}" width="${t.length * 11 + 28}" height="34" rx="17" fill="rgba(35,64,255,.25)" stroke="rgba(142,162,255,.5)"/><text x="${x + 14}" y="${y}" font-family="JetBrains Mono" font-size="14" fill="#C9D3FF">${t}</text></g>`).join('')}`;
-    } else if (i === 2) {
-      art = `${[150, 115, 80].map((r, k) => `<circle cx="400" cy="215" r="${r}" fill="none" stroke="rgba(170,185,255,${0.15 + k * 0.1})"/>`).join('')}
-        <path d="M400 135 L465 160 V215 C465 255 437 283 400 298 C363 283 335 255 335 215 V160 Z" fill="url(#${id}c)" opacity=".95"/>
-        <path d="M375 215 l18 18 l35 -38" stroke="#0A0E1C" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
-    } else {
-      art = `<text x="400" y="290" text-anchor="middle" font-family="Urbanist" font-weight="300" font-size="230" fill="url(#${id}c)">©</text>
-        <g font-family="JetBrains Mono" font-size="15" fill="#C9D3FF">${[['CC BY', 170, 140], ['CC BY-SA', 560, 120], ['CC BY-NC', 600, 320], ['Atribusi', 150, 320]].map(([t, x, y]) => `<text x="${x}" y="${y}">${t}</text>`).join('')}</g>`;
-    }
-    return `<svg viewBox="0 0 800 425" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${bg}${art}</svg>`;
-  }
+  // ───────── Peta materi: kartu bertumpuk + video demo per materi ─────────
+  // Materi semester 1 yang sudah dipelajari kelas XI (sesuai bahan ajar guru).
+  const MATERI = [
+    {
+      scene: 'search', tag: 'Literasi digital', title: 'Mesin Pencari',
+      desc: 'Fungsi & cara kerja mesin pencari (crawling, indexing, ranking), ragam mesin pencari, operator pencarian, membaca lateral, triangulasi, dan ciri sumber yang kredibel.',
+      chips: ['Crawling · Indexing · Ranking', 'Operator " " - site: filetype:', 'Triangulasi'],
+      href: 'modul.html?bab=1', cta: 'Buka modul',
+    },
+    {
+      scene: 'law', tag: 'Regulasi siber', title: 'Hukum & Perundang-Undangan Digital',
+      desc: 'UU ITE, UU Pelindungan Data Pribadi, dan UU Hak Cipta — hak & kewajiban warganet, studi kasus pelanggaran, sanksi, serta etika digital (netiket).',
+      chips: ['UU ITE', 'UU PDP No. 27/2022', 'UU Hak Cipta No. 28/2014'],
+      href: 'modul.html?bab=2', cta: 'Buka modul',
+    },
+    {
+      scene: 'data', tag: 'Analisis data', title: 'Analisis Data: Excel & Power BI',
+      desc: 'Mengolah data dengan rumus Excel (AVERAGE, IF), fill handle, dan grafik, lalu menyajikannya sebagai dasbor interaktif di Power BI.',
+      chips: ['AVERAGE · IF', 'Grafik', 'Dasbor Power BI'],
+      href: 'modul.html?bab=3', cta: 'Buka modul',
+    },
+  ];
   function initStack() {
     const host = $('#chapter-stack');
-    host.innerHTML = CH.map((c, i) => `<article class="lp-chap" data-idx="${i}" aria-labelledby="chap-${i}">
-      <div class="lp-chap__art">${chapterArt(c, i)}<div class="lp-chap__title">${esc(c.short)}</div></div>
+    host.innerHTML = MATERI.map((m, i) => `<article class="lp-chap" data-idx="${i}" aria-labelledby="chap-${i}">
+      <div class="lp-chap__art"><div class="lp-vid" data-scene="${m.scene}"></div></div>
       <div class="lp-chap__body">
         <div>
-          <div class="flex flex-wrap gap-1.5"><span class="hj-chip hj-chip--blue">Bab ${String(c.number).padStart(2, '0')}</span><span class="hj-chip">${esc(c.badge)}</span><span class="hj-chip">${c.steps.length} langkah · ${esc(c.duration)}</span></div>
-          <h3 id="chap-${i}" class="mt-3">${esc(c.title)}</h3>
-          <p>${esc(c.desc)}</p>
+          <div class="flex flex-wrap gap-1.5"><span class="hj-chip hj-chip--blue">Materi ${String(i + 1).padStart(2, '0')}</span><span class="hj-chip">${esc(m.tag)}</span>${m.chips.map((t) => `<span class="hj-chip">${esc(t)}</span>`).join('')}</div>
+          <h3 id="chap-${i}" class="mt-3">${esc(m.title)}</h3>
+          <p>${esc(m.desc)}</p>
         </div>
-        <a href="modul.html?bab=${c.number}" class="hj-btn hj-btn--sm">Buka bab</a>
+        ${m.href ? `<a href="${m.href}" class="hj-btn hj-btn--sm">${esc(m.cta)}</a>` : `<span class="hj-btn hj-btn--sm hj-btn--ghost text-white" aria-disabled="true">${esc(m.cta)}</span>`}
       </div>
     </article>`).join('');
+    if (window.DemoVideos) $$('.lp-vid', host).forEach((el) => DemoVideos.mount(el, el.dataset.scene));
     const cards = $$('.lp-chap', host);
     const count = $('#stack-count'), link = $('#stack-link');
+    count.textContent = `01 / ${String(cards.length).padStart(2, '0')}`;
+    // Penghitung & tombol samping hanya tampil saat kartu materi melewati tengah layar
+    const meta = $('.lp-stack-meta');
+    if (meta && 'IntersectionObserver' in window) {
+      new IntersectionObserver((es) => meta.classList.toggle('is-on', es.some((e) => e.isIntersecting)), { rootMargin: '-45% 0px -45% 0px' }).observe(host);
+    }
     if (!canAnimate) return;
     cards.forEach((card, i) => {
       M.inView(card, () => {
         count.textContent = `${String(i + 1).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
-        link.href = `modul.html?bab=${CH[i].number}`;
+        link.href = MATERI[i].href || 'modul.html';
       }, { amount: 0.55 });
       if (i < cards.length - 1 && M.scroll) {
         M.scroll(M.animate(card, { scale: [1, 0.9], opacity: [1, 0.35] }, { ease: 'linear' }), { target: cards[i + 1], offset: ['start end', 'start start'] });
@@ -369,6 +372,42 @@
     });
   }
 
+  // ───────── Maskot 3D di seksi Etika digital (Three.js dimuat saat seksi mendekat) ─────────
+  function loadScript(src) {
+    return new Promise((ok, fail) => {
+      const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = fail; document.head.appendChild(s);
+    });
+  }
+  function initLawMascot() {
+    const host = $('#law-mascot');
+    if (!host) return;
+    let started = false;
+    const start = async () => {
+      if (started) return; started = true;
+      try {
+        if (!window.THREE) await loadScript('https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js');
+        if (!window.HJRobotSVG) await loadScript('assets/js/robot-svg.js');
+        if (!window.HJRobot) await loadScript('assets/js/robot.js');
+      } catch (e) { /* tanpa jaringan: coba cadangan 2D bila sudah ada */ }
+      const api = window.HJRobot || window.HJRobotSVG;
+      if (!api) { host.remove(); return; }
+      const bot = api.mount(host, {
+        size: 320, bubble: true, mood: 'think',
+        lines: ['Saring dulu sebelum sharing!', 'Data pribadimu berharga, jaga ya.', 'Karya orang lain? Minta izin & cantumkan sumber.', 'Beda pendapat boleh, tetap sopan ya.'],
+      });
+      if (canAnimate) M.animate(host, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, ease: EASE });
+      // Saat kartu UU disorot, maskot menoleh ke kartu itu
+      $$('.lp-law__item').forEach((card) => {
+        card.addEventListener('mouseenter', () => bot && bot.lookAt && bot.lookAt(card));
+        card.addEventListener('mouseleave', () => bot && bot.lookAt && bot.lookAt(null));
+      });
+    };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '400px 0px' });
+      io.observe(host);
+    } else start();
+  }
+
   // ───────── Fitur ─────────
   function initFeatures() {
     const F = [
@@ -377,26 +416,12 @@
       ['smart_toy', 'Tanya AI', 'Minta penjelasan ulang materi dengan bahasa yang lebih santai.', 'tanya-ai.html'],
       ['edit_note', 'Catatan Belajar', 'Tulis ringkasan dengan bahasamu sendiri, tersimpan per bab.', 'catatan.html'],
       ['assignment', 'Tugas & Rubrik', 'Panduan tugas lengkap dengan rubrik penilaian yang jelas.', 'tugas.html'],
-      ['forum', 'Komunitas', 'Diskusi dan berbagi temuan riset dengan teman sekelas.', 'komunitas.html'],
+      ['auto_stories', 'Modul Materi', 'Pelajaran langkah demi langkah dengan animasi, latihan, dan cek pemahaman.', 'modul.html'],
     ];
     $('#features').innerHTML = F.map(([ic, t, d, h]) => `<a href="${h}" class="lp-feature">
       <div class="lp-feature__art"><span class="material-symbols-outlined" aria-hidden="true">${ic}</span></div>
       <div class="py-1 pr-1"><h3>${t}</h3><p>${d}</p><span class="hj-link text-[13px] mt-3 inline-block text-[#2340FF]">Buka</span></div>
     </a>`).join('');
-  }
-
-  // ───────── Tombol suara ─────────
-  function initSound() {
-    const b = $('#sound-btn');
-    if (!window.X) { b.hidden = true; return; }
-    const paint = () => {
-      const on = X.sfx.enabled();
-      b.setAttribute('aria-pressed', String(on));
-      b.setAttribute('aria-label', on ? 'Efek suara aktif — klik untuk mematikan' : 'Efek suara mati — klik untuk menyalakan');
-      b.firstElementChild.textContent = on ? 'volume_up' : 'volume_off';
-    };
-    paint();
-    b.addEventListener('click', () => { X.sfx.toggle(); paint(); if (canAnimate) M.animate(b, { scale: [0.85, 1] }, { type: 'spring', stiffness: 400, damping: 15 }); });
   }
 
   // ───────── Drawer "Mulai belajar" ─────────
@@ -467,7 +492,7 @@
     initConverter();
     initEngine();
     initChrome();
-    initSound();
+    initLawMascot();
     initDrawer();
     if (window.HJMotion) HJMotion.reveal(); // isi dinamis (fitur, bab) ikut animasi masuk
   }

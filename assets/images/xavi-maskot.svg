@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none">
+  <defs>
+    <linearGradient id="armor" x1="226" y1="145" x2="772" y2="870" gradientUnits="userSpaceOnUse"><stop stop-color="#83E4FF"/><stop offset=".28" stop-color="#268FFF"/><stop offset=".68" stop-color="#1262D8"/><stop offset="1" stop-color="#092D78"/></linearGradient>
+    <linearGradient id="armor2" x1="311" y1="485" x2="698" y2="831" gradientUnits="userSpaceOnUse"><stop stop-color="#45BDFF"/><stop offset=".52" stop-color="#1470E8"/><stop offset="1" stop-color="#0A347F"/></linearGradient>
+    <linearGradient id="visor" x1="343" y1="278" x2="680" y2="466" gradientUnits="userSpaceOnUse"><stop stop-color="#12315C"/><stop offset=".55" stop-color="#071A38"/><stop offset="1" stop-color="#102A50"/></linearGradient>
+    <linearGradient id="cyan" x1="401" y1="329" x2="624" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#D8FFFF"/><stop offset=".35" stop-color="#77F4FF"/><stop offset="1" stop-color="#20B9FF"/></linearGradient>
+    <linearGradient id="core" x1="463" y1="544" x2="565" y2="652" gradientUnits="userSpaceOnUse"><stop stop-color="#F1FFFF"/><stop offset=".4" stop-color="#71F5FF"/><stop offset="1" stop-color="#18A9FF"/></linearGradient>
+    <radialGradient id="aura" cx="0" cy="0" r="1" gradientTransform="matrix(0 367 -367 0 512 507)" gradientUnits="userSpaceOnUse"><stop stop-color="#2CBFFF" stop-opacity=".2"/><stop offset="1" stop-color="#2CBFFF" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="112" y="88" width="800" height="852" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="20"/></filter>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <!-- Soft halo and cursor-reactive visual cue -->
+  <circle cx="512" cy="500" r="385" fill="url(#aura)"/>
+  <circle cx="512" cy="500" r="352" stroke="#59D8FF" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 16"/>
+  <path d="M735 253C787 292 822 344 838 405" stroke="#73E9FF" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 15" opacity=".75"/>
+  <path d="M822 361l22 51 15-20 23 2-60-33Z" fill="#F7FFFF" stroke="#23BFFF" stroke-width="5" stroke-linejoin="round" filter="url(#glow)"/>
+  <circle cx="838" cy="407" r="18" stroke="#75EDFF" stroke-width="3" opacity=".55"/>
+  <circle cx="838" cy="407" r="33" stroke="#75EDFF" stroke-width="2" opacity=".22"/>
+  <!-- Floor shadow -->
+  <ellipse cx="512" cy="865" rx="237" ry="35" fill="#061D49" opacity=".18" filter="url(#shadow)"/>
+  <ellipse cx="512" cy="858" rx="186" ry="19" fill="#1475C7" opacity=".13"/>
+  <!-- Antenna -->
+  <path d="M512 158v-56" stroke="#0B4AA5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M512 152v-49" stroke="#9AEFFF" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="512" cy="84" r="27" fill="#FFB84D" stroke="#FFF0BC" stroke-width="9"/>
+  <circle cx="512" cy="84" r="9" fill="#FFFCEB" filter="url(#glow)"/>
+  <!-- Legs and reinforced boots -->
+  <path d="m404 710-13 76c-3 18-17 31-39 43l-28 16c-17 10-11 35 9 37h126c22 0 35-17 29-38l-22-78 6-56h-68Z" fill="url(#armor2)" stroke="#0B3F97" stroke-width="13" stroke-linejoin="round"/>
+  <path d="m620 710 13 76c3 18 17 31 39 43l28 16c17 10 11 35-9 37H565c-22 0-35-17-29-38l22-78-6-56h68Z" fill="url(#armor2)" stroke="#0B3F97" stroke-width="13" stroke-linejoin="round"/>
+  <path d="M355 826h113M556 826h113" stroke="#8AF5FF" stroke-width="12" stroke-linecap="round"/>
+  <path d="m390 785 75 5m94-5-75 5" stroke="#A9EFFF" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+  <!-- Arms and shoulder armor -->
+  <path d="M339 438c-33 9-55 29-68 60l-48 109c-12 28-3 52 23 65l44 21c26 12 51 1 64-25l58-111 20-91-93-28Z" fill="url(#armor)" stroke="#0B3F97" stroke-width="14" stroke-linejoin="round"/>
+  <path d="m685 438c33 9 55 29 68 60l48 109c12 28 3 52-23 65l-44 21c-26 12-51 1-64-25l-58-111-20-91 93-28Z" fill="url(#armor)" stroke="#0B3F97" stroke-width="14" stroke-linejoin="round"/>
+  <path d="m253 608 61 29m457-29-61 29" stroke="#8FEAFF" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="287" cy="586" r="12" fill="#FFBE55"/><circle cx="737" cy="586" r="12" fill="#FFBE55"/>
+  <!-- Torso -->
+  <path d="M370 438c29-25 75-39 142-39s113 14 142 39l54 158-42 130c-10 31-34 48-68 48H426c-34 0-58-17-68-48l-42-130 54-158Z" fill="url(#armor2)" stroke="#0B3F97" stroke-width="16" stroke-linejoin="round"/>
+  <path d="m404 474 108 28 108-28 29 118-31 112H406l-31-112 29-118Z" fill="#E7FAFF" stroke="#83DFFF" stroke-width="12" stroke-linejoin="round"/>
+  <path d="m444 523 68-20 68 20-15 28h-106l-15-28Z" fill="#1166C8"/>
+  <path d="M470 541h84" stroke="#9CF5FF" stroke-width="9" stroke-linecap="round"/>
+  <path d="M441 603h142" stroke="#9BDFFF" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+  <circle cx="512" cy="675" r="52" fill="#0E4C9A" stroke="#8DEBFF" stroke-width="10"/>
+  <circle cx="512" cy="675" r="31" fill="url(#core)" filter="url(#glow)"/>
+  <path d="M512 650v50m-25-25h50" stroke="#F4FFFF" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+  <circle cx="382" cy="510" r="11" fill="#FFBE55"/><circle cx="642" cy="510" r="11" fill="#FFBE55"/>
+  <!-- Helmet / head -->
+  <path d="M292 277c0-76 60-137 136-137h168c76 0 136 61 136 137v145c0 73-58 131-131 131H423c-73 0-131-58-131-131V277Z" fill="url(#armor)" stroke="#093B91" stroke-width="17"/>
+  <path d="M328 279c0-55 45-100 100-100h168c55 0 100 45 100 100v123c0 53-43 96-96 96H424c-53 0-96-43-96-96V279Z" fill="url(#visor)" stroke="#A3EDFF" stroke-width="10"/>
+  <path d="M369 235c41-31 113-42 215-24" stroke="#B9F2FF" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+  <!-- expressive cyan eyes looking toward cursor -->
+  <g filter="url(#glow)">
+    <path d="M390 328c0-11 9-20 20-20h44c11 0 20 9 20 20v54c0 11-9 20-20 20h-44c-11 0-20-9-20-20v-54Z" fill="url(#cyan)"/>
+    <path d="M550 328c0-11 9-20 20-20h44c11 0 20 9 20 20v54c0 11-9 20-20 20h-44c-11 0-20-9-20-20v-54Z" fill="url(#cyan)"/>
+  </g>
+  <circle cx="449" cy="339" r="8" fill="#fff" opacity=".9"/><circle cx="609" cy="339" r="8" fill="#fff" opacity=".9"/>
+  <!-- friendly confident mouth and cheek lights -->
+  <path d="M469 426c26 18 58 18 86 0" stroke="#8CEFFF" stroke-width="9" stroke-linecap="round"/>
+  <path d="M359 398h23m260 0h23" stroke="#FFB84D" stroke-width="9" stroke-linecap="round"/>
+  <!-- helmet crest details -->
+  <path d="M335 258h-24m378 0h-24" stroke="#D7F8FF" stroke-width="8" stroke-linecap="round"/>
+  <path d="m512 157 28 30h-56l28-30Z" fill="#A1EEFF" stroke="#1A73D9" stroke-width="7" stroke-linejoin="round"/>
+  <!-- small spark accents -->
+  <path d="m218 316 10 20 21 4-16 14 4 21-19-11-19 11 4-21-16-14 21-4 10-20Zm590 250 8 16 18 3-13 12 3 18-16-9-16 9 3-18-13-12 18-3 8-16Z" fill="#72E8FF" opacity=".84"/>
+</svg>

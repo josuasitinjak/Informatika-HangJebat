@@ -1,6 +1,6 @@
 /**
  * XAVETRA — Kurikulum bawaan Informatika Fase F (Kelas XI)
- * 4 bab inti + langkah pelajaran interaktif + bank soal kuis.
+ * 3 bab inti + langkah pelajaran interaktif + bank soal kuis.
  *
  * Tipe langkah (step):
  *   read   → bacaan (HTML aman, ditulis oleh tim pengajar)
@@ -16,7 +16,7 @@
 (function () {
   'use strict';
 
-  const CHAPTERS = [
+  const OLD_CHAPTERS = [
     // ════════════════════════════════════════ BAB 1 ════════════════════════════════════════
     {
       id: 'bab1',
@@ -337,8 +337,36 @@
     },
   ];
 
+  // Tiga bab resmi. Materi riset digabung ke Mesin Pencari; hak cipta/netiket ke Hukum Digital.
+  const oldById = Object.fromEntries(OLD_CHAPTERS.map((chapter) => [chapter.id, chapter]));
+  const CHAPTERS = [
+    Object.assign({}, oldById.bab1, {
+      number: 1, title: 'Mesin Pencari', short: 'Mesin Pencari', duration: '50 Menit',
+      desc: 'Pahami cara kerja mesin pencari, susun query yang tepat, lalu verifikasi informasi dengan membaca lateral dan triangulasi.',
+      goals: ['Menjelaskan crawling, indexing, dan ranking', 'Menggunakan operator pencarian', 'Memeriksa kredibilitas informasi'],
+      steps: oldById.bab1.steps.concat(oldById.bab2.steps),
+    }),
+    Object.assign({}, oldById.bab3, {
+      number: 2, title: 'Hukum dan Perundang-Undangan Digital di Indonesia', short: 'Hukum Digital', duration: '55 Menit',
+      desc: 'Pelajari UU ITE, UU PDP, UU Hak Cipta, lisensi karya, dan etika berkomunikasi digital.',
+      goals: ['Mengenali aturan digital di Indonesia', 'Melindungi data pribadi dan menghargai hak cipta', 'Menerapkan netiket'],
+      steps: oldById.bab3.steps.concat(oldById.bab4.steps),
+    }),
+    {
+      id: 'bab5', number: 3, title: 'Analisis Data (Excel dan Power BI)', short: 'Analisis Data', badge: 'Data & Visualisasi', icon: 'query_stats', color: 'emerald', duration: '35 Menit',
+      desc: 'Bersihkan, hitung, rangkum, dan sajikan data dengan Excel dan Power BI.',
+      goals: ['Memilih rumus Excel sesuai kebutuhan', 'Meringkas data dengan tabel pivot', 'Membuat visualisasi yang mudah dibaca'],
+      steps: [
+        { type: 'read', title: 'Dari Data Mentah ke Informasi', html: `<p>Analisis data dimulai dengan pertanyaan yang jelas. Periksa kolom, satuan, nilai kosong, dan data ganda sebelum menghitung.</p><table><tr><th>Bulan</th><th>Produk</th><th>Unit terjual</th></tr><tr><td>Januari</td><td>Buku</td><td>18</td></tr><tr><td>Januari</td><td>Pena</td><td>25</td></tr><tr><td>Februari</td><td>Buku</td><td>22</td></tr><tr><td>Februari</td><td>Pena</td><td>20</td></tr></table><p>Gunakan <code>SUM</code> untuk total, <code>AVERAGE</code> untuk rata-rata, <code>COUNTIF</code> untuk menghitung data yang memenuhi kriteria, dan <code>IF</code> untuk memberi label berdasarkan kondisi.</p><div class="callout callout-tip"><span>📊</span><span>Rumus menjawab pertanyaan tertentu. Grafik membantu pembaca melihat pola. Pilih jenis grafik sesuai datanya.</span></div>` },
+        { type: 'widget', widget: 'excelLab', title: 'Lab Ringkas Data Penjualan', intro: 'Filter wilayah, bandingkan total penjualan, lalu tandai langkah ini selesai.' },
+        { type: 'read', title: 'Menyusun Dasbor di Power BI', html: `<ol><li><strong>Get Data</strong> — impor tabel Excel atau CSV.</li><li><strong>Transform</strong> — rapikan nama kolom, tipe data, nilai kosong, dan duplikasi di Power Query.</li><li><strong>Model</strong> — hubungkan tabel menggunakan kunci yang tepat.</li><li><strong>Visualize</strong> — pilih kartu KPI, batang untuk perbandingan, atau garis untuk tren waktu.</li><li><strong>Periksa</strong> — beri judul, satuan, sumber, dan konteks; jangan tampilkan data pribadi.</li></ol><div class="callout callout-warn"><span>🔒</span><span>Bagikan hanya data yang memang boleh dilihat penerima. Nama, nomor identitas, dan informasi sensitif tidak perlu dimasukkan ke dasbor kelas.</span></div>` },
+        { type: 'check', title: 'Cek Pemahaman', q: { type: 'mc', question: 'Rumus Excel mana yang menghitung rata-rata nilai pada rentang B2 sampai B20?', options: ['=SUM(B2:B20)', '=AVERAGE(B2:B20)', '=COUNTIF(B2:B20)', '=IF(B2:B20)'], answer: 1, explain: 'AVERAGE menghitung nilai rata-rata dari rentang yang dipilih.' } },
+      ],
+    },
+  ];
+
   // ════════════════════════════════════════ BANK SOAL ════════════════════════════════════════
-  const QUIZ = {
+  const OLD_QUIZ = {
     bab1: [
       { type: 'mc', question: 'Robot program yang menjelajahi web dari satu tautan ke tautan lain disebut…', options: ['Crawler / spider', 'Firewall', 'Compiler', 'Router'], answer: 0, explain: 'Crawler (spider/bot) merayapi web dengan mengikuti hyperlink untuk menemukan halaman baru.' },
       { type: 'order', question: 'Urutkan tahap kerja mesin pencari dari awal sampai hasil tampil!', items: ['Crawling (menjelajah)', 'Indexing (mengarsipkan)', 'Ranking (mengurutkan)', 'Menampilkan SERP'], explain: 'Data dikumpulkan dulu (crawling), disimpan di indeks (indexing), diurutkan (ranking), lalu ditampilkan di halaman hasil (SERP).' },
@@ -386,6 +414,22 @@
       { type: 'order', question: 'Urutkan format atribusi karya Creative Commons yang benar!', items: ['Judul karya', 'Nama pencipta', 'Sumber / tautan', 'Jenis lisensi'], explain: 'Format TASL: Title – Author – Source – License.' },
       { type: 'mc', question: 'Kamu memakai paragraf dari artikel internet di tugas tanpa menyebut sumber. Ini termasuk…', options: ['Parafrase', 'Plagiarisme', 'Atribusi', 'Fair use'], answer: 1, explain: 'Mengakui tulisan orang lain sebagai milik sendiri tanpa sumber adalah plagiarisme.' },
       { type: 'mc', question: 'Lisensi yang melepaskan karya ke domain publik sehingga bebas dipakai siapa saja tanpa syarat adalah…', options: ['CC BY-ND', 'CC BY-NC-SA', 'CC0', 'All Rights Reserved'], answer: 2, explain: 'CC0 (No Rights Reserved) = pencipta melepaskan haknya sejauh diizinkan hukum.' },
+    ],
+  };
+  const QUIZ = {
+    bab1: OLD_QUIZ.bab1.concat(OLD_QUIZ.bab2),
+    bab3: OLD_QUIZ.bab3.concat(OLD_QUIZ.bab4),
+    bab5: [
+      { type: 'mc', question: 'Rumus Excel untuk menghitung rata-rata adalah…', options: ['SUM', 'AVERAGE', 'COUNTIF', 'IF'], answer: 1, explain: 'AVERAGE menghitung rata-rata angka pada rentang.' },
+      { type: 'mc', question: 'Fungsi COUNTIF digunakan untuk…', options: ['Menjumlah semua angka', 'Menghitung sel yang memenuhi kriteria', 'Mengurutkan tabel', 'Menghapus duplikasi'], answer: 1, explain: 'COUNTIF menghitung banyak sel yang memenuhi satu kriteria.' },
+      { type: 'mc', question: 'Langkah yang tepat sebelum membuat grafik adalah…', options: ['Menghapus judul kolom', 'Memeriksa tipe data dan nilai kosong', 'Mengubah semua angka menjadi teks', 'Menyembunyikan sumber data'], answer: 1, explain: 'Periksa dan bersihkan data agar ringkasan dan visualisasi tidak menyesatkan.' },
+      { type: 'order', question: 'Urutkan alur sederhana membuat laporan di Power BI!', items: ['Impor data', 'Bersihkan data', 'Buat model', 'Pilih visualisasi'], explain: 'Impor, transformasi, model, lalu susun visualisasi.' },
+      { type: 'mc', question: 'Grafik yang paling sesuai untuk melihat perubahan penjualan dari bulan ke bulan adalah…', options: ['Grafik garis', 'Diagram lingkaran 3D', 'Tabel tanpa judul', 'Piktogram acak'], answer: 0, explain: 'Grafik garis memudahkan pembaca melihat tren sepanjang waktu.' },
+      { type: 'tf', question: 'Nama dan nomor identitas siswa sebaiknya ditampilkan pada dasbor kelas yang dibagikan luas.', answer: false, explain: 'Salah. Dasbor sebaiknya hanya memuat data yang diperlukan dan tidak membuka informasi pribadi.' },
+      { type: 'mc', question: 'Fitur Excel yang membantu merangkum penjualan berdasarkan wilayah dan produk adalah…', options: ['Tabel Pivot', 'WordArt', 'Mail Merge', 'Page Break'], answer: 0, explain: 'Tabel Pivot merangkum dan membandingkan data menurut kategori.' },
+      { type: 'mc', question: 'Di Power BI, Power Query terutama dipakai untuk…', options: ['Menggambar ikon', 'Mengimpor dan menyiapkan data', 'Membuat kata sandi', 'Mengirim email otomatis'], answer: 1, explain: 'Power Query membantu mengambil, mengubah, dan membersihkan data.' },
+      { type: 'tf', question: 'Semua data yang berhasil dihitung otomatis menjadi informasi yang benar tanpa perlu diperiksa.', answer: false, explain: 'Salah. Rumus yang tepat tetap membutuhkan data bersih dan interpretasi yang sesuai.' },
+      { type: 'mc', question: 'Elemen yang membantu pembaca memahami satuan pada grafik adalah…', options: ['Judul dan label yang jelas', 'Warna sebanyak mungkin', 'Efek animasi', 'Menyembunyikan sumbu'], answer: 0, explain: 'Judul, label, dan satuan memberi konteks agar grafik mudah dibaca.' },
     ],
   };
 

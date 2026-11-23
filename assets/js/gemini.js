@@ -37,11 +37,10 @@ const GeminiAI = (function () {
 
 Panduan Wajib:
 1. Bersikap ramah, edukatif, suportif, dan jelas dalam bahasa Indonesia yang santun, runtut, dan mudah dipahami siswa SMA.
-2. Kuasai secara mendalam 4 Bab Inti Materi Informatika SMAN 1 Batam:
-   - Bab 01: Mesin Pencari (Search Engine), Arsitektur Web, Algoritma Crawling (Spider Bot), Indexing (Inverted Index), Ranking & SERP, PageRank.
-   - Bab 02: Strategi Riset Digital, Operator Pencarian Tingkat Lanjut (site:, filetype:, "-", "exact phrase", OR, related:), Triangulasi Sumber (Minimal 3 sumber kredibel), Lateral Reading, Evaluasi Berita & Hoaks.
-   - Bab 03: Hukum & Etika Siber Indonesia, UU ITE (No. 11/2008 jo UU No. 1/2024 pasal 27 kesusilaan/pencemaran, pasal 28 hoaks/SARA, pasal 30 akses ilegal/hacking, pasal 45 pemidanaan), UU Pelindungan Data Pribadi (UU PDP No. 27/2022).
-   - Bab 04: Hak Cipta Digital & Netiket, UU Hak Cipta No. 28/2014, Lisensi Creative Commons (CC-BY, CC-NC, CC-SA, CC-ND), Pencegahan Plagiarisme, Atribusi Karya, Netiket (Etika Komunikasi Internet).
+2. Kuasai secara mendalam 3 Bab Inti Materi Informatika SMAN 1 Batam:
+   - Bab 01: Mesin Pencari dan strategi riset: crawling, indexing, ranking, operator pencarian, membaca lateral, triangulasi, dan evaluasi sumber.
+   - Bab 02: Hukum dan Perundang-Undangan Digital di Indonesia: UU ITE (UU No. 1/2024), UU PDP (UU No. 27/2022), UU Hak Cipta (UU No. 28/2014), lisensi, atribusi, dan netiket.
+   - Bab 03: Analisis Data (Excel dan Power BI): pembersihan data, SUM, AVERAGE, COUNTIF, IF, Tabel Pivot, grafik, Power Query, dan dasbor.
 3. FORMAT VISUAL WAJIB - Gunakan format ini agar tampilan lebih menarik bagi siswa:
    - LANGKAH/PROSES: gunakan daftar bernomor (1. 2. 3.) — akan tampil sebagai Step Flow timeline visual.
    - POIN/FITUR: gunakan daftar bullet (- item) — akan tampil sebagai Card Grid interaktif.
@@ -642,7 +641,7 @@ Mesin pencari modern seperti Google bekerja melalui 3 tahapan utama:
 💡 Gunakan file \`robots.txt\` dan \`sitemap.xml\` untuk memahami bagaimana webmaster mengatur crawling bot.`;
     }
 
-    if (q.includes('site:') || q.includes('filetype:') || q.includes('operator') || q.includes('triangulasi') || chapterFocus === '2') {
+    if (q.includes('site:') || q.includes('filetype:') || q.includes('operator') || q.includes('triangulasi') || chapterFocus === '1') {
       return `## Strategi Riset Digital & Operator Pencarian
 
 Untuk mendapatkan data terpercaya dan memfilter informasi:
@@ -655,7 +654,7 @@ Untuk mendapatkan data terpercaya dan memfilter informasi:
 📌 Teknik Triangulasi Sumber: Memverifikasi klaim informasi dengan mencocokkan minimal 3 sumber independen yang berbeda.`;
     }
 
-    if (q.includes('ite') || q.includes('pdp') || q.includes('pasal') || q.includes('hoaks') || chapterFocus === '3') {
+    if (q.includes('ite') || q.includes('pdp') || q.includes('pasal') || q.includes('hoaks') || chapterFocus === '2') {
       return `## Regulasi Hukum & Etika Siber Indonesia
 
 Regulasi utama yang wajib dipahami:
@@ -666,6 +665,18 @@ Regulasi utama yang wajib dipahami:
 4. **Pasal 30** — Larangan akses ilegal (hacking).
 
 ⚠️ UU PDP No. 27/2022 melindungi data pribadi dan melarang jual beli data tanpa izin pemilik.`;
+    }
+
+    if (q.includes('excel') || q.includes('power bi') || q.includes('analisis data') || q.includes('rumus') || q.includes('pivot') || chapterFocus === '3') {
+      return `## Analisis Data dengan Excel dan Power BI
+
+1. **Periksa data**: pastikan judul kolom jelas, format konsisten, dan nilai kosong atau duplikat ditinjau.
+2. **Hitung di Excel**: gunakan SUM untuk total, AVERAGE untuk rata-rata, COUNTIF untuk menghitung kondisi, dan IF untuk memberi label.
+3. **Ringkas**: Tabel Pivot membantu membandingkan kategori, misalnya penjualan per bulan atau produk.
+4. **Visualisasikan**: grafik garis cocok untuk tren waktu, batang untuk membandingkan kategori.
+5. **Susun dasbor**: Power BI mengimpor data, merapikannya di Power Query, lalu menyajikan visual yang menjawab pertanyaan.
+
+🔒 Jangan tampilkan data pribadi jika dasbor dibagikan.`;
     }
 
     return `## Penjelasan Materi Informatika SMAN 1 Batam

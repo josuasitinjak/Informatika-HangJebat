@@ -8,12 +8,11 @@ atau aset Stride yang dipakai.
 
 | | Versi GitHub (`HEAD`, Antigravity/Gemini) | Versi lokal sebelumnya (Claude, 13 Nov) |
 |---|---|---|
-| Kelebihan | Rapi, terang, mudah dibaca | Arsitektur JS kuat: `core.js` (XP, streak, lencana, sidebar terpadu), `content.js` (4 bab + 40 soal), `lessons.js` (11 widget), editor materi guru, rekap nilai |
+| Kelebihan | Rapi, terang, mudah dibaca | Arsitektur JS kuat: `core.js` (XP, streak, lencana, sidebar terpadu), `content.js` (3 bab + 50 soal), `lessons.js` (12 widget), editor materi guru, rekap nilai |
 | Kekurangan | Generik (hero teks + kartu), minim interaksi | Mode gelap otomatis mengikuti OS padahal gayanya belum lengkap → teks hilang di beranda; Motion dimuat tapi tidak dipakai; animasi CSS lambat (600 ms+); gaya "chunky" terlalu kekanak-kanakan untuk SMA; `index.html` sempat tertimpa template "Flowstate" |
 | Keputusan | Tidak dipakai sebagai basis kode | **Logika JS dipertahankan utuh**; lapisan visual diganti |
 
-Berkas yang dibiarkan apa adanya (bukan buatan sesi ini, tidak dihapus): `flowstate.html`,
-`index.informatika.html` (beranda lama, berisi error `X.mascot.render`), `_skill-ui-ux-pro-max/`.
+Halaman HTML lama yang tidak ditautkan telah dibersihkan. Folder skill dan aset konsep dipertahankan karena menjadi bahan kerja proyek.
 
 ## 2. Token
 
@@ -68,24 +67,43 @@ untuk interaksi (kartu 3D, konverter, drawer); animasi berhenti saat di luar lay
 `prefers-reduced-motion` mematikan semuanya dan konten tampil statis. Bila Motion gagal dimuat,
 `tw-config.js` membuka kembali konten setelah 2,5 dtk.
 
+### Maskot 3D "Jebat" (`assets/js/robot.js`)
+
+Model Three.js (`three@0.149.0` UMD) prosedural, mengikuti Character Model Sheet pemilik:
+- **Kepala**: helm putih hasil putaran profil superelips (sisi tegak, kubah atas, bawah lebih datar; bulat dari atas, kedalaman 86% lebar) + panel melingkar di atas.
+- **Layar 3 lapis**: bingkai abu-abu kebiruan → bezel hitam tebal → kaca gelap melengkung & menjorok; wajah digambar di tekstur kanvas (ekspresi: ∩∩, wink, ●●, sad, ^^, think, tutup mata, mengintip).
+- **Leher** mekanis metalik; **jas navy** 3D bertebal dengan bukaan V, lapel, tepi; kemeja putih, kerah 2 bagian, **dasi merah 3D bergaris emas**; mangkuk bawah + senyum LED + **thruster cincin cyan**.
+- **Tangan** kapsul putih + cincin cyan + sambungan mekanis gelap yang mengarah ke badan.
+- Warna hex diperlakukan sebagai sRGB (`ColorManagement.legacyMode = false`).
+- Interaksi: kepala/mata ikut kursor, melayang, kedip, tangan berayun alami; `controls: true` → seret putar 360°, roda/cubit zoom, klik ganda reset (kembali menghadap depan setelah diam).
+- API: `HJRobot.mount(el, { size, bubble, mood, lines, controls, view })` → `setMood`, `say`, `lookAt`, `celebrate`, `shake`, `setView(yaw, pitch)`.
+- Evaluasi multi sudut: `docs/konsep/maskot-3d-sudut.html` (render ke `maskot-3d-sudut.png`).
+- Tanpa WebGL → cadangan 2D `robot-svg.js`.
+
+### Cahaya kursor (`assets/js/cursor-glow.js`)
+
+Cahaya biru lembut mengikuti kursor di semua halaman, plus "spotlight" pada kartu/panel/tombol: permukaan
+dan tepinya menyala di titik kursor. Tambahkan `data-spot` untuk menyalakan, `data-spot="off"` untuk mematikan.
+Nonaktif di perangkat sentuh dan saat "kurangi gerakan".
+
 ## 6. Beranda — padanan referensi
 
 | Referensi | Versi Informatika |
 |---|---|
 | Latar hero | **Gradient ASCII** dari React Bits (MIT), di-port ke JS biasa di `assets/js/gradient-ascii.js` (`GradientASCII.mount(el, opsi)`), bentuk `horizon`, warna bawaan. Karakter teracak di bawah kursor, gelombang saat klik. Tanpa WebGL2 → latar CSS cadangan. Isi hero diletakkan di bagian bawah yang gelap agar teks putih terbaca. (Menggantikan filamen cahaya, 22 Nov 2026.) |
-| Statistik 4.9 / 30k / 15k | 4 bab · 11 aktivitas · 40 soal — dihitung dari `content.js` |
+| Statistik 4.9 / 30k / 15k | 3 bab · 12 aktivitas · 50 soal — dihitung dari `content.js` |
 | Marquee logo + kalimat muncul kata per kata | Marquee topik + kalimat yang menajam mengikuti scroll |
 | Bento kartu foto/angka | Kartu pelajar logam 3D (tilt + kilau pelangi, data akun nyata), konverter DEC/BIN/HEX dengan angka pegas |
 | "Thoughtful engineering" + tab | "Dirancang teliti di setiap langkah" + tab Baca/Coba/Cek/Catat dengan demo hidup |
-| Portofolio kartu bertumpuk | Peta Materi: 4 bab bertumpuk sticky, penghitung 01/04 |
-| Rantai krom 3D | Simbol pasal `§` krom 3D di seksi hukum digital |
-| Hati krom + "Have questions?" | `?` krom + "Ada pertanyaan? Tanya Xavi." |
+| Portofolio kartu bertumpuk | Peta Materi semester 1 (Mesin Pencari · Hukum Digital · Analisis Data) sebagai kartu bertumpuk sticky, masing-masing berisi **video demo** animasi (`assets/js/demo-videos.js` + `demo-videos.css`): antarmuka realistis 960×540 (mesin pencari, media sosial, spreadsheet + dasbor) yang dimainkan kursor virtual dengan caption langkah. Diputar hanya saat terlihat; "kurangi gerakan" → keadaan akhir statis. |
+| Rantai krom 3D | Maskot 3D Jebat (pose berpikir) di seksi hukum/etika — Three.js dimuat saat seksi mendekat; menoleh ke kartu UU yang disorot |
+| Hati krom + "Have questions?" | `?` krom + "Ada pertanyaan? Tanya Jebat." |
 | Drawer registrasi | Drawer "Mulai belajar" (3 langkah / lanjut belajar bila sudah masuk) |
 | Tombol suara melayang | Tombol efek suara situs (`X.sfx`) |
 
 ## 7. Langkah berikutnya (belum dikerjakan)
 
-- Merombak isi halaman Modul (ruang belajar), Kuis, Simulator, Catatan, Tugas, Komunitas, Tanya AI
+- Merombak isi halaman Modul (ruang belajar), Kuis, Simulator, Catatan, Tugas, Tanya AI
   dengan komponen `hj-*` — saat ini halaman tersebut sudah memakai tema & shell baru lewat pemetaan
   `html.dark`, tetapi markup dalamnya masih gaya lama (judul tebal, tombol `border-b-4`).
 - Mode terang untuk halaman aplikasi perlu ditinjau ulang setelah markup diperbarui.
