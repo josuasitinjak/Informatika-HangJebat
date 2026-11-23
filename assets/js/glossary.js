@@ -51,7 +51,7 @@
   const categories = ['Semua', 'Mesin Pencari', 'Hukum Digital', 'Excel & Power BI'];
 
   function renderFilters() {
-    document.getElementById('glossary-filters').innerHTML = categories.map((label) => `<button type="button" data-topic="${esc(label)}" aria-pressed="${activeTopic === label}" class="rounded-full px-3 py-2 text-[11px] font-extrabold transition ${activeTopic === label ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${esc(label)}</button>`).join('');
+    document.getElementById('glossary-filters').innerHTML = categories.map((label) => `<button type="button" data-topic="${esc(label)}" aria-pressed="${activeTopic === label}" class="min-h-[44px] rounded-full px-3 py-2 text-[11px] font-extrabold transition ${activeTopic === label ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${esc(label)}</button>`).join('');
   }
   function renderList() {
     const query = search.value.trim().toLocaleLowerCase('id');
@@ -88,3 +88,4 @@
   document.getElementById('flash-prev').addEventListener('click', () => { if (!deck.length) return; deckIndex = (deckIndex - 1 + deck.length) % deck.length; revealed = false; renderCard(); });
   renderFilters(); renderList(); makeDeck();
 })();
+
